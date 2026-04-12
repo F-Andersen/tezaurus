@@ -1,0 +1,206 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  CONTENT_MANAGER
+  SALES
+}
+
+enum LeadType {
+  request
+  callback
+}
+
+enum LeadStatus {
+  NEW
+  IN_PROGRESS
+  DONE
+}
+
+enum BlogPostStatus {
+  draft
+  published
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  role         UserRole @default(CONTENT_MANAGER)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Setting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("settings")
+}
+
+model Page {
+  id                String   @id @default(cuid())
+  slug              String   @unique
+  titleUa           String?  @map("title_ua")
+  titleEn           String?  @map("title_en")
+  contentUa         String?  @map("content_ua") @db.Text
+  contentEn         String?  @map("content_en") @db.Text
+  metaTitleUa       String?  @map("meta_title_ua")
+  metaTitleEn       String?  @map("meta_title_en")
+  metaDescriptionUa String?  @map("meta_description_ua") @db.Text
+  metaDescriptionEn String?  @map("meta_description_en") @db.Text
+  ogImageUa         String?  @map("og_image_ua")
+  ogImageEn         String?  @map("og_image_en")
+  canonical         String?
+  published         Boolean  @default(true)
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@map("pages")
+}
+
+model Clinic {
+  id                String   @id @default(cuid())
+  slug              String   @unique
+  nameUa            String?  @map("name_ua")
+  nameEn            String?  @map("name_en")
+  country           String?
+  city              String?
+  specializations   String[] @default([])
+  descriptionUa     String?  @map("description_ua") @db.Text
+  descriptionEn     String?  @map("description_en") @db.Text
+  metaTitleUa       String?  @map("meta_title_ua")
+  metaTitleEn       String?  @map("meta_title_en")
+  metaDescriptionUa String?  @map("meta_description_ua") @db.Text
+  metaDescriptionEn String?  @map("meta_description_en") @db.Text
+  published         Boolean  @default(true)
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+  images            ClinicImage[]
+
+  @@map("clinics")
+}
+
+model ClinicImage {
+  id         String  @id @default(cuid())
+  clinicId   String  @map("clinic_id")
+  clinic     Clinic  @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  mediaId    String  @map("media_id")
+  media      MediaAsset @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  sortOrder  Int     @default(0) @map("sort_order")
+
+  @@unique([clinicId, mediaId])
+  @@map("clinic_images")
+}
+
+model BlogCategory {
+  id        String     @id @default(cuid())
+  slug      String     @unique
+  nameUa    String?    @map("name_ua")
+  nameEn    String?    @map("name_en")
+  posts     BlogPost[]
+
+  @@map("blog_categories")
+}
+
+model BlogPost {
+  id                String         @id @default(cuid())
+  slug              String         @unique
+  categoryId        String?        @map("category_id")
+  category          BlogCategory?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  titleUa           String?        @map("title_ua")
+  titleEn           String?        @map("title_en")
+  excerptUa         String?        @map("excerpt_ua") @db.Text
+  excerptEn         String?        @map("excerpt_en") @db.Text
+  bodyUa            String?        @map("body_ua") @db.Text
+  bodyEn            String?        @map("body_en") @db.Text
+  metaTitleUa       String?        @map("meta_title_ua")
+  metaTitleEn       String?        @map("meta_title_en")
+  metaDescriptionUa String?        @map("meta_description_ua") @db.Text
+  metaDescriptionEn String?        @map("meta_description_en") @db.Text
+  tags              String[]      @default([])
+  status            BlogPostStatus @default(draft)
+  publishedAt       DateTime?     @map("published_at")
+  createdAt         DateTime      @default(now()) @map("created_at")
+  updatedAt         DateTime      @updatedAt @map("updated_at")
+
+  @@map("blog_posts")
+}
+
+model Service {
+  id                String   @id @default(cuid())
+  slug              String   @unique
+  nameUa            String?  @map("name_ua")
+  nameEn            String?  @map("name_en")
+  category          String?
+  descriptionUa     String?  @map("description_ua") @db.Text
+  descriptionEn     String?  @map("description_en") @db.Text
+  country           String?
+  city              String?
+  priceFrom         Int?     @map("price_from")
+  currency          String   @default("USD")
+  duration          String?
+  imageUrl          String?  @map("image_url")
+  tags              String[] @default([])
+  featured          Boolean  @default(false)
+  published         Boolean  @default(true)
+  sortOrder         Int      @default(0) @map("sort_order")
+  metaTitleUa       String?  @map("meta_title_ua")
+  metaTitleEn       String?  @map("meta_title_en")
+  metaDescriptionUa String?  @map("meta_description_ua") @db.Text
+  metaDescriptionEn String?  @map("meta_description_en") @db.Text
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@map("services")
+}
+
+model Lead {
+  id          String     @id @default(cuid())
+  type        LeadType
+  name        String?
+  phone       String
+  email       String?
+  requestType String?    @map("request_type")
+  country     String?
+  message     String?    @db.Text
+  consent     Boolean
+  status      LeadStatus @default(NEW) @map("status")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+
+  @@map("leads")
+}
+
+model MediaAsset {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  altUa     String?  @map("alt_ua")
+  altEn     String?  @map("alt_en")
+  mimeType  String   @map("mime_type")
+  size      Int
+  createdAt DateTime @default(now()) @map("created_at")
+  clinicImages ClinicImage[]
+
+  @@map("media_assets")
+}
+
+model Redirect {
+  id       String @id @default(cuid())
+  fromPath String @map("from_path") @unique
+  toPath   String @map("to_path")
+  code     Int    @default(301)
+
+  @@map("redirects")
+}

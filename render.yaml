@@ -1,0 +1,53 @@
+databases:
+  - name: tezaurus-db
+    plan: free
+    databaseName: tezaurus_tour
+    user: tezaurus
+
+services:
+  # ── NestJS API ──
+  - type: web
+    name: tezaurus-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./apps/api/Dockerfile
+    dockerContext: ./apps/api
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: tezaurus-db
+          property: connectionString
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: API_PORT
+        value: "4000"
+      - key: NODE_ENV
+        value: production
+      - key: WEB_URL
+        value: https://tezaurus-web.onrender.com
+      - key: ADMIN_URL
+        value: https://tezaurus-admin.onrender.com
+
+  # ── Next.js Public Website ──
+  - type: web
+    name: tezaurus-web
+    runtime: docker
+    plan: free
+    dockerfilePath: ./apps/web/Dockerfile
+    dockerContext: ./apps/web
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        value: https://tezaurus-api.onrender.com/api
+
+  # ── Next.js Admin Panel ──
+  - type: web
+    name: tezaurus-admin
+    runtime: docker
+    plan: free
+    dockerfilePath: ./apps/admin/Dockerfile
+    dockerContext: ./apps/admin
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        value: https://tezaurus-api.onrender.com/api
