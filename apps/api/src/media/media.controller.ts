@@ -3,15 +3,18 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
+  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import type { Response } from 'express';
 import { MediaService } from './media.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -39,6 +42,19 @@ export class MediaController {
   @Get()
   findAll() {
     return this.media.findAll();
+  }
+
+  @Get('file/:id')
+  async getFile(@Param('id') id: string, @Res() res: Response) {
+    const asset = await this.media.findOne(id);
+    const file = this.media.getLocalFile(id);
+    if (!file) {
+      throw new NotFoundException('File not available (local store empty)');
+    }
+    res.setHeader('Content-Type', asset.mimeType || file.mimeType || 'application/octet-stream');
+    res.setHeader('Content-Disposition', `inline; filename="${file.filename}"`);
+    res.setHeader('Content-Length', String(file.buffer.length));
+    res.end(file.buffer);
   }
 
   @Get(':id')
