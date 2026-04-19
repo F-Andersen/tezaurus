@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { getPlaceholder, onImgError } from '@/lib/placeholder';
 
 export interface Clinic {
   id: string;
@@ -173,18 +174,13 @@ export function ClinicsDirectory({ clinics, lang, phones }: Props) {
             <section className="mb-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               <div className="lg:col-span-7 relative">
                 <div className="overflow-hidden rounded-2xl h-[340px] md:h-[500px] bg-surface-container-low">
-                  {firstImage(featured) ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      alt={featured.name}
-                      src={firstImage(featured)!}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-primary-container to-secondary flex items-center justify-center">
-                      <span className="material-symbols-outlined text-7xl text-on-primary-container/30">local_hospital</span>
-                    </div>
-                  )}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    alt={featured.name}
+                    src={firstImage(featured) || getPlaceholder('clinic')}
+                    onError={(e) => onImgError(e, 'clinic')}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 {/* Floating quote card */}
                 <div className="absolute -bottom-8 -right-8 bg-tertiary-container text-white p-8 rounded-xl max-w-xs shadow-xl hidden md:block">
@@ -252,18 +248,13 @@ export function ClinicsDirectory({ clinics, lang, phones }: Props) {
                 return (
                   <div key={c.id} className="clinic-card p-4">
                     <Link href={`/${lang}/clinics/${c.slug}`} className="block relative overflow-hidden rounded-lg aspect-[16/11] mb-6">
-                      {imgUrl ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          alt={c.name}
-                          src={imgUrl}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-primary-container to-secondary flex items-center justify-center">
-                          <span className="material-symbols-outlined text-5xl text-on-primary-container/30">local_hospital</span>
-                        </div>
-                      )}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        alt={c.name}
+                        src={imgUrl || getPlaceholder('clinic')}
+                        onError={(e) => onImgError(e, 'clinic')}
+                        className="w-full h-full object-cover"
+                      />
                       {c.rating != null && c.rating > 0 && (
                         <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-md shadow-sm">
                           <span className="text-[9px] font-label font-extrabold tracking-[0.25em] uppercase text-primary">

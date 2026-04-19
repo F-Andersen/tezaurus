@@ -328,13 +328,12 @@ export default function ClinicEdit() {
               {clinicImages.map((img, index) => (
                 <div key={img.mediaId} className="relative group rounded-xl overflow-hidden border border-gray-200 bg-gray-50">
                   <div className="aspect-square">
-                    {img.url ? (
-                      <img src={img.url} alt={img.key || ''} className="w-full h-full object-cover" />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <span className="material-symbols-outlined text-3xl text-gray-300">image</span>
-                      </div>
-                    )}
+                    <img
+                      src={img.url || '/placeholders/clinic.svg'}
+                      alt={img.key || ''}
+                      onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/placeholders/clinic.svg'; }}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
 
                   {/* Overlay controls */}

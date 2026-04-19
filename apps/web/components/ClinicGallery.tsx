@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { getPlaceholder, onImgError } from '@/lib/placeholder';
 
 interface GalleryImage {
   id: string;
@@ -18,7 +19,19 @@ export function ClinicGallery({ images, clinicName }: Props) {
   const [selected, setSelected] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
-  if (validImages.length === 0) return null;
+  if (validImages.length === 0) {
+    return (
+      <div className="w-full overflow-hidden rounded-xl aspect-[16/10] bg-surface-container-low">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={getPlaceholder('gallery')}
+          alt={clinicName}
+          onError={(e) => onImgError(e, 'gallery')}
+          className="w-full h-full object-cover"
+        />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -32,6 +45,7 @@ export function ClinicGallery({ images, clinicName }: Props) {
           <img
             src={validImages[selected].url!}
             alt={validImages[selected].alt || clinicName}
+            onError={(e) => onImgError(e, 'gallery')}
             className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
           />
         </button>
@@ -51,6 +65,7 @@ export function ClinicGallery({ images, clinicName }: Props) {
                 <img
                   src={img.url!}
                   alt={img.alt || `${clinicName} ${i + 1}`}
+                  onError={(e) => onImgError(e, 'gallery')}
                   className="w-full h-full object-cover"
                 />
               </button>
@@ -99,6 +114,7 @@ export function ClinicGallery({ images, clinicName }: Props) {
           <img
             src={validImages[selected].url!}
             alt={validImages[selected].alt || clinicName}
+            onError={(e) => onImgError(e, 'gallery')}
             className="max-w-full max-h-[85vh] object-contain rounded-lg"
             onClick={(e) => e.stopPropagation()}
           />

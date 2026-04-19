@@ -4,6 +4,7 @@ import { memoryStorage } from 'multer';
 import { MediaService } from './media.service';
 import { MediaController } from './media.controller';
 import { S3Service } from './s3.service';
+import { LocalMediaStore } from './local-media.store';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { S3Service } from './s3.service';
     }),
   ],
   controllers: [MediaController],
-  providers: [MediaService, S3Service],
-  exports: [MediaService, S3Service],
+  providers: [MediaService, S3Service, LocalMediaStore],
+  exports: [MediaService, S3Service, LocalMediaStore],
 })
 export class MediaModule {}

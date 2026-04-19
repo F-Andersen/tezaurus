@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { api } from '@/lib/api';
 import { getAdminLang, t, type AdminLang } from '@/lib/i18n';
+import { getPlaceholder, onImgError } from '@/lib/placeholder';
 
 const dict = {
   title: { ua: 'Медіатека', en: 'Media Library' },
@@ -163,10 +164,15 @@ export function MediaPickerModal({ open, onClose, onSelect, multiple = false }: 
                       }`}
                     >
                       {m.url ? (
-                        <img src={m.url} alt={m.key} className="w-full h-full object-cover" />
+                        <img
+                          src={m.url}
+                          alt={m.key}
+                          onError={(e) => onImgError(e, 'gallery')}
+                          className="w-full h-full object-cover"
+                        />
                       ) : (
                         <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                          <span className="material-symbols-outlined text-2xl text-gray-300">image</span>
+                          <img src={getPlaceholder('gallery')} alt="" className="w-1/2 h-1/2 object-contain opacity-60" />
                         </div>
                       )}
                       {isSelected && (

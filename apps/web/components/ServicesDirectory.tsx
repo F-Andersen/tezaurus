@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
+import { getPlaceholder, onImgError } from '@/lib/placeholder';
 
 export interface ServiceItem {
   id: string;
@@ -70,7 +71,7 @@ type SortType = 'default' | 'priceAsc' | 'priceDesc' | 'name';
 type BudgetRange = '' | '5000-15000' | '15000-30000' | '30000+';
 
 const ITEMS_PER_PAGE = 9;
-const PLACEHOLDER_IMG = 'https://images.unsplash.com/photo-1540555700478-4be289fbec6f?w=800&q=80';
+const PLACEHOLDER_IMG = getPlaceholder('service');
 
 function getPageNumbers(current: number, total: number): (number | 'dots')[] {
   if (total <= 5) return Array.from({ length: total }, (_, i) => i + 1);
@@ -240,6 +241,7 @@ export function ServicesDirectory({ services, lang }: Props) {
                   <img
                     src={svc.imageUrl || PLACEHOLDER_IMG}
                     alt={svc.name}
+                    onError={(e) => onImgError(e, 'service')}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   {svc.featured && (

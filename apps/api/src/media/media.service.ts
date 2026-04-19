@@ -1,6 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Optional } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { S3Service } from './s3.service';
+import { LocalMediaStore } from './local-media.store';
 import { randomUUID } from 'crypto';
 
 @Injectable()
@@ -8,6 +9,7 @@ export class MediaService {
   constructor(
     private prisma: PrismaService,
     private s3: S3Service,
+    @Optional() private localStore?: LocalMediaStore,
   ) {}
 
   async upload(file: Express.Multer.File, altUa?: string, altEn?: string) {
@@ -25,6 +27,9 @@ export class MediaService {
           size: file.size,
         },
       });
+      // Phase 1: зберігаємо байти в in-memory store, щоб `GET /api/admin/media/file/:id`
+      // міг віддати файл. Phase 2 замінить на disk storage + volume.
+      this.localStore?.set(asset.id, file.buffer, file.mimetype, file.originalname);
       return { ...asset, url: `/api/admin/media/file/${asset.id}` };
     }
     const asset = await this.prisma.mediaAsset.create({
@@ -37,6 +42,10 @@ export class MediaService {
       },
     });
     return { ...asset, url: this.s3.getPublicUrl(key) };
+  }
+
+  getLocalFile(id: string): { buffer: Buffer; mimeType: string; filename: string } | undefined {
+    return this.localStore?.get(id);
   }
 
   async findAll() {
@@ -64,6 +73,7 @@ export class MediaService {
   async remove(id: string) {
     const asset = await this.findOne(id);
     await this.s3.delete(asset.key);
+    this.localStore?.delete(id);
     await this.prisma.mediaAsset.delete({ where: { id } });
     return { success: true };
   }

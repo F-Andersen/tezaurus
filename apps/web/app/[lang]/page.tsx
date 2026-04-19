@@ -4,6 +4,7 @@ import { LeadForm } from '@/components/LeadForm';
 import { CallbackForm } from '@/components/CallbackForm';
 import type { Lang } from '@/lib/api';
 import Link from 'next/link';
+import { getPlaceholder } from '@/lib/placeholder';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -45,7 +46,8 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   const featuredServices: FeaturedService[] = (allServices as FeaturedService[]).filter((s) => s.featured).slice(0, 3);
   const phones = (settings.phones as string[] | undefined) ?? [];
   const phone = phones[0];
-  const placeholderImg = 'https://images.unsplash.com/photo-1540555700478-4be289fbec6f?w=800&q=80';
+  const placeholderImg = getPlaceholder('service');
+  const blogPlaceholder = getPlaceholder('blog');
 
   const categoryLabels: Record<string, Record<Lang, string>> = {
     diagnostics: { ua: 'Діагностика', en: 'Diagnostics' },
@@ -295,7 +297,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
                       <img
                         alt={post.title}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        src={post.image || post.coverUrl || placeholderImg}
+                        src={post.image || post.coverUrl || blogPlaceholder}
                       />
                     </div>
                     {post.category && (

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="User placeholder">
+  <defs>
+    <linearGradient id="gradUser" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eef2f4"/>
+      <stop offset="100%" stop-color="#dfe6ea"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#gradUser)"/>
+  <g fill="none" stroke="#9aa6ad" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="400" cy="250" r="70"/>
+    <path d="M270 450 q130 -130 260 0"/>
+  </g>
+  <text x="400" y="520" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="20" fill="#6b7780" letter-spacing="0.25em">USER</text>
+</svg>
