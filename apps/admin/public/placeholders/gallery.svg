@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Gallery placeholder">
+  <defs>
+    <linearGradient id="gradGallery" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eef2f4"/>
+      <stop offset="100%" stop-color="#dfe6ea"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#gradGallery)"/>
+  <g fill="none" stroke="#9aa6ad" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="220" y="170" width="360" height="260" rx="6"/>
+    <circle cx="300" cy="240" r="24"/>
+    <path d="M240 400 L340 300 L430 380 L510 320 L560 400"/>
+  </g>
+  <text x="400" y="500" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="20" fill="#6b7780" letter-spacing="0.25em">GALLERY</text>
+</svg>

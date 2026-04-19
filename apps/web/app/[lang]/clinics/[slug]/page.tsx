@@ -4,6 +4,7 @@ import { getClinic, getClinics } from '@/lib/api';
 import type { Lang } from '@/lib/api';
 import { ServiceInquiryForm } from '@/components/ServiceInquiryForm';
 import { ClinicGallery } from '@/components/ClinicGallery';
+import { getPlaceholder } from '@/lib/placeholder';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string; slug: string }> }) {
   const { lang, slug } = await params;
@@ -38,16 +39,12 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ l
     <>
       {/* Hero */}
       <section className="relative w-full h-[50vh] md:h-[65vh] min-h-[380px] overflow-hidden">
-        {heroImage ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={heroImage}
-            alt={clinic.name}
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-        ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-primary-container to-secondary" />
-        )}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={heroImage || getPlaceholder('clinic')}
+          alt={clinic.name}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/30 to-transparent" />
 
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10 lg:p-16 max-w-site mx-auto">
@@ -221,18 +218,12 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ l
                 return (
                   <Link key={c.id} href={`/${l}/clinics/${c.slug}`} className="group block rounded-2xl border border-primary/10 hover:border-secondary/35 transition-colors overflow-hidden bg-white">
                     <div className="relative overflow-hidden aspect-[4/5] bg-surface-container-low">
-                      {img ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={img}
-                          alt={c.name}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-primary-container to-secondary flex items-center justify-center">
-                          <span className="material-symbols-outlined text-5xl text-white/30">local_hospital</span>
-                        </div>
-                      )}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={img || getPlaceholder('clinic')}
+                        alt={c.name}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
                     </div>
                     <div className="p-5">
                       <h3 className="font-headline text-xl text-primary group-hover:underline decoration-1 underline-offset-4">

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getService, getServices } from '@/lib/api';
 import type { Lang } from '@/lib/api';
 import { ServiceInquiryForm } from '@/components/ServiceInquiryForm';
+import { getPlaceholder } from '@/lib/placeholder';
 
 const categoryLabels: Record<string, Record<'ua' | 'en', string>> = {
   diagnostics: { ua: 'Діагностика', en: 'Diagnostics' },
@@ -14,7 +15,7 @@ const categoryLabels: Record<string, Record<'ua' | 'en', string>> = {
   medical: { ua: 'Медицина', en: 'Medical' },
 };
 
-const PLACEHOLDER_IMG = 'https://images.unsplash.com/photo-1540555700478-4be289fbec6f?w=1200&q=80';
+const PLACEHOLDER_IMG = getPlaceholder('service');
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string; slug: string }> }) {
   const { lang, slug } = await params;

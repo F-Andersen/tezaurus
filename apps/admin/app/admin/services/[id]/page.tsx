@@ -332,7 +332,7 @@ export default function ServiceEdit() {
                 src={form.imageUrl}
                 alt="Preview"
                 className="h-48 w-auto max-w-full rounded-xl object-cover border border-gray-200"
-                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/placeholders/service.svg'; }}
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 rounded-xl transition-all flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
                 <button

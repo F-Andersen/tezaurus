@@ -2,6 +2,7 @@ import { getBlog } from '@/lib/api';
 import Link from 'next/link';
 import type { Lang } from '@/lib/api';
 import type { Metadata } from 'next';
+import { getPlaceholder } from '@/lib/placeholder';
 
 type BlogPost = {
   id: string;
@@ -141,18 +142,12 @@ export default async function BlogPage({
                 {featured.author && (
                   <div className="flex items-center gap-4 mb-10">
                     <div className="h-12 w-12 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant/30">
-                      {featured.author.avatar ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          className="w-full h-full object-cover"
-                          src={featured.author.avatar}
-                          alt={featured.author.name || ''}
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-outline">
-                          <span className="material-symbols-outlined">person</span>
-                        </div>
-                      )}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        className="w-full h-full object-cover"
+                        src={featured.author.avatar || getPlaceholder('user')}
+                        alt={featured.author.name || ''}
+                      />
                     </div>
                     <div>
                       {featured.author.name && (
@@ -176,16 +171,12 @@ export default async function BlogPage({
             {/* Image */}
             <div className="col-span-12 lg:col-span-6 lg:-ml-24 mt-8 lg:mt-0">
               <div className="aspect-[4/5] w-full rounded-xl overflow-hidden shadow-xl">
-                {featured.image ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-105 hover:scale-100"
-                    src={featured.image}
-                    alt={featured.title}
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-primary-container to-primary" />
-                )}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-105 hover:scale-100"
+                  src={featured.image || getPlaceholder('blog')}
+                  alt={featured.title}
+                />
               </div>
             </div>
           </div>
@@ -219,18 +210,12 @@ export default async function BlogPage({
               <Link key={post.id} href={`/${lang}/blog/${post.slug}`} className="group block">
                 <article className="blog-card flex flex-col p-6 h-full">
                   <div className="aspect-[3/2] rounded-xl overflow-hidden mb-6 bg-surface-container-low">
-                    {post.image ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        src={post.image}
-                        alt={post.title}
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-surface-container-high to-surface-container flex items-center justify-center">
-                        <span className="material-symbols-outlined text-5xl text-outline-variant">article</span>
-                      </div>
-                    )}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      src={post.image || getPlaceholder('blog')}
+                      alt={post.title}
+                    />
                   </div>
                   <div className="flex items-center gap-3 mb-4">
                     {post.category?.name && (

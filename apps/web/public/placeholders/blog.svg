@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Blog post placeholder">
+  <defs>
+    <linearGradient id="gradBlog" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eef2f4"/>
+      <stop offset="100%" stop-color="#dfe6ea"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#gradBlog)"/>
+  <g fill="none" stroke="#9aa6ad" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="240" y="170" width="320" height="260" rx="6"/>
+    <line x1="280" y1="230" x2="520" y2="230"/>
+    <line x1="280" y1="270" x2="520" y2="270"/>
+    <line x1="280" y1="310" x2="520" y2="310"/>
+    <line x1="280" y1="350" x2="460" y2="350"/>
+    <line x1="280" y1="390" x2="420" y2="390"/>
+  </g>
+  <text x="400" y="500" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="20" fill="#6b7780" letter-spacing="0.25em">ARTICLE</text>
+</svg>

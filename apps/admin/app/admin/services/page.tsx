@@ -134,12 +134,15 @@ export default function ServicesList() {
                         <img
                           src={s.imageUrl}
                           alt=""
+                          onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/placeholders/service.svg'; }}
                           className="w-10 h-10 rounded-lg object-cover"
                         />
                       ) : (
-                        <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
-                          <span className="material-symbols-outlined text-gray-300 !text-[18px]">image</span>
-                        </div>
+                        <img
+                          src="/placeholders/service.svg"
+                          alt=""
+                          className="w-10 h-10 rounded-lg object-cover opacity-70"
+                        />
                       )}
                     </td>
                     <td className="font-medium text-gray-900">

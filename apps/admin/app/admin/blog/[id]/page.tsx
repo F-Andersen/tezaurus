@@ -202,7 +202,12 @@ export default function BlogPostEdit() {
           {form.coverImage && (
             <div className="relative rounded-lg overflow-hidden bg-gray-100 max-w-md">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={form.coverImage} alt="Cover" className="w-full h-48 object-cover" />
+              <img
+                src={form.coverImage}
+                alt="Cover"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/placeholders/blog.svg'; }}
+                className="w-full h-48 object-cover"
+              />
               <button
                 type="button"
                 onClick={() => set('coverImage', '')}

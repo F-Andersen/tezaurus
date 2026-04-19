@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Clinic placeholder">
+  <defs>
+    <linearGradient id="gradClinic" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eef2f4"/>
+      <stop offset="100%" stop-color="#dfe6ea"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#gradClinic)"/>
+  <g fill="none" stroke="#9aa6ad" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="260" y="220" width="280" height="240" rx="6"/>
+    <rect x="310" y="280" width="60" height="60"/>
+    <rect x="430" y="280" width="60" height="60"/>
+    <rect x="310" y="370" width="60" height="90"/>
+    <rect x="430" y="370" width="60" height="90"/>
+    <path d="M260 220 L400 140 L540 220"/>
+    <path d="M388 160 L412 160 M400 148 L400 172" stroke-width="6"/>
+  </g>
+  <text x="400" y="520" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="20" fill="#6b7780" letter-spacing="0.25em">CLINIC</text>
+</svg>

@@ -3,6 +3,7 @@ import { getBlogPost, getBlog } from '@/lib/api';
 import Link from 'next/link';
 import type { Lang } from '@/lib/api';
 import type { Metadata } from 'next';
+import { getPlaceholder } from '@/lib/placeholder';
 
 type BlogPost = {
   id: string;
@@ -122,18 +123,12 @@ export default async function BlogPostPage({
             <div className="flex flex-wrap items-center gap-6 sm:gap-8">
               {post.author?.name && (
                 <div className="flex items-center gap-3 sm:gap-4">
-                  {post.author.avatar ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={post.author.avatar}
-                      alt={post.author.name}
-                      className="w-11 h-11 rounded-full object-cover bg-surface-container"
-                    />
-                  ) : (
-                    <div className="w-11 h-11 rounded-full bg-surface-container-high flex items-center justify-center">
-                      <span className="material-symbols-outlined text-outline">person</span>
-                    </div>
-                  )}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={post.author.avatar || getPlaceholder('user')}
+                    alt={post.author.name}
+                    className="w-11 h-11 rounded-full object-cover bg-surface-container"
+                  />
                   <div>
                     <p className="text-sm font-bold text-primary">{post.author.name}</p>
                     {post.author.role && (
@@ -164,16 +159,14 @@ export default async function BlogPostPage({
         </header>
 
         {/* ── Hero Image ── */}
-        {post.image && (
-          <div className="relative w-full aspect-[21/9] rounded-xl overflow-hidden mb-16 md:mb-24 shadow-2xl shadow-primary/5">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              alt={post.title}
-              className="w-full h-full object-cover"
-              src={post.image}
-            />
-          </div>
-        )}
+        <div className="relative w-full aspect-[21/9] rounded-xl overflow-hidden mb-16 md:mb-24 shadow-2xl shadow-primary/5">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            alt={post.title}
+            className="w-full h-full object-cover"
+            src={post.image || getPlaceholder('blog')}
+          />
+        </div>
 
         {/* ── Article Body + Sidebar ── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
@@ -249,18 +242,12 @@ export default async function BlogPostPage({
                   <div className="space-y-5">
                     {post.contributors.map((c, i) => (
                       <div key={i} className="flex items-center gap-4">
-                        {c.avatar ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            src={c.avatar}
-                            alt={c.name}
-                            className="w-10 h-10 rounded-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0">
-                            <span className="material-symbols-outlined text-sm text-outline">person</span>
-                          </div>
-                        )}
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={c.avatar || getPlaceholder('user')}
+                          alt={c.name}
+                          className="w-10 h-10 rounded-full object-cover"
+                        />
                         <span className="text-sm font-medium">{c.name}</span>
                       </div>
                     ))}
@@ -314,18 +301,12 @@ export default async function BlogPostPage({
                 <Link key={r.id} href={`/${lang}/blog/${r.slug}`} className="group block rounded-2xl border border-primary/10 hover:border-secondary/35 transition-colors overflow-hidden bg-white">
                   <article>
                     <div className="aspect-[4/5] overflow-hidden bg-surface-container-low">
-                      {r.image ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          alt={r.title}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                          src={r.image}
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-surface-container-high to-surface-container flex items-center justify-center">
-                          <span className="material-symbols-outlined text-5xl text-outline-variant">article</span>
-                        </div>
-                      )}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        alt={r.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        src={r.image || getPlaceholder('blog')}
+                      />
                     </div>
                     <div className="p-5">
                       {r.category?.name && (

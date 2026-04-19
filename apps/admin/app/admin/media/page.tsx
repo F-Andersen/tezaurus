@@ -156,7 +156,12 @@ export default function MediaList() {
             <div key={m.id} className="card group overflow-hidden">
               <div className="aspect-square bg-gray-50 relative overflow-hidden">
                 {m.mimeType.startsWith('image/') && m.url ? (
-                  <img src={m.url} alt={m.altUa || m.key} className="w-full h-full object-cover" />
+                  <img
+                    src={m.url}
+                    alt={m.altUa || m.key}
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/placeholders/gallery.svg'; }}
+                    className="w-full h-full object-cover"
+                  />
                 ) : (
                   <div className="flex items-center justify-center w-full h-full">
                     <span className="material-symbols-outlined text-3xl text-gray-300">insert_drive_file</span>
