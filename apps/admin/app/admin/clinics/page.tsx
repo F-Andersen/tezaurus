@@ -4,6 +4,24 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { api } from '@/lib/api';
+import { getAdminLang, t, type AdminLang } from '@/lib/i18n';
+
+const dict = {
+  title: { ua: 'Клініки', en: 'Clinics' },
+  addClinic: { ua: 'Додати клініку', en: 'Add Clinic' },
+  totalSuffix: { ua: 'всього', en: 'total' },
+  clinic: { ua: 'клініка', en: 'clinic' },
+  clinics: { ua: 'клінік', en: 'clinics' },
+  noClinics: { ua: 'Клінік ще немає. Додайте першу клініку.', en: 'No clinics yet. Add your first clinic.' },
+  name: { ua: 'Назва', en: 'Name' },
+  country: { ua: 'Країна', en: 'Country' },
+  city: { ua: 'Місто', en: 'City' },
+  specializations: { ua: 'Спеціалізації', en: 'Specializations' },
+  published: { ua: 'Опублікований', en: 'Published' },
+  actions: { ua: 'Дії', en: 'Actions' },
+  edit: { ua: 'Редагувати', en: 'Edit' },
+  confirmDeleteClinic: { ua: 'Ви впевнені, що хочете видалити цю клініку?', en: 'Are you sure you want to delete this clinic?' },
+} as const;
 
 interface Clinic {
   id: string;
@@ -20,6 +38,9 @@ export default function ClinicsList() {
   const [list, setList] = useState<Clinic[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const [lang, setLang] = useState<AdminLang>('ua');
+  useEffect(() => { setLang(getAdminLang()); }, []);
+  useEffect(() => { const i = setInterval(() => { const l = getAdminLang(); if (l !== lang) setLang(l); }, 500); return () => clearInterval(i); });
 
   useEffect(() => {
     api.get('/admin/clinics')
@@ -29,7 +50,7 @@ export default function ClinicsList() {
   }, [router]);
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this clinic?')) return;
+    if (!confirm(t(dict, 'confirmDeleteClinic', lang))) return;
     await api.delete(`/admin/clinics/${id}`);
     setList((prev) => prev.filter((c) => c.id !== id));
   };
@@ -44,12 +65,12 @@ export default function ClinicsList() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Clinics</h1>
-          <p className="text-sm text-gray-500 mt-1">{list.length} clinic{list.length !== 1 ? 's' : ''} total</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t(dict, 'title', lang)}</h1>
+          <p className="text-sm text-gray-500 mt-1">{list.length} {list.length !== 1 ? t(dict, 'clinics', lang) : t(dict, 'clinic', lang)} {t(dict, 'totalSuffix', lang)}</p>
         </div>
         <Link href="/admin/clinics/new" className="btn-primary">
           <span className="material-symbols-outlined">add</span>
-          Add Clinic
+          {t(dict, 'addClinic', lang)}
         </Link>
       </div>
 
@@ -61,19 +82,19 @@ export default function ClinicsList() {
         ) : list.length === 0 ? (
           <div className="text-center py-12">
             <span className="material-symbols-outlined text-4xl text-gray-300">local_hospital</span>
-            <p className="mt-2 text-sm text-gray-500">No clinics yet. Add your first clinic.</p>
+            <p className="mt-2 text-sm text-gray-500">{t(dict, 'noClinics', lang)}</p>
           </div>
         ) : (
           <div className="table-container">
             <table>
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Country</th>
-                  <th>City</th>
-                  <th>Specializations</th>
-                  <th>Published</th>
-                  <th className="text-right">Actions</th>
+                  <th>{t(dict, 'name', lang)}</th>
+                  <th>{t(dict, 'country', lang)}</th>
+                  <th>{t(dict, 'city', lang)}</th>
+                  <th>{t(dict, 'specializations', lang)}</th>
+                  <th>{t(dict, 'published', lang)}</th>
+                  <th className="text-right">{t(dict, 'actions', lang)}</th>
                 </tr>
               </thead>
               <tbody>
@@ -109,7 +130,7 @@ export default function ClinicsList() {
                       <div className="flex items-center justify-end gap-1">
                         <Link href={`/admin/clinics/${c.id}`} className="btn-ghost !px-2 !py-1.5 text-xs">
                           <span className="material-symbols-outlined !text-[16px]">edit</span>
-                          Edit
+                          {t(dict, 'edit', lang)}
                         </Link>
                         <button type="button" onClick={() => handleDelete(c.id)} className="btn-ghost !px-2 !py-1.5 text-xs text-red-600 hover:text-red-700 hover:bg-red-50">
                           <span className="material-symbols-outlined !text-[16px]">delete</span>

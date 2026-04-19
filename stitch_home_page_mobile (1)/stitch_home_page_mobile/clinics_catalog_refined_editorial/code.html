@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clinical Curator | Clinics Catalog</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#324b4e",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "background": "#f7fafb",
+                        "on-surface": "#203033",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#234c59",
+                        "on-secondary": "#ffffff",
+                        "primary": "#002630",
+                        "on-secondary-container": "#0b6c7b",
+                        "inverse-primary": "#a4cddd",
+                        "primary-fixed": "#bfe9fa",
+                        "secondary": "#006877",
+                        "tertiary-container": "#223b3e",
+                        "secondary-fixed": "#a3eeff",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#c1c7cb",
+                        "secondary-fixed-dim": "#85d2e3",
+                        "on-primary-fixed": "#001f28",
+                        "on-secondary-fixed": "#001f25",
+                        "tertiary-fixed": "#cce8eb",
+                        "inverse-surface": "#2d3132",
+                        "on-surface-variant": "rgba(32, 48, 51, 0.85)",
+                        "secondary-container": "#9eecfd",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f1f4f5",
+                        "surface-variant": "#e0e3e4",
+                        "surface-container-highest": "#e0e3e4",
+                        "on-tertiary-fixed": "#041f22",
+                        "on-background": "#181c1d",
+                        "primary-container": "#0f3c49",
+                        "surface-bright": "#f7fafb",
+                        "surface-tint": "#3c6472",
+                        "primary-fixed-dim": "#a4cddd",
+                        "outline": "#71787b",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#b0ccce",
+                        "surface-container": "#ebeeef",
+                        "on-tertiary-container": "#8aa5a8",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#7ea6b6",
+                        "tertiary": "#0a2528",
+                        "surface-container-high": "#e5e9ea",
+                        "surface": "#f7fafb",
+                        "inverse-on-surface": "#eef1f2",
+                        "on-secondary-fixed-variant": "#004e5a",
+                        "surface-dim": "#d7dadc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .shadow-soft {
+            box-shadow: 0 4px 20px -2px rgba(0, 38, 48, 0.04);
+        }
+        .clinic-card {
+            background: white;
+            border-radius: 1rem;
+            border: 1px solid rgba(32, 48, 51, 0.10);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .clinic-card:hover {
+            border-color: rgba(49, 132, 145, 0.35);
+            box-shadow: 0 20px 40px -10px rgba(0, 38, 48, 0.08);
+            transform: translateY(-4px);
+        }
+        .footer-link {
+            color: rgba(191, 233, 250, 0.7);
+            transition: all 0.3s ease;
+        }
+        .footer-link:hover {
+            color: rgba(191, 233, 250, 1);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+    
+        .text-near-white-92 { color: rgba(255, 255, 255, 0.92); }
+        .text-near-white-82 { color: rgba(255, 255, 255, 0.82); }
+        .text-near-white-70 { color: rgba(255, 255, 255, 0.70); }
+        .link-dark-hover:hover { color: #a3eeff; text-decoration: underline; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary-container selection:text-on-secondary-fixed-variant">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm shadow-teal-900/5 transition-all duration-300">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-12 py-6">
+<div class="text-2xl font-serif italic text-primary">
+                Clinical Curator
+            </div>
+<div class="hidden md:flex items-center space-x-10">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label text-[11px] font-bold tracking-[0.15em] uppercase" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label text-[11px] font-bold tracking-[0.15em] uppercase" href="#">Packages</a>
+<a class="text-secondary border-b-2 border-secondary pb-1 font-label text-[11px] font-bold tracking-[0.15em] uppercase" href="#">Clinics</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label text-[11px] font-bold tracking-[0.15em] uppercase" href="#">Blog</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label text-[11px] font-bold tracking-[0.15em] uppercase" href="#">About</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label text-[11px] font-bold tracking-[0.15em] uppercase" href="#">Contact</a>
+</div>
+<div class="flex items-center space-x-6">
+<span class="text-[10px] font-label font-bold tracking-[0.2em] text-on-surface-variant uppercase">UA/EN/RU</span>
+<button class="bg-primary text-white px-6 py-2.5 rounded-lg font-label text-[11px] tracking-[0.15em] font-bold uppercase hover:opacity-90 transition-opacity active:scale-95 duration-300">
+                    +1 800 MEDICAL
+                </button>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
+<!-- Hero Header -->
+<header class="mb-20 flex flex-col md:flex-row md:items-end justify-between gap-12">
+<div class="max-w-2xl">
+<span class="text-secondary font-label tracking-[0.3em] text-[10px] font-bold uppercase mb-4 block">The Clinical Atelier</span>
+<h1 class="font-headline text-5xl md:text-7xl text-primary leading-tight mb-6">
+                    Curated <br/><i class="font-normal">Medical Excellence</i>
+</h1>
+<p class="text-on-surface-variant text-lg font-light leading-relaxed max-w-xl">
+                    A peer-vetted selection of the world's most sophisticated clinical institutions, balanced between surgical precision and holistic sanctuary.
+                </p>
+</div>
+<div class="flex-shrink-0">
+<div class="relative w-32 h-32 md:w-48 md:h-48 rounded-full border border-outline-variant/30 flex items-center justify-center group overflow-hidden">
+<div class="absolute inset-0 bg-primary-container/5 translate-y-full group-hover:translate-y-0 transition-transform duration-700"></div>
+<span class="material-symbols-outlined text-4xl text-primary z-10">verified_user</span>
+<div class="absolute -bottom-2 text-[9px] font-label tracking-[0.25em] uppercase font-bold text-on-surface-variant">Vetted 2024</div>
+</div>
+</div>
+</header>
+<!-- Search & Filter Bar -->
+<section class="mb-16">
+<div class="bg-white rounded-xl p-3 flex flex-col lg:flex-row items-center gap-4 shadow-soft border border-black/5">
+<div class="relative flex-grow w-full">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg pl-12 pr-4 py-4 text-on-surface font-label text-sm placeholder:text-outline-variant focus:ring-1 focus:ring-secondary/20" placeholder="Search by specialty or city..." type="text"/>
+</div>
+<div class="flex items-center gap-3 w-full lg:w-auto">
+<div class="relative w-full lg:w-48">
+<select class="w-full bg-surface-container-low border-none rounded-lg px-4 py-4 text-on-surface font-label text-sm appearance-none focus:ring-1 focus:ring-secondary/20">
+<option>Specialty</option>
+<option>Cardiology</option>
+<option>Dermatology</option>
+<option>Oncology</option>
+</select>
+</div>
+<div class="relative w-full lg:w-48">
+<select class="w-full bg-surface-container-low border-none rounded-lg px-4 py-4 text-on-surface font-label text-sm appearance-none focus:ring-1 focus:ring-secondary/20">
+<option>Region</option>
+<option>Switzerland</option>
+<option>Germany</option>
+<option>Thailand</option>
+</select>
+</div>
+<button class="bg-primary text-white p-4 rounded-lg flex items-center justify-center hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">tune</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Featured Clinic -->
+<section class="mb-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<div class="lg:col-span-7 relative">
+<div class="overflow-hidden rounded-xl h-[500px]">
+<img alt="Modern luxury clinic interior" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3uus3IxrRfrrhNnrxOiTnZSuGgAnd0ZRRGgpa-6HII4tBjR_YlU5E3ILKoVVCRDUgSMlhxvQdBmrBc8RzWfwxQU7hdw4vq5-f9YO3hcCGgJjaaLsQtbtbXJ5H24qQ0kAh7oH8XY7-boNiZCZeQqRr1yEZqMlkinGwysmy0XArge5pWq21-rrhW06l2TQz1ebjCTM2zU6iT_0D6-oMDmf2frp3J8WFnsuLimJargp62nZv-fFP9t86LfW1VyV-BvsWfl6vM5yGC4TZ"/>
+</div>
+<div class="absolute -bottom-8 -right-8 bg-tertiary-container text-white p-8 rounded-xl max-w-xs shadow-xl hidden md:block">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-secondary-fixed">star_rate</span>
+<span class="font-label font-bold tracking-[0.2em] text-[10px] uppercase opacity-90">Prime Selection</span>
+</div>
+<p class="font-headline text-lg italic mb-2 opacity-95">"The gold standard in European oncology and post-operative recovery."</p>
+<span class="text-[9px] font-label tracking-[0.25em] uppercase opacity-70">— Medical Review Board</span>
+</div>
+</div>
+<div class="lg:col-span-5 pl-0 lg:pl-12">
+<span class="text-secondary font-label tracking-[0.25em] text-[10px] font-bold uppercase mb-4 block">Montreux, Switzerland</span>
+<h2 class="font-headline text-4xl text-primary mb-6">Clinique Valmont</h2>
+<div class="flex flex-wrap gap-3 mb-8">
+<span class="px-3 py-1 bg-surface-container-high rounded-full text-[9px] font-label font-bold tracking-[0.2em] uppercase text-on-surface-variant">Neurology</span>
+<span class="px-3 py-1 bg-surface-container-high rounded-full text-[9px] font-label font-bold tracking-[0.2em] uppercase text-on-surface-variant">Orthopedics</span>
+<span class="px-3 py-1 bg-surface-container-high rounded-full text-[9px] font-label font-bold tracking-[0.2em] uppercase text-on-surface-variant">Rehabilitation</span>
+</div>
+<p class="text-on-surface-variant font-light mb-10 leading-relaxed">
+                    Founded in 1905, Clinique Valmont offers a unique setting with a breathtaking view of Lake Geneva and the Alps. It is renowned for its state-of-the-art neurological and orthopedic rehabilitation programs.
+                </p>
+<div class="flex items-center gap-8 border-t border-outline-variant/20 pt-8">
+<div>
+<div class="text-2xl font-headline text-primary">4.9</div>
+<div class="text-[9px] font-label tracking-[0.2em] uppercase text-outline font-bold">Patient Score</div>
+</div>
+<div>
+<div class="text-2xl font-headline text-primary">12</div>
+<div class="text-[9px] font-label tracking-[0.2em] uppercase text-outline font-bold">Awards 2024</div>
+</div>
+<button class="ml-auto flex items-center gap-2 text-secondary font-label font-bold tracking-[0.2em] text-[10px] uppercase group">
+                        Explore Institution
+                        <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Directory Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Clinic Card 1 -->
+<div class="clinic-card p-4">
+<div class="relative overflow-hidden rounded-lg aspect-[16/11] mb-6">
+<img alt="Charité Berlin exterior" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5nFK9LP78_-UFazRBQ_urm-tcSs8D-tSm0jLI1h04sYkp3B2zEINuU7xPifkMaP65MxUbwS6MMLwWmBh0Yq537G4z6vo1JO_tXTGNCH53ZLfhXYW2RT6D9OYudp4ARTcAlVTU7FdGgr3quzdo6ZtNDKtX74q48kjhKtP7N-G1Rh68vGjVkAj6hW-W-ui1Jy5AP6RGkWCU5PCx6aQTgC8pOW3jpCmH55hPMBfdumpw_yYnPXiX0-3buBpi1_k8GT9DnzdIcyXxqnae"/>
+<div class="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-md shadow-sm">
+<span class="text-[9px] font-label font-extrabold tracking-[0.25em] uppercase text-primary">Top Rated</span>
+</div>
+</div>
+<div class="flex justify-between items-start mb-2 px-2">
+<h3 class="font-headline text-2xl text-primary">Charité Berlin</h3>
+<div class="flex items-center text-secondary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-label font-bold ml-1">4.8</span>
+</div>
+</div>
+<div class="px-2 mb-4">
+<div class="text-[10px] font-label tracking-[0.2em] uppercase text-on-surface-variant flex items-center gap-2 font-bold">
+<span class="material-symbols-outlined text-xs">location_on</span> Berlin, Germany
+                    </div>
+</div>
+<p class="text-on-surface-variant text-sm font-light mb-6 px-2 line-clamp-2">Leading university hospital system providing cutting-edge treatment across all medical disciplines.</p>
+<div class="mt-auto px-2 pb-2">
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="text-[9px] font-label tracking-[0.15em] font-bold uppercase text-outline border-b border-outline-variant/30 pb-0.5">Cardiology</span>
+<span class="text-[9px] font-label tracking-[0.15em] font-bold uppercase text-outline border-b border-outline-variant/30 pb-0.5">Virology</span>
+</div>
+<button class="w-full py-3 bg-surface-container-low hover:bg-surface-container-high text-primary font-label text-[10px] font-extrabold tracking-[0.2em] uppercase rounded-lg transition-colors">View Profile</button>
+</div>
+</div>
+<!-- Clinic Card 2 -->
+<div class="clinic-card p-4">
+<div class="relative overflow-hidden rounded-lg aspect-[16/11] mb-6">
+<img alt="Dental Atelier interior" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8ytfmORsVcYeG_J_nTd08605IGR0AvTbmB6BdqftU550Y7ZBBnd5cV_7GQB7qCHH-t6wIyi6wKEkuuOZCD752LaKJ1_ttwGoHXQFeogPNv6-vpII0X4VMGmWpDK9oNVDM3EcKai9HC2g7o7ey5SQzK03-duGZ0Q9t9hsLPxiNzWWrUH4gM8rmW5GG_bOAkEVVuoelq40zL48stwCp7W2zygDVQQJBWPfUpZevTLG2pG2lNaXZq4uB4mrZ0YgaFQ7hzg_I7E9pMfYv"/>
+<div class="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-md shadow-sm">
+<span class="text-[9px] font-label font-extrabold tracking-[0.25em] uppercase text-primary">Boutique</span>
+</div>
+</div>
+<div class="flex justify-between items-start mb-2 px-2">
+<h3 class="font-headline text-2xl text-primary">Dental Atelier</h3>
+<div class="flex items-center text-secondary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-label font-bold ml-1">5.0</span>
+</div>
+</div>
+<div class="px-2 mb-4">
+<div class="text-[10px] font-label tracking-[0.2em] uppercase text-on-surface-variant flex items-center gap-2 font-bold">
+<span class="material-symbols-outlined text-xs">location_on</span> Bangkok, Thailand
+                    </div>
+</div>
+<p class="text-on-surface-variant text-sm font-light mb-6 px-2 line-clamp-2">Combining world-class aesthetic dentistry with 5-star concierge services in the heart of Bangkok.</p>
+<div class="mt-auto px-2 pb-2">
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="text-[9px] font-label tracking-[0.15em] font-bold uppercase text-outline border-b border-outline-variant/30 pb-0.5">Cosmetic</span>
+<span class="text-[9px] font-label tracking-[0.15em] font-bold uppercase text-outline border-b border-outline-variant/30 pb-0.5">Implants</span>
+</div>
+<button class="w-full py-3 bg-surface-container-low hover:bg-surface-container-high text-primary font-label text-[10px] font-extrabold tracking-[0.2em] uppercase rounded-lg transition-colors">View Profile</button>
+</div>
+</div>
+<!-- Clinic Card 3 -->
+<div class="clinic-card p-4">
+<div class="relative overflow-hidden rounded-lg aspect-[16/11] mb-6">
+<img alt="Asan Medical center" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCouO5bfpghR6ZLQM1u81Q3HICkYVrSmIY7DEO9F-UCXqPKT_bLOgpjxfYJthrRAYNg_VqTue4CD3JeDqJgFCTL7V-7pQTk4RSZ8hhZ6vPdNK_-PQYrzCzjJ4mo3xmy2preubWz069-nj4W8HB_kaKAGuCFUSA2hgDL_aa2IYGrWzIeSVeBbl8UnlvCe1yEapPzGyfijRIQsLPBtsk7_HDRWE0WLp33RsBMpm3i320TWhB3eddUG1SLSSSxQT6LHgwu6mQ9paJvZk-K"/>
+</div>
+<div class="flex justify-between items-start mb-2 px-2">
+<h3 class="font-headline text-2xl text-primary">Asan Medical</h3>
+<div class="flex items-center text-secondary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-label font-bold ml-1">4.7</span>
+</div>
+</div>
+<div class="px-2 mb-4">
+<div class="text-[10px] font-label tracking-[0.2em] uppercase text-on-surface-variant flex items-center gap-2 font-bold">
+<span class="material-symbols-outlined text-xs">location_on</span> Seoul, South Korea
+                    </div>
+</div>
+<p class="text-on-surface-variant text-sm font-light mb-6 px-2 line-clamp-2">Global leaders in organ transplantation and advanced robotic surgery procedures.</p>
+<div class="mt-auto px-2 pb-2">
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="text-[9px] font-label tracking-[0.15em] font-bold uppercase text-outline border-b border-outline-variant/30 pb-0.5">Surgery</span>
+<span class="text-[9px] font-label tracking-[0.15em] font-bold uppercase text-outline border-b border-outline-variant/30 pb-0.5">Oncology</span>
+</div>
+<button class="w-full py-3 bg-surface-container-low hover:bg-surface-container-high text-primary font-label text-[10px] font-extrabold tracking-[0.2em] uppercase rounded-lg transition-colors">View Profile</button>
+</div>
+</div>
+</section>
+<!-- Newsletter / Concierge CTA -->
+<section class="mt-32">
+<div class="bg-primary text-white rounded-xl overflow-hidden flex flex-col lg:flex-row shadow-2xl">
+<div class="lg:w-1/2 p-12 lg:p-20">
+<h2 class="font-headline text-4xl mb-6 text-white/95">Can't find the right <i class="font-normal opacity-70">institution?</i></h2>
+<p class="text-white/80 font-light text-lg mb-10 leading-relaxed">Our concierge team provides personalized research for complex medical cases requiring specific international expertise.</p>
+<form class="flex flex-col sm:flex-row gap-4">
+<input class="bg-white/10 border border-white/20 rounded-lg px-6 py-4 flex-grow font-label placeholder:text-white/40 focus:ring-1 focus:ring-white/40 outline-none text-white" placeholder="Your email address" type="email"/>
+<button class="bg-secondary text-white font-label font-bold tracking-[0.2em] text-[11px] uppercase px-10 py-4 rounded-lg hover:bg-secondary-fixed-dim hover:text-on-secondary-fixed transition-colors">Request Concierge</button>
+</form>
+</div>
+<div class="lg:w-1/2 relative h-64 lg:h-auto">
+<img alt="Medical concierge consultant" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpDF6D7wVec9G3GEZkh8TiEDjdeIoXtKP9z9I3D4i1vcx_N-iae-GX7HLa_m0Xy5MNW72jWU0oA9mgmkZ_8XKDE4yGMbcEUKbxjscogXCiZ4fq6wd1ZaSMG_9OHNgykLiUvn_MOt42mIigIOCD3mDIpRfwDj06hZfqUkHwy60CBR-msV0hOFeVry_jjBFhmgYsBMizMkjldrKoOOeLAwO7hA-AWohOsnZ8SnNAN2Lq3h2_aah1fTPB-_ZCBrwobDvXJDJqORI6DZ76"/>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-primary w-full py-24 px-12"><div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
+<div class="col-span-1 md:col-span-1">
+<h2 class="text-3xl font-serif text-near-white-92 mb-8">Clinical Curator</h2>
+<p class="text-near-white-82 font-body text-sm leading-relaxed">Elevating medical travel to a bespoke art form through global expertise and restorative luxury.</p>
+</div>
+<div>
+<h4 class="font-headline text-near-white-92 mb-8 tracking-wide text-lg">Quick Links</h4>
+<ul class="space-y-4">
+<li><a class="text-near-white-70 link-dark-hover transition-all font-label text-[11px] tracking-[0.2em] uppercase block" href="#">Procedure Index</a></li>
+<li><a class="text-near-white-70 link-dark-hover transition-all font-label text-[11px] tracking-[0.2em] uppercase block" href="#">Accreditation Standards</a></li>
+<li><a class="text-near-white-70 link-dark-hover transition-all font-label text-[11px] tracking-[0.2em] uppercase block" href="#">Concierge Services</a></li>
+<li><a class="text-near-white-70 link-dark-hover transition-all font-label text-[11px] tracking-[0.2em] uppercase block" href="#">Partner Clinics</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-headline text-near-white-92 mb-8 tracking-wide text-lg">Legal</h4>
+<ul class="space-y-4">
+<li><a class="text-near-white-70 link-dark-hover transition-all font-label text-[11px] tracking-[0.2em] uppercase block" href="#">Privacy Policy</a></li>
+<li><a class="text-near-white-70 link-dark-hover transition-all font-label text-[11px] tracking-[0.2em] uppercase block" href="#">Terms of Service</a></li>
+<li><a class="text-near-white-70 link-dark-hover transition-all font-label text-[11px] tracking-[0.2em] uppercase block" href="#">Medical Disclaimer</a></li>
+<li><a class="text-near-white-70 link-dark-hover transition-all font-label text-[11px] tracking-[0.2em] uppercase block" href="#">Contact Support</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-headline text-near-white-92 mb-8 tracking-wide text-lg">Newsletter</h4>
+<p class="text-near-white-82 text-sm font-body mb-8 leading-relaxed">Join our curated list for the latest breakthroughs in global medicine.</p>
+<div class="relative">
+<input class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-4 text-white font-label text-xs tracking-wider focus:outline-none focus:border-secondary transition-colors" placeholder="EMAIL ADDRESS" type="email"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">east</span>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto mt-24 pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+<p class="text-near-white-70 font-label text-[10px] tracking-[0.3em] uppercase">© 2024 Clinical Curator. All rights reserved.</p>
+<div class="flex gap-10">
+<a class="text-near-white-70 link-dark-hover transition-colors font-label text-[10px] tracking-[0.2em] uppercase" href="#">Instagram</a>
+<a class="text-near-white-70 link-dark-hover transition-colors font-label text-[10px] tracking-[0.2em] uppercase" href="#">LinkedIn</a>
+<a class="text-near-white-70 link-dark-hover transition-colors font-label text-[10px] tracking-[0.2em] uppercase" href="#">Twitter</a>
+</div>
+</div></footer>
+</body></html>

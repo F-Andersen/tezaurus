@@ -80,6 +80,7 @@ model Clinic {
   specializations   String[] @default([])
   descriptionUa     String?  @map("description_ua") @db.Text
   descriptionEn     String?  @map("description_en") @db.Text
+  imageUrl          String?  @map("image_url")
   metaTitleUa       String?  @map("meta_title_ua")
   metaTitleEn       String?  @map("meta_title_en")
   metaDescriptionUa String?  @map("meta_description_ua") @db.Text
@@ -125,6 +126,7 @@ model BlogPost {
   excerptEn         String?        @map("excerpt_en") @db.Text
   bodyUa            String?        @map("body_ua") @db.Text
   bodyEn            String?        @map("body_en") @db.Text
+  coverImage        String?        @map("cover_image")
   metaTitleUa       String?        @map("meta_title_ua")
   metaTitleEn       String?        @map("meta_title_en")
   metaDescriptionUa String?        @map("meta_description_ua") @db.Text

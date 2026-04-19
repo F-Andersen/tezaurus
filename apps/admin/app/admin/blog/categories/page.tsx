@@ -4,6 +4,26 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { api } from '@/lib/api';
+import { getAdminLang, t, type AdminLang } from '@/lib/i18n';
+
+const dict = {
+  title: { ua: 'Категорії блогу', en: 'Blog Categories' },
+  categoriesCount: { ua: '{count} категорій', en: '{count} categories' },
+  categoryCount: { ua: '{count} категорія', en: '{count} category' },
+  editCategory: { ua: 'Редагувати категорію', en: 'Edit Category' },
+  addCategory: { ua: 'Додати категорію', en: 'Add Category' },
+  slug: { ua: 'Slug', en: 'Slug' },
+  nameUa: { ua: 'Назва UA', en: 'Name UA' },
+  nameEn: { ua: 'Назва EN', en: 'Name EN' },
+  update: { ua: 'Оновити', en: 'Update' },
+  add: { ua: 'Додати', en: 'Add' },
+  cancel: { ua: 'Скасувати', en: 'Cancel' },
+  posts: { ua: 'Статті', en: 'Posts' },
+  actions: { ua: 'Дії', en: 'Actions' },
+  edit: { ua: 'Редагувати', en: 'Edit' },
+  noCategories: { ua: 'Категорій ще немає.', en: 'No categories yet.' },
+  confirmDelete: { ua: 'Видалити цю категорію?', en: 'Delete this category?' },
+} as const;
 
 interface Category {
   id: string;
@@ -20,6 +40,9 @@ export default function BlogCategoriesPage() {
   const [form, setForm] = useState({ slug: '', nameUa: '', nameEn: '' });
   const [saving, setSaving] = useState(false);
   const router = useRouter();
+  const [lang, setLang] = useState<AdminLang>('ua');
+  useEffect(() => { setLang(getAdminLang()); }, []);
+  useEffect(() => { const i = setInterval(() => { const l = getAdminLang(); if (l !== lang) setLang(l); }, 500); return () => clearInterval(i); });
 
   const loadCategories = () => {
     api.get('/admin/blog/categories')
@@ -57,7 +80,7 @@ export default function BlogCategoriesPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Delete this category?')) return;
+    if (!confirm(t(dict, 'confirmDelete', lang))) return;
     await api.delete(`/admin/blog/categories/${id}`);
     if (editId === id) resetForm();
     loadCategories();
@@ -70,27 +93,31 @@ export default function BlogCategoriesPage() {
           <span className="material-symbols-outlined">arrow_back</span>
         </Link>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Blog Categories</h1>
-          <p className="text-sm text-gray-500 mt-1">{list.length} categor{list.length !== 1 ? 'ies' : 'y'}</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t(dict, 'title', lang)}</h1>
+          <p className="text-sm text-gray-500 mt-1">
+            {list.length !== 1
+              ? t(dict, 'categoriesCount', lang, { count: String(list.length) })
+              : t(dict, 'categoryCount', lang, { count: String(list.length) })}
+          </p>
         </div>
       </div>
 
       {/* Inline form */}
       <div className="card p-6">
         <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">
-          {editId ? 'Edit Category' : 'Add Category'}
+          {editId ? t(dict, 'editCategory', lang) : t(dict, 'addCategory', lang)}
         </h2>
         <form onSubmit={handleSubmit} className="flex flex-wrap items-end gap-4">
           <div className="flex-1 min-w-[160px]">
-            <label className="label">Slug</label>
+            <label className="label">{t(dict, 'slug', lang)}</label>
             <input className="input" placeholder="category-slug" value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))} required />
           </div>
           <div className="flex-1 min-w-[160px]">
-            <label className="label">Name UA</label>
+            <label className="label">{t(dict, 'nameUa', lang)}</label>
             <input className="input" placeholder="Назва" value={form.nameUa} onChange={(e) => setForm((f) => ({ ...f, nameUa: e.target.value }))} />
           </div>
           <div className="flex-1 min-w-[160px]">
-            <label className="label">Name EN</label>
+            <label className="label">{t(dict, 'nameEn', lang)}</label>
             <input className="input" placeholder="Name" value={form.nameEn} onChange={(e) => setForm((f) => ({ ...f, nameEn: e.target.value }))} />
           </div>
           <div className="flex items-center gap-2">
@@ -100,10 +127,10 @@ export default function BlogCategoriesPage() {
               ) : (
                 <span className="material-symbols-outlined">{editId ? 'check' : 'add'}</span>
               )}
-              {editId ? 'Update' : 'Add'}
+              {editId ? t(dict, 'update', lang) : t(dict, 'add', lang)}
             </button>
             {editId && (
-              <button type="button" onClick={resetForm} className="btn-ghost">Cancel</button>
+              <button type="button" onClick={resetForm} className="btn-ghost">{t(dict, 'cancel', lang)}</button>
             )}
           </div>
         </form>
@@ -118,18 +145,18 @@ export default function BlogCategoriesPage() {
         ) : list.length === 0 ? (
           <div className="text-center py-12">
             <span className="material-symbols-outlined text-4xl text-gray-300">category</span>
-            <p className="mt-2 text-sm text-gray-500">No categories yet.</p>
+            <p className="mt-2 text-sm text-gray-500">{t(dict, 'noCategories', lang)}</p>
           </div>
         ) : (
           <div className="table-container">
             <table>
               <thead>
                 <tr>
-                  <th>Name UA</th>
-                  <th>Name EN</th>
-                  <th>Slug</th>
-                  <th>Posts</th>
-                  <th className="text-right">Actions</th>
+                  <th>{t(dict, 'nameUa', lang)}</th>
+                  <th>{t(dict, 'nameEn', lang)}</th>
+                  <th>{t(dict, 'slug', lang)}</th>
+                  <th>{t(dict, 'posts', lang)}</th>
+                  <th className="text-right">{t(dict, 'actions', lang)}</th>
                 </tr>
               </thead>
               <tbody>
@@ -145,7 +172,7 @@ export default function BlogCategoriesPage() {
                       <div className="flex items-center justify-end gap-1">
                         <button type="button" onClick={() => handleEdit(c)} className="btn-ghost !px-2 !py-1.5 text-xs">
                           <span className="material-symbols-outlined !text-[16px]">edit</span>
-                          Edit
+                          {t(dict, 'edit', lang)}
                         </button>
                         <button type="button" onClick={() => handleDelete(c.id)} className="btn-ghost !px-2 !py-1.5 text-xs text-red-600 hover:text-red-700 hover:bg-red-50">
                           <span className="material-symbols-outlined !text-[16px]">delete</span>

@@ -13,11 +13,12 @@ interface Settings {
 }
 
 const nav: { href: string; labelUa: string; labelEn: string }[] = [
-  { href: '/services', labelUa: 'Послуги', labelEn: 'Services' },
+  { href: '/', labelUa: 'Головна', labelEn: 'Home' },
+  { href: '/services', labelUa: 'Пакети', labelEn: 'Packages' },
   { href: '/clinics', labelUa: 'Клініки', labelEn: 'Clinics' },
   { href: '/blog', labelUa: 'Блог', labelEn: 'Blog' },
   { href: '/about', labelUa: 'Про нас', labelEn: 'About' },
-  { href: '/contacts', labelUa: 'Контакти', labelEn: 'Contacts' },
+  { href: '/contacts', labelUa: 'Контакти', labelEn: 'Contact' },
 ];
 
 function getLangSwitchHref(pathname: string, target: Lang) {
@@ -39,16 +40,18 @@ export function Header({ lang, settings }: { lang: Lang; settings: Settings }) {
 
   const phone = settings.phones?.[0];
 
+  const isActive = (href: string) => {
+    if (href === '/') return pathname === `/${lang}` || pathname === `/${lang}/`;
+    return pathname.startsWith(`/${lang}${href}`);
+  };
+
   return (
     <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-background/95 backdrop-blur-xl shadow-[0_1px_0_rgba(0,0,0,0.06)]'
-          : 'bg-background/80 backdrop-blur-xl'
+      className={`fixed top-0 w-full z-50 transition-all duration-300 glass-nav ${
+        scrolled ? 'shadow-sm shadow-primary/5' : ''
       }`}
     >
-      <div className="flex justify-between items-center w-full px-6 md:px-10 lg:px-12 py-5 max-w-site mx-auto">
-        {/* Logo */}
+      <div className="flex justify-between items-center w-full px-6 md:px-12 py-5 max-w-7xl mx-auto">
         <Link
           href={`/${lang}`}
           className="font-headline italic text-2xl text-primary tracking-tight"
@@ -56,16 +59,15 @@ export function Header({ lang, settings }: { lang: Lang; settings: Settings }) {
           TEZAURUS·TOUR
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center space-x-10">
+        <nav className="hidden lg:flex items-center gap-8">
           {nav.map((item) => (
             <Link
               key={item.href}
-              href={`/${lang}${item.href}`}
-              className={`font-headline text-lg tracking-tight transition-colors duration-300 ${
-                pathname.startsWith(`/${lang}${item.href}`)
-                  ? 'text-primary border-b border-primary/20 pb-1'
-                  : 'text-on-surface/60 hover:text-primary'
+              href={item.href === '/' ? `/${lang}` : `/${lang}${item.href}`}
+              className={`text-[11px] font-label font-semibold uppercase tracking-[0.15em] pb-1 transition-all duration-200 ${
+                isActive(item.href)
+                  ? 'text-secondary border-b-2 border-secondary'
+                  : 'text-on-surface/60 hover:text-primary border-b-2 border-transparent'
               }`}
             >
               {lang === 'ua' ? item.labelUa : item.labelEn}
@@ -73,36 +75,41 @@ export function Header({ lang, settings }: { lang: Lang; settings: Settings }) {
           ))}
         </nav>
 
-        {/* Right side */}
-        <div className="flex items-center space-x-6">
-          {/* Lang switch */}
-          <div className="hidden lg:flex items-center text-xs tracking-[0.15em] uppercase text-on-surface-variant font-medium">
+        <div className="flex items-center gap-5">
+          {phone && (
+            <a
+              href={`tel:${phone.replace(/\s/g, '')}`}
+              className="hidden xl:block text-[11px] font-label font-medium tracking-wide text-on-surface/60 hover:text-primary transition-colors"
+            >
+              {phone}
+            </a>
+          )}
+
+          <div className="hidden md:flex items-center text-[10px] tracking-[0.15em] uppercase text-on-surface-variant font-semibold">
             <Link
               href={getLangSwitchHref(pathname, 'ua')}
-              className={lang === 'ua' ? 'text-primary font-bold' : 'hover:text-primary transition-colors'}
+              className={lang === 'ua' ? 'text-primary' : 'hover:text-primary transition-colors'}
             >
               UA
             </Link>
-            <span className="mx-1.5 opacity-40">/</span>
+            <span className="mx-1.5 opacity-30">/</span>
             <Link
               href={getLangSwitchHref(pathname, 'en')}
-              className={lang === 'en' ? 'text-primary font-bold' : 'hover:text-primary transition-colors'}
+              className={lang === 'en' ? 'text-primary' : 'hover:text-primary transition-colors'}
             >
               EN
             </Link>
           </div>
 
-          {/* CTA button */}
           <Link
-            href={`/${lang}/#request-form`}
-            className="hidden md:inline-flex btn-primary rounded-full shadow-lg shadow-primary/10"
+            href={`/${lang}/contacts`}
+            className="hidden md:inline-flex btn-primary !py-2.5 !px-6 !text-xs"
           >
-            {lang === 'ua' ? 'Консультація' : 'Consultation'}
+            {lang === 'ua' ? '+1 800 MEDICAL' : '+1 800 MEDICAL'}
           </Link>
 
-          {/* Mobile burger */}
           <button
-            className="md:hidden p-1"
+            className="lg:hidden p-1 text-primary"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Menu"
           >
@@ -122,15 +129,17 @@ export function Header({ lang, settings }: { lang: Lang; settings: Settings }) {
         </div>
       </div>
 
-      {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-white border-t border-outline-variant/10 px-6 pb-8 pt-4">
+        <div className="lg:hidden bg-white/95 backdrop-blur-xl px-6 pb-8 pt-4" style={{ borderTop: '1px solid rgba(32,48,51,0.08)' }}>
           {nav.map((item) => (
             <Link
               key={item.href}
-              href={`/${lang}${item.href}`}
+              href={item.href === '/' ? `/${lang}` : `/${lang}${item.href}`}
               onClick={() => setMobileOpen(false)}
-              className="block py-3 border-b border-surface-container-high font-headline text-lg text-on-surface-variant"
+              className={`block py-3 font-label text-sm uppercase tracking-[0.1em] ${
+                isActive(item.href) ? 'text-secondary font-bold' : 'text-on-surface/70'
+              }`}
+              style={{ borderBottom: '1px solid rgba(32,48,51,0.06)' }}
             >
               {lang === 'ua' ? item.labelUa : item.labelEn}
             </Link>
@@ -158,8 +167,8 @@ export function Header({ lang, settings }: { lang: Lang; settings: Settings }) {
             </a>
           )}
           <Link
-            href={`/${lang}/#request-form`}
-            className="btn-primary rounded-full mt-6 justify-center w-full"
+            href={`/${lang}/contacts`}
+            className="btn-primary mt-6 justify-center w-full"
             onClick={() => setMobileOpen(false)}
           >
             {lang === 'ua' ? 'Консультація' : 'Consultation'}

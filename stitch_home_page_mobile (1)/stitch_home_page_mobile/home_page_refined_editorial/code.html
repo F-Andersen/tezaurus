@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clinical Curator | Premium Medical Journeys</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#203033",
+                        "on-primary": "#ffffff",
+                        "secondary": "#318491",
+                        "background": "#f7fafb",
+                        "on-surface": "#203033",
+                        "surface-container-low": "#f1f4f5",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-card": "rgba(32,48,51,0.10)",
+                        "outline-card-hover": "rgba(49,132,145,0.35)",
+                        "mint-accent": "#e0f2f1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "card": "16px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; background-color: #f7fafb; color: #203033; }
+        h1, h2, h3, h4, .font-serif { font-family: 'Noto Serif', serif; color: #203033; }
+        .body-text { color: rgba(32, 48, 51, 0.85); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+        .tracking-widest-extra { letter-spacing: 0.15em; }
+        .glass-nav { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        
+        /* Card Specifics */
+        .custom-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            border: 1px solid rgba(32, 48, 51, 0.10);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .custom-card:hover {
+            border-color: rgba(49, 132, 145, 0.35);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(-4px);
+        }
+
+        /* Dark Background Contrasts */
+        .dark-bg-title { color: rgba(255, 255, 255, 0.92); }
+        .dark-bg-body { color: rgba(255, 255, 255, 0.82); }
+        .dark-bg-muted { color: rgba(255, 255, 255, 0.70); }
+        .dark-bg-link { color: #ccfffa; text-decoration: none; transition: all 0.2s; }
+        .dark-bg-link:hover { text-decoration: underline; }
+
+        .label-uppercase { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+    </style>
+</head>
+<body class="bg-background">
+<!-- Top Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-outline-card">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-12 py-5">
+<div class="text-2xl font-serif italic text-primary">Clinical Curator</div>
+<div class="hidden md:flex items-center space-x-10">
+<a class="text-primary font-bold border-b-2 border-secondary pb-1 label-uppercase" href="#">Home</a>
+<a class="text-primary/60 hover:text-primary transition-colors label-uppercase" href="#">Packages</a>
+<a class="text-primary/60 hover:text-primary transition-colors label-uppercase" href="#">Clinics</a>
+<a class="text-primary/60 hover:text-primary transition-colors label-uppercase" href="#">Blog</a>
+<a class="text-primary/60 hover:text-primary transition-colors label-uppercase" href="#">About</a>
+<a class="text-primary/60 hover:text-primary transition-colors label-uppercase" href="#">Contact</a>
+</div>
+<div class="flex items-center space-x-6">
+<span class="text-primary font-bold tracking-widest text-sm">+1 800 MEDICAL</span>
+<span class="text-primary/40 text-[10px] label-uppercase">UA/EN/RU</span>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center pt-24 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover" data-alt="minimalist modern medical interior with floor to ceiling windows looking out to a serene mountain lake at dawn" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNl7pdoMgpEyAR3E6MKe_4vxazReYQcTry8e41u-Qomuc2JawruZxTFsB67SqRjD6im4vKQo_3MqswzkDVhhoCduBdB9wNBJJu4l9fRgzZirZqt2q9bZeDCUW9QKfmLMPR6CAIKZkCUndopHwQ6ynXsmKCpXzEVWdQ-2hW3e48xctZjupE5Y83qj4okyQNk0aM1N04YlP_xnY3c2ghRDdnQZa7JbPTtK5BY6vsSHFkG9JSEeUXiNNFM2TB9JDK7DUGY4_zVmvQdKpN"/>
+<div class="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent"></div>
+</div>
+<div class="relative z-10 max-w-7xl mx-auto px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="space-y-8">
+<span class="inline-block px-4 py-1.5 rounded-full bg-secondary/10 text-secondary label-uppercase">The Clinical Atelier</span>
+<h1 class="text-6xl md:text-8xl font-serif text-primary leading-tight">
+                Curated <br/>
+<span class="italic text-secondary">Medical</span> <br/>
+                Excellence.
+            </h1>
+<p class="text-lg body-text max-w-md leading-relaxed">
+                We bridge the gap between world-class medical procedures and the luxury of bespoke travel. Your health journey, meticulously curated by experts.
+            </p>
+<div class="flex flex-col space-y-4">
+<div class="flex items-center space-x-3 group">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-sm">verified</span>
+</div>
+<span class="text-sm font-bold text-primary label-uppercase">Accredited Global Networks</span>
+</div>
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-sm">concierge</span>
+</div>
+<span class="text-sm font-bold text-primary label-uppercase">24/7 Personal Health Concierge</span>
+</div>
+</div>
+<div class="pt-6">
+<button class="bg-primary text-white px-10 py-5 rounded-lg text-sm font-bold label-uppercase hover:bg-secondary transition-all shadow-xl shadow-primary/20">
+                    Begin Your Consultation
+                </button>
+</div>
+</div>
+<div class="hidden lg:block relative">
+<div class="absolute -top-12 -left-12 w-64 h-80 rounded-xl overflow-hidden shadow-2xl rotate-3 z-20 transition-transform hover:rotate-0 duration-500">
+<img class="w-full h-full object-cover" data-alt="professional medical specialist in high-end clinic setting holding a digital tablet with medical charts" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBl8cuxpCV9jet6DMpnRvETVh3NkWViZA1WN6VqIdRL5aRLhHEDEqdsADIjXx2dw5YmvA1OrmU06Zk8TzkHhWPa60-NsiZfsu6mokIVoB9UVGgz33xx6trloEUVfNyZmCjGsiC6KUX92zubQFibbNCGOQ9rrYJ_-oXvcNCiHLkylrhEl2CHCzl9Gs6mVoS-pb_uqdajcOL-5NsTFwyE-1_GzLFFGCM-RFudwdRVm-NEOnPLaBf7I9MGGMrO30E2fgkQc_MKn-cck3oD"/>
+</div>
+<div class="w-full aspect-[4/5] rounded-xl overflow-hidden shadow-2xl relative z-10 border border-white/50">
+<img class="w-full h-full object-cover" data-alt="luxury wellness retreat pool area with teal water and elegant white lounge chairs under soft sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAch0DLqfKL8j30vwa7rFMCWzm-jEfPzJCufw97vDti8z5tk80sz0zibLDVws8-e19QW93gtlXClUms09KKq0sDASJjAbb7rS4pMQOVeMa8zIGgCy7FpXsdvY_VNFfS6m1Y5w2y1kFpPJxByc9NXOI1Oj7wKfCOZLEEsuLQ3kmIvWM_k2u3m-McNWyxI7x5gCXtOXMjXPTYh0MwBunto5mRVC3q9Yrn2jizK1MsonNB-TP4i8bE5-iXbFzT4AXfYoISsW1QTrW0vCaF"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Exceptional Packages -->
+<section class="py-32 bg-surface-container-low">
+<div class="max-w-7xl mx-auto px-12">
+<div class="flex justify-between items-end mb-16">
+<div>
+<h2 class="text-4xl font-serif text-primary mb-2">Exceptional Packages</h2>
+<p class="body-text label-uppercase">Curated health &amp; recovery journeys</p>
+</div>
+<button class="text-secondary font-bold label-uppercase border-b-2 border-secondary/30 hover:border-secondary transition-all pb-1">View All Offers</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Package 1 -->
+<div class="custom-card">
+<div class="relative aspect-[4/3] overflow-hidden rounded-t-[15px]">
+<img class="w-full h-full object-cover" data-alt="ultra modern dental suite" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeuAkhzFJ5mYlvY053oaPS0u8cyuvQ9euAovbGSodZPotsgHOA2nKRgd12z5vhyqXlupBDsW00tYM2SV1yWmWdtxYv9xBKIb8FdVlqHX1CV8LX1Gp2Bio7tmjjfdZ_rmVWjWp6RNySTFTt-kyLgQYq2cJpsHe0STYd50sbqkKYzHI8Yqg1Cqti1g_YCvu08I-MQiRKmUDJWlSGVnLjenZsne7kbbd8U5VQh-cyblsypOPCis93YcVyc9GbD9emcEdiN3VUBGrQejEh"/>
+<div class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full label-uppercase text-[9px] text-primary">Switzerland</div>
+</div>
+<div class="p-8 flex-grow flex flex-col">
+<h3 class="text-2xl font-serif text-primary mb-3">Restorative Smile Design</h3>
+<p class="body-text text-sm mb-auto leading-relaxed">Full mouth reconstruction with Switzerland's leading prosthetic architects.</p>
+<div class="flex justify-between items-center pt-8">
+<span class="text-lg font-bold text-primary">$12,500 <span class="text-[10px] font-normal body-text italic label-uppercase">Starting</span></span>
+<span class="material-symbols-outlined text-secondary">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Package 2 -->
+<div class="custom-card lg:translate-y-12">
+<div class="relative aspect-[4/3] overflow-hidden rounded-t-[15px]">
+<img class="w-full h-full object-cover" data-alt="tranquil recovery suite" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbdLN8M3gOLqsxlseQbzqWhQ8JV06b2JnEofn4cRwHCm7sCVj34EIzr9aOaDvIjMR-oA-T4BxHN7fM6lQ0fXcyG70DWNQJXw_H-1jehk00krvsHWopgonFalG0nbeFlHAVQV0OJP2KJqqwL2vH-Y11WGR0qFbT7sY5ijWQxtdD9ZDijsNkUB0dVnNUVLZK_TGs-6ao8IDe0YkRJm__MFW6rLbFY1q-LZV3VLv2IfWH8-KXUqi0m6G5IZ1bvR7p9TF0tKhcylPEw7Tg"/>
+<div class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full label-uppercase text-[9px] text-primary">Thailand</div>
+</div>
+<div class="p-8 flex-grow flex flex-col">
+<h3 class="text-2xl font-serif text-primary mb-3">Executive Longevity Retreat</h3>
+<p class="body-text text-sm mb-auto leading-relaxed">7-day comprehensive health diagnostic and bio-hacking infusion series.</p>
+<div class="flex justify-between items-center pt-8">
+<span class="text-lg font-bold text-primary">$8,200 <span class="text-[10px] font-normal body-text italic label-uppercase">Starting</span></span>
+<span class="material-symbols-outlined text-secondary">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Package 3 -->
+<div class="custom-card">
+<div class="relative aspect-[4/3] overflow-hidden rounded-t-[15px]">
+<img class="w-full h-full object-cover" data-alt="modern hospital wing" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAch29ECXkEzVAZA6gKLRH5VVvJIUvaEmC6Nl3l5ovFJCsMvR1zy9I-nw9WAFc73vSktzILQ5yGn6KLEwFkLjzwdUJYeB_m13S8BSPoVaGWGYBwDMFvedajntEn8OkUb2iOeYvpP2JatoLTVgSAN30PprSjefWzj5vtw77-vSSYTwICnCTLeiJ7sRJWe6s50kEQybdEZHjajHvUahDqXvNsHY9d57NqMzCUR5xJ57dvSqezGIz6mY_-UdQYPqK9_SUwRUyT7li51SbE"/>
+<div class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full label-uppercase text-[9px] text-primary">Dubai</div>
+</div>
+<div class="p-8 flex-grow flex flex-col">
+<h3 class="text-2xl font-serif text-primary mb-3">Advanced Cardiac Screening</h3>
+<p class="body-text text-sm mb-auto leading-relaxed">Elite preventative cardiology utilizing AI-enhanced imaging and DNA profiling.</p>
+<div class="flex justify-between items-center pt-8">
+<span class="text-lg font-bold text-primary">$4,900 <span class="text-[10px] font-normal body-text italic label-uppercase">Starting</span></span>
+<span class="material-symbols-outlined text-secondary">arrow_forward</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- The Curated Process -->
+<section class="py-32 bg-background relative overflow-hidden">
+<div class="max-w-7xl mx-auto px-12 relative z-10">
+<div class="text-center mb-24">
+<h2 class="text-5xl font-serif text-primary mb-4">The Curated Process</h2>
+<p class="body-text max-w-lg mx-auto leading-relaxed">From initial inquiry to home recovery, your journey is handled with clinical precision and concierge grace.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+<!-- Step 1 -->
+<div class="relative space-y-6 text-center group">
+<div class="w-16 h-16 mx-auto bg-surface-container-low border border-outline-card rounded-full flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-500">
+<span class="text-xl font-serif">01</span>
+</div>
+<div class="h-px bg-outline-card w-full absolute top-8 left-1/2 -z-10 hidden md:block"></div>
+<div>
+<h4 class="font-bold text-primary mb-2 label-uppercase">Consultation</h4>
+<p class="body-text text-[11px] leading-relaxed px-4">Direct dialogue with our medical advisors.</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="relative space-y-6 text-center group">
+<div class="w-16 h-16 mx-auto bg-surface-container-low border border-outline-card rounded-full flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-500">
+<span class="text-xl font-serif">02</span>
+</div>
+<div class="h-px bg-outline-card w-full absolute top-8 left-1/2 -z-10 hidden md:block"></div>
+<div>
+<h4 class="font-bold text-primary mb-2 label-uppercase">Matching</h4>
+<p class="body-text text-[11px] leading-relaxed px-4">Selecting the world's best specialists for you.</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="relative space-y-6 text-center group">
+<div class="w-16 h-16 mx-auto bg-surface-container-low border border-outline-card rounded-full flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-500">
+<span class="text-xl font-serif">03</span>
+</div>
+<div class="h-px bg-outline-card w-full absolute top-8 left-1/2 -z-10 hidden md:block"></div>
+<div>
+<h4 class="font-bold text-primary mb-2 label-uppercase">Travel</h4>
+<p class="body-text text-[11px] leading-relaxed px-4">Seamless logistics and luxury accommodation.</p>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="relative space-y-6 text-center group">
+<div class="w-16 h-16 mx-auto bg-surface-container-low border border-outline-card rounded-full flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-500">
+<span class="text-xl font-serif">04</span>
+</div>
+<div class="h-px bg-outline-card w-full absolute top-8 left-1/2 -z-10 hidden md:block"></div>
+<div>
+<h4 class="font-bold text-primary mb-2 label-uppercase">Procedure</h4>
+<p class="body-text text-[11px] leading-relaxed px-4">The highest standards of medical care.</p>
+</div>
+</div>
+<!-- Step 5 -->
+<div class="relative space-y-6 text-center group">
+<div class="w-16 h-16 mx-auto bg-surface-container-low border border-outline-card rounded-full flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-500">
+<span class="text-xl font-serif">05</span>
+</div>
+<div>
+<h4 class="font-bold text-primary mb-2 label-uppercase">Recovery</h4>
+<p class="body-text text-[11px] leading-relaxed px-4">Post-op monitoring and serene rehabilitation.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Latest News -->
+<section class="py-32 bg-white">
+<div class="max-w-7xl mx-auto px-12">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<div class="lg:col-span-4">
+<div class="sticky top-32">
+<span class="text-secondary label-uppercase mb-4 block">The Ledger</span>
+<h2 class="text-5xl font-serif text-primary leading-tight mb-8">Medical <br/> Insights &amp; <br/> Dispatch</h2>
+<p class="body-text mb-12 max-w-xs leading-relaxed">Exploring the future of global healthcare, longevity research, and medical innovation.</p>
+<button class="px-8 py-4 border border-outline-card rounded-lg text-xs font-bold label-uppercase hover:bg-primary hover:text-white transition-all">Explore the Journal</button>
+</div>
+</div>
+<div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-20">
+<div class="space-y-6 group">
+<div class="aspect-[4/3] rounded-xl overflow-hidden border border-outline-card">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="microscopic view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUCDwY9FyB6bo7JiCryNhLN-vkyVBR761W6JA0CedOBZCCex6CW2I8S0YXC3gm3x6qaN9gRjgu7xW9VF9LF7KScu2uF3seSwbgDut-I0MLLZqe6imTFXPWZIogULpR-fysoL3Ph6avr8XgccacKQKryf1STo0KNriyXF9ket9qCchVBCXUYZBBDJOP-_f4FU7S074p-KTfSO0BhVN-SVDJ-XLs5f0ElIR0VCbFtFKaNIxkRYEGoEUgF74nQxKV67ociwBAkvzWwYsx"/>
+</div>
+<span class="body-text label-uppercase">Science — Oct 2024</span>
+<h3 class="text-2xl font-serif text-primary leading-snug group-hover:text-secondary transition-colors">The Breakthrough in Personalized Oncology in Korea</h3>
+<p class="body-text text-sm leading-relaxed">How genomic mapping is changing the survival rates for expatriate patients seeking treatment in Seoul.</p>
+</div>
+<div class="space-y-6 group translate-y-12">
+<div class="aspect-[4/3] rounded-xl overflow-hidden border border-outline-card">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="zen spa" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABwwsU2DWpEycoATn3jtl1JEEEMM6vqcPcwOUdS3aqIHDfUATwhkH4EG-8Zr6TxXxnwGb8LWxpAHyY3Mo1Bet3Bu0m9WNM_Q_plyu8npuC0AAhTWtMy6lfabT9H3yjBz6KxSVOal9K6GiStP1XnxZR3mgs2QzGuWGQ2dvWT1sJGZpyWQmj1GmRgi5xn4L2ecnkEvKmWVV7N4P909uhocDIbROzkp2yzYu28iQOWT-RDZZo02AEAvwf0UbnpVcyQuuEYhFQCEdQHSVK"/>
+</div>
+<span class="body-text label-uppercase">Lifestyle — Sept 2024</span>
+<h3 class="text-2xl font-serif text-primary leading-snug group-hover:text-secondary transition-colors">Beyond Surgery: The Rise of Curated Recovery Spas</h3>
+<p class="body-text text-sm leading-relaxed">Why the recovery environment is just as critical as the procedure itself for long-term clinical success.</p>
+</div>
+<div class="space-y-6 group">
+<div class="aspect-[4/3] rounded-xl overflow-hidden border border-outline-card">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="robotic arm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6wDuFV8FC53HFs3MWVtn3V-Lom28S0WeB4YQ-5zFo4NVwkupaMoEvNbrBGZw3HY3lUA6PVh22wExczcai3bsvmn2S6fqYjoHxAvsjrUfiYWjoECU5pABCuAMqSld9ZfnV1VoHV57dURwutgqyyz3jKHtEzihVSbJ3aAL9jHzgb-ligCf8PlTNKon2gv9cIpi1lkziMrAiDFERZ9mi7egqEQzIn60-Ozb2-bnZgpy_tf14iGwP_gnKx1vITkEEkyRDGG7cqqXsC6AN"/>
+</div>
+<span class="body-text label-uppercase">Innovation — Aug 2024</span>
+<h3 class="text-2xl font-serif text-primary leading-snug group-hover:text-secondary transition-colors">Robotic Precision in Orthopedic Tourism</h3>
+<p class="body-text text-sm leading-relaxed">The new gold standard of joint replacements now available in our partner clinics in Warsaw.</p>
+</div>
+<div class="space-y-6 group translate-y-12">
+<div class="aspect-[4/3] rounded-xl overflow-hidden border border-outline-card">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="doctor conversation" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuf6G64Ezjrd4oeEeUmfRahh3yDa6Mgg2rJdfF7oUTJ8xXTWsIRwQYhTPN8eJ83tCoKKS66ltuE3fGbTeYu2DlynhF4_tTIOJt3675CWXNiQ7rj-vYW3uCaQoRewSLrn94EmA-omHcIM-LVDjYvPG68eAwrpm66HrkXNvvk15z1YLPzgLAF2gDKMFpcf4FDjBgNLrXh7Z6kgVyHQzQFwKvv60QuwN3kWOpUMysfdmYnZMaW_IslH7dypZqtHcQOFkwQWu-BsoVNQSE"/>
+</div>
+<span class="body-text label-uppercase">Patient Stories — Aug 2024</span>
+<h3 class="text-2xl font-serif text-primary leading-snug group-hover:text-secondary transition-colors">Journey to Health: A Personal Chronicle</h3>
+<p class="body-text text-sm leading-relaxed">A first-hand account of navigating complex surgery across borders with Clinical Curator.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- World-Class Hubs -->
+<section class="py-32 bg-surface-container-low overflow-hidden">
+<div class="max-w-7xl mx-auto px-12">
+<h2 class="text-5xl font-serif text-primary mb-16 text-center">World-Class Hubs</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="relative group h-[500px] rounded-xl overflow-hidden border border-outline-card">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" data-alt="Istanbul" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyvF0trS-VfEXOZKYO5OJrrC5PuqzKpBUt49x-_HxmYBuquav0afUaOUOj1P7-s9bFvbVxhhzCj3v8e3SIy7TvFbwgwZuO_5TpGSB4lpXnJyzVDSfiYedlPoSAYkkTQWfmKfrcU1WlgDLfIrlqTgzalloCH5g34-GHHZmq2wkEi_jSU4K2ropo8p16ur6PXTQw_CNaisWtcdG2TZQvfdOqtjJc4tDRcIXI0aRgeWSDhY1dv_CSqStWInztnjswpL6mBw5V9PU9MDy0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent"></div>
+<div class="absolute bottom-8 left-8">
+<h4 class="text-white font-serif text-3xl">Turkey</h4>
+<p class="dark-bg-muted label-uppercase mt-2">Aesthetics &amp; Vision</p>
+</div>
+</div>
+<div class="relative group h-[500px] rounded-xl overflow-hidden border border-outline-card lg:mt-12">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" data-alt="Munich" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAssG6vPufUOkQSNyYP-ZyEoG40qZQv4wCwJuK0fJrRrmj9KIjZUHOaNzz9AbOwkVYml3Vn09-j2szX8cvpMmUgehOUUGzdGGypvqMgjVRXNBaj2WHxSZJrC2WNG69NHXAgcVTVdNg0wEJMym-4AuWQZB47nf5eOM46B3x0OCgh4XBJR1cAmijYroemDOnPjko_7ovp123zLulZaJdh5Xvv9fWBm3eWT5QQmMTKJU4TZxtaudgJByPpbAjQDaUk3bT0r_8UAPabxor_"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent"></div>
+<div class="absolute bottom-8 left-8">
+<h4 class="text-white font-serif text-3xl">Germany</h4>
+<p class="dark-bg-muted label-uppercase mt-2">Oncology &amp; Cardio</p>
+</div>
+</div>
+<div class="relative group h-[500px] rounded-xl overflow-hidden border border-outline-card">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" data-alt="Seoul" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNSIOYSBefJOxOvC8YMdC-L2FJoNGDTLHlAXhgTChbDOFraSzszkR11DI2810l44wvdtlzOAxWHDA7QOuBGMMl2tuGnaHTprmgq_I06-ssMf15-xYLBb2iKh3_U_SUVrZYxspb0Fu29ata1gs8mVyFdl3GrjAkkmrkkAXyq5FXrq-FuSdeRTYOAbJgqMtbexR3bExqRNWKW8OR_NOQk-WHWo2iFI-01n-OiVro3hVjYKtYfWqhG2cpvgR55Rme5GIr5LPfDY6PyZpz"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent"></div>
+<div class="absolute bottom-8 left-8">
+<h4 class="text-white font-serif text-3xl">S. Korea</h4>
+<p class="dark-bg-muted label-uppercase mt-2">Dermatology &amp; Longevity</p>
+</div>
+</div>
+<div class="relative group h-[500px] rounded-xl overflow-hidden border border-outline-card lg:mt-12">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" data-alt="Cancun" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA69rF1XIcp1OZrnrHWYuitTy7JCCxbMz4Ay05h98zJTjcpDj4sEWd5goLZE5nm36LY1TRx8ZuWiXWOr1DoixY8BH79OrsM9fsqh1wtSiz7BJtDWxByI7gBx978uz_fA0_zyJSWJar9-u5HmP5OJXqkvrCZJ7IOtmeTtg0UQlUAQeBqcxFQlWB7e1tb7cWRs1kG8kpo3z09RVLXqQhZVF--a-kDBkQ83Nz6YHo-xzrVpcyRo5zAAjdA3DJvBFP89NZwEnxKzF1EJpyr"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent"></div>
+<div class="absolute bottom-8 left-8">
+<h4 class="text-white font-serif text-3xl">Mexico</h4>
+<p class="dark-bg-muted label-uppercase mt-2">Dental &amp; Bariatric</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials & Trust -->
+<section class="py-32 bg-primary text-white overflow-hidden">
+<div class="max-w-7xl mx-auto px-12">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+<div class="space-y-12">
+<div class="flex items-center space-x-2 text-secondary">
+<span class="material-symbols-outlined fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined fill" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-3xl md:text-5xl font-serif italic leading-tight dark-bg-title">
+                    "The level of coordination was beyond anything I've experienced in traditional healthcare. I felt like a guest, but received care like a VIP patient."
+                </p>
+<div class="flex items-center space-x-4">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-secondary/50">
+<img class="w-full h-full object-cover" data-alt="Arthur Vance" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvH51hdaVOYPR2B_u4Ro_suONrECjoj9sfbQ5GloX5aniy9EdTYPdINDXlp3QOrirQRVpqPhooYsOpekEAmajqmJVxMsIG4gqNaQXZPlcyYdMeGITKOat5MyFQkHiHKSwoMjsSCK_Q6MTSz66QZcOXd5EpkX25iK1lfCp7HDMbhBVjdEfgAvKv_keka7qJ2RL5NwZyD_scFBk-7zpxXESntY1r3-6lB1bdJq3WXPHM1flCU86oCfkBXck5jiPmWg2PdZUhwT6Gki2H"/>
+</div>
+<div>
+<h5 class="text-lg font-bold dark-bg-title">Arthur Vance</h5>
+<p class="dark-bg-muted label-uppercase">CEO, Vance Global • Cardiac Recovery</p>
+</div>
+</div>
+</div>
+<div class="bg-white/5 backdrop-blur-sm p-12 rounded-card border border-white/10 space-y-8">
+<h3 class="text-2xl font-serif dark-bg-title">Trust &amp; Credentials</h3>
+<div class="grid grid-cols-2 gap-8">
+<div class="space-y-2">
+<h6 class="text-secondary label-uppercase font-bold">Accreditation</h6>
+<p class="text-sm dark-bg-body">All partner clinics are JCI accredited and internationally vetted.</p>
+</div>
+<div class="space-y-2">
+<h6 class="text-secondary label-uppercase font-bold">Safety Score</h6>
+<p class="text-sm dark-bg-body">99.8% satisfaction and procedure success rate in 2023.</p>
+</div>
+<div class="space-y-2">
+<h6 class="text-secondary label-uppercase font-bold">Confidentiality</h6>
+<p class="text-sm dark-bg-body">HIPAA compliant data protection and absolute privacy.</p>
+</div>
+<div class="space-y-2">
+<h6 class="text-secondary label-uppercase font-bold">Global Presence</h6>
+<p class="text-sm dark-bg-body">Offices in London, Zurich, and Seoul for localized support.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-primary w-full py-20 px-12 border-t border-white/10">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 max-w-7xl mx-auto">
+<div class="col-span-1 md:col-span-1 space-y-6">
+<div class="text-3xl font-serif dark-bg-title">Clinical Curator</div>
+<p class="dark-bg-body text-sm leading-relaxed">The premier gateway to elite medical tourism. Merging surgical precision with editorial lifestyle.</p>
+</div>
+<div class="space-y-6">
+<h6 class="dark-bg-title font-serif text-lg">Services</h6>
+<ul class="space-y-4">
+<li><a class="dark-bg-link text-sm label-uppercase" href="#">Elite Cardiology</a></li>
+<li><a class="dark-bg-link text-sm label-uppercase" href="#">Advanced Oncology</a></li>
+<li><a class="dark-bg-link text-sm label-uppercase" href="#">Aesthetic Reconstruction</a></li>
+<li><a class="dark-bg-link text-sm label-uppercase" href="#">Longevity Programs</a></li>
+</ul>
+</div>
+<div class="space-y-6">
+<h6 class="dark-bg-title font-serif text-lg">Quick Links</h6>
+<ul class="space-y-4">
+<li><a class="dark-bg-link text-sm label-uppercase" href="#">Privacy Policy</a></li>
+<li><a class="dark-bg-link text-sm label-uppercase" href="#">Terms of Service</a></li>
+<li><a class="dark-bg-link text-sm label-uppercase" href="#">Medical Disclaimer</a></li>
+<li><a class="dark-bg-link text-sm label-uppercase" href="#">Contact Support</a></li>
+</ul>
+</div>
+<div class="space-y-6">
+<h6 class="dark-bg-title font-serif text-lg">Contact</h6>
+<p class="dark-bg-body text-sm leading-relaxed">Bahnhofstrasse 1, <br/>8001 Zurich, Switzerland</p>
+<p class="dark-bg-title font-bold tracking-widest text-sm">+41 44 123 45 67</p>
+<div class="flex space-x-4 pt-2">
+<span class="material-symbols-outlined dark-bg-muted hover:text-white cursor-pointer">share</span>
+<span class="material-symbols-outlined dark-bg-muted hover:text-white cursor-pointer">mail</span>
+<span class="material-symbols-outlined dark-bg-muted hover:text-white cursor-pointer">language</span>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-12 mt-20 pt-8 border-t border-white/5 text-center">
+<p class="dark-bg-muted text-[10px] label-uppercase">© 2024 Clinical Curator. All rights reserved.</p>
+</div>
+</footer>
+</body></html>

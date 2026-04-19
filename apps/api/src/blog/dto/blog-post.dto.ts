@@ -35,6 +35,10 @@ export class CreateBlogPostDto {
 
   @IsOptional()
   @IsString()
+  coverImage?: string;
+
+  @IsOptional()
+  @IsString()
   metaTitleUa?: string;
 
   @IsOptional()
@@ -94,6 +98,10 @@ export class UpdateBlogPostDto {
   @IsOptional()
   @IsString()
   bodyEn?: string;
+
+  @IsOptional()
+  @IsString()
+  coverImage?: string;
 
   @IsOptional()
   @IsString()

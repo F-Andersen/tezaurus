@@ -9,8 +9,8 @@
   *, *::before, *::after { box-sizing: border-box; }
   body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background: #f8fafc;
-    color: #0f172a;
+    background: #F7FAFB;
+    color: #181C1D;
     -webkit-font-smoothing: antialiased;
   }
 }

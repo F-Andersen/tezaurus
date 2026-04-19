@@ -17,8 +17,15 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
 }
 
-export default async function ContactsPage({ params }: { params: Promise<{ lang: string }> }) {
+export default async function ContactsPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ lang: string }>;
+  searchParams: Promise<{ subject?: string }>;
+}) {
   const { lang } = await params;
+  const { subject } = await searchParams;
   const l = lang as Lang;
   const [page, settings] = await Promise.all([getPage('contacts', l), getSettings()]);
   const phones = (settings.phones as string[] | undefined) ?? [];
@@ -27,198 +34,256 @@ export default async function ContactsPage({ params }: { params: Promise<{ lang:
 
   const defaultEmail = 'info@tezaurustour.com';
   const email = contacts.email || defaultEmail;
-  const address = contacts.address || '';
 
   return (
     <>
-      {/* ── CONTACT HERO + CARD ── */}
-      <section className="max-w-site mx-auto px-6 md:px-10 lg:px-12 pt-36 pb-20 md:pt-44 md:pb-28">
-        <div className="max-w-2xl mb-16">
-          <span className="font-label text-xs tracking-[0.2em] text-on-surface-variant uppercase mb-6 block">
-            {l === 'ua' ? 'Зв\'яжіться' : 'Get in Touch'}
+      {/* ── EDITORIAL HERO ── */}
+      <section className="max-w-7xl mx-auto px-6 md:px-12 pt-36 pb-12 md:pt-44 md:pb-16">
+        <div className="max-w-3xl">
+          <span className="inline-block px-3 py-1 rounded-full bg-secondary-container/40 text-secondary font-bold font-label text-[10px] tracking-[0.2em] uppercase mb-8">
+            {l === 'ua' ? 'Зв\'яжіться з нами' : 'Get in Touch'}
           </span>
-          <h1 className="font-headline text-5xl md:text-6xl lg:text-7xl font-light text-primary leading-tight mb-6">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-headline text-primary leading-[1.1] mb-8">
             {l === 'ua' ? (
-              <>
-                Розпочніть вашу{' '}
-                <span className="italic font-normal text-secondary">подорож</span>
-              </>
+              <>Розпочніть вашу <span className="italic">подорож</span>.</>
             ) : (
-              <>
-                Start Your{' '}
-                <span className="italic font-normal text-secondary">Journey</span>
-              </>
+              <>Begin Your <span className="italic">Journey</span>.</>
             )}
           </h1>
-          <p className="text-on-surface-variant text-lg leading-relaxed">
-            {page?.content || (l === 'ua'
-              ? 'Проконсультуйтеся з нашою командою спеціалістів, щоб дізнатися, як ми можемо створити індивідуальний медичний маршрут саме для вас.'
-              : 'Consult with our specialist team to discover how we can tailor a medical path specifically for you.')}
+          <p className="text-lg md:text-xl font-light leading-relaxed max-w-2xl" style={{ color: 'rgba(32,48,51,0.85)' }}>
+            {page?.content ||
+              (l === 'ua'
+                ? 'Проконсультуйтеся з нашою командою спеціалістів, щоб дізнатися, як ми можемо створити індивідуальний медичний маршрут саме для вас.'
+                : 'Consult with our specialist team to discover how we can tailor a medical path specifically for you.')}
           </p>
         </div>
+      </section>
 
-        {/* ── SPLIT CARD: FORM + DETAILS ── */}
-        <div className="bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col lg:flex-row">
-          {/* Left: Lead Form */}
-          <div className="p-8 md:p-12 lg:p-16 xl:p-20 lg:w-1/2">
-            <h2 className="font-headline text-3xl md:text-4xl font-light text-primary mb-4">
-              {l === 'ua' ? 'Залишити заявку' : 'Leave a Request'}
-            </h2>
-            <p className="text-on-surface-variant mb-10">
-              {l === 'ua'
-                ? 'Заповніть форму і ми зв\'яжемося з вами протягом 24 годин.'
-                : 'Fill in the form and we will contact you within 24 hours.'}
-            </p>
-            <LeadForm lang={l} />
+      {/* ── CONTACT FORM + SIDEBAR ── */}
+      <section className="max-w-7xl mx-auto px-6 md:px-12 pb-24 md:pb-32">
+        <div className="grid lg:grid-cols-5 gap-16">
+          {/* Left: Lead form (3 cols) */}
+          <div className="lg:col-span-3 bg-surface-container-lowest p-8 md:p-12 rounded-xl shadow-2xl shadow-primary/5 border border-surface-variant/40">
+            <div className="mb-10">
+              <h2 className="text-3xl font-headline text-primary mb-2">
+                {l === 'ua' ? 'Залишити заявку' : 'Leave a Request'}
+              </h2>
+              <p className="text-sm font-light" style={{ color: 'rgba(32,48,51,0.85)' }}>
+                {l === 'ua'
+                  ? 'Наш куратор відповість на ваш запит протягом 4 робочих годин.'
+                  : 'A dedicated curator will respond to your inquiry within 4 business hours.'}
+              </p>
+            </div>
+
+            {subject && (
+              <div className="bg-primary/5 border border-primary/20 rounded-lg px-4 py-3 mb-8 flex items-center gap-3">
+                <span className="material-symbols-outlined text-primary text-lg">info</span>
+                <p className="text-sm text-primary font-medium">
+                  {l === 'ua' ? 'Запит щодо:' : 'Inquiry about:'}{' '}
+                  <span className="font-bold">{subject}</span>
+                </p>
+              </div>
+            )}
+
+            <LeadForm lang={l} subject={subject} />
           </div>
 
-          {/* Right: Navy contact details panel */}
-          <div className="lg:w-1/2 relative bg-primary flex flex-col justify-between p-8 md:p-12 lg:p-16 xl:p-20 text-white min-h-[500px]">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-container/40 to-transparent pointer-events-none" />
-
-            <div className="relative z-10">
-              <h3 className="font-headline text-2xl md:text-3xl mb-12">
+          {/* Right: Contact sidebar (2 cols) */}
+          <div className="lg:col-span-2 space-y-12">
+            <div>
+              <h3 className="text-2xl font-headline text-primary mb-2">
                 {l === 'ua' ? 'Контактна інформація' : 'Contact Details'}
               </h3>
+              <p className="text-sm font-light" style={{ color: 'rgba(32,48,51,0.85)' }}>
+                {l === 'ua'
+                  ? 'Зв\'яжіться з нами будь-яким зручним способом.'
+                  : 'Reach out through any of the channels below.'}
+              </p>
+            </div>
 
-              <div className="space-y-10">
-                {/* Phone */}
-                {phones.length > 0 ? (
-                  <div className="flex items-start gap-6">
-                    <span className="material-symbols-outlined text-secondary-container shrink-0">call</span>
-                    <div>
-                      <p className="text-xs uppercase tracking-widest opacity-50 mb-1">
-                        {l === 'ua' ? 'Телефон' : 'Direct Line'}
-                      </p>
-                      {phones.map((p) => (
-                        <a
-                          key={p}
-                          href={`tel:${p.replace(/\s/g, '')}`}
-                          className="block text-lg hover:text-secondary-container transition-colors"
-                        >
-                          {p}
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex items-start gap-6">
-                    <span className="material-symbols-outlined text-secondary-container shrink-0">call</span>
-                    <div>
-                      <p className="text-xs uppercase tracking-widest opacity-50 mb-1">
-                        {l === 'ua' ? 'Телефон' : 'Direct Line'}
-                      </p>
-                      <p className="text-lg opacity-60">{l === 'ua' ? 'Незабаром' : 'Coming soon'}</p>
-                    </div>
-                  </div>
-                )}
-
-                {/* Email */}
-                <div className="flex items-start gap-6">
-                  <span className="material-symbols-outlined text-secondary-container shrink-0">mail</span>
-                  <div>
-                    <p className="text-xs uppercase tracking-widest opacity-50 mb-1">Email</p>
-                    <a
-                      href={`mailto:${email}`}
-                      className="text-lg hover:text-secondary-container transition-colors"
-                    >
-                      {email}
-                    </a>
-                  </div>
-                </div>
-
-                {/* Address */}
-                {address && (
-                  <div className="flex items-start gap-6">
-                    <span className="material-symbols-outlined text-secondary-container shrink-0">location_on</span>
-                    <div>
-                      <p className="text-xs uppercase tracking-widest opacity-50 mb-1">
-                        {l === 'ua' ? 'Адреса' : 'Office'}
-                      </p>
-                      <p className="text-lg leading-relaxed">{address}</p>
-                    </div>
-                  </div>
-                )}
+            {/* Office: London */}
+            <div className="flex gap-6 group">
+              <div className="w-14 h-14 flex-shrink-0 bg-primary-container rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                <span className="material-symbols-outlined text-on-primary-container text-xl">apartment</span>
+              </div>
+              <div>
+                <h4 className="font-bold text-primary tracking-[0.08em] text-[10px] uppercase mb-2">
+                  {l === 'ua' ? 'Європейський хаб' : 'European Hub'}
+                </h4>
+                <p className="font-light text-sm" style={{ color: 'rgba(32,48,51,0.85)' }}>
+                  54 Curzon Street, Mayfair<br />London, W1J 5FB, UK
+                </p>
+                <a href="tel:+442079460123" className="text-secondary text-sm mt-2 font-bold tracking-tight block hover:underline">
+                  +44 20 7946 0123
+                </a>
               </div>
             </div>
 
-            {/* Social / Messenger links */}
-            <div className="relative z-10 flex flex-wrap gap-6 mt-16">
-              {Object.entries(messengers).length > 0
-                ? Object.entries(messengers).map(([name, url]) => (
-                    <a
-                      key={name}
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm uppercase tracking-widest hover:text-secondary-container transition-colors"
-                    >
-                      {name}
-                    </a>
-                  ))
-                : ['Telegram', 'WhatsApp', 'Instagram'].map((name) => (
-                    <span key={name} className="text-sm uppercase tracking-widest opacity-40">
-                      {name}
-                    </span>
-                  ))}
+            {/* Office: Zurich */}
+            <div className="flex gap-6 group">
+              <div className="w-14 h-14 flex-shrink-0 bg-primary-container rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                <span className="material-symbols-outlined text-on-primary-container text-xl">location_city</span>
+              </div>
+              <div>
+                <h4 className="font-bold text-primary tracking-[0.08em] text-[10px] uppercase mb-2">
+                  {l === 'ua' ? 'Центральний офіс' : 'Central Operations'}
+                </h4>
+                <p className="font-light text-sm" style={{ color: 'rgba(32,48,51,0.85)' }}>
+                  Bahnhofstrasse 42<br />8001 Zurich, Switzerland
+                </p>
+                <a href="tel:+41442714440" className="text-secondary text-sm mt-2 font-bold tracking-tight block hover:underline">
+                  +41 44 271 4440
+                </a>
+              </div>
             </div>
+
+            {/* Phone from settings */}
+            {phones.length > 0 && (
+              <div className="flex gap-6 group">
+                <div className="w-14 h-14 flex-shrink-0 bg-primary-container rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <span className="material-symbols-outlined text-on-primary-container text-xl">call</span>
+                </div>
+                <div>
+                  <h4 className="font-bold text-primary tracking-[0.08em] text-[10px] uppercase mb-2">
+                    {l === 'ua' ? 'Телефон' : 'Direct Line'}
+                  </h4>
+                  {phones.map((p) => (
+                    <a
+                      key={p}
+                      href={`tel:${p.replace(/\s/g, '')}`}
+                      className="block text-sm text-secondary font-bold tracking-tight hover:underline"
+                    >
+                      {p}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Email */}
+            <div className="flex gap-6 group">
+              <div className="w-14 h-14 flex-shrink-0 bg-primary-container rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                <span className="material-symbols-outlined text-on-primary-container text-xl">mail</span>
+              </div>
+              <div>
+                <h4 className="font-bold text-primary tracking-[0.08em] text-[10px] uppercase mb-2">Email</h4>
+                <a
+                  href={`mailto:${email}`}
+                  className="text-sm text-secondary font-bold tracking-tight hover:underline"
+                >
+                  {email}
+                </a>
+              </div>
+            </div>
+
+            {/* Messengers */}
+            {Object.entries(messengers).length > 0 && (
+              <div className="flex flex-wrap gap-3 pt-4 border-t border-surface-variant">
+                {Object.entries(messengers).map(([name, url]) => (
+                  <a
+                    key={name}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] font-bold text-primary/60 uppercase tracking-[0.2em] border border-primary/20 px-3 py-1.5 rounded-full bg-white/50 hover:border-secondary hover:text-secondary transition-colors"
+                  >
+                    {name}
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
 
       {/* ── CALLBACK FORM ── */}
       <section className="bg-surface-container-low py-24 md:py-32">
-        <div className="max-w-site mx-auto px-6 md:px-10 lg:px-12">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <span className="font-label text-xs tracking-[0.2em] text-secondary uppercase mb-4 block">
+              <span className="inline-block px-3 py-1 rounded-full bg-secondary-container/40 text-secondary font-bold font-label text-[10px] tracking-[0.2em] uppercase mb-6">
                 {l === 'ua' ? 'Швидкий зв\'язок' : 'Quick Connect'}
               </span>
-              <h2 className="font-headline text-3xl md:text-4xl text-primary mb-6">
+              <h2 className="text-3xl md:text-4xl font-headline text-primary mb-6">
                 {l === 'ua' ? (
-                  <>
-                    Ми <span className="italic">зателефонуємо</span> вам
-                  </>
+                  <>Ми <span className="italic">зателефонуємо</span> вам</>
                 ) : (
-                  <>
-                    We&apos;ll <span className="italic">call</span> you back
-                  </>
+                  <>We&apos;ll <span className="italic">call</span> you back</>
                 )}
               </h2>
-              <p className="text-on-surface-variant leading-relaxed max-w-md">
+              <p className="font-light leading-relaxed max-w-md" style={{ color: 'rgba(32,48,51,0.85)' }}>
                 {l === 'ua'
                   ? 'Залиште свій номер і наш медичний консьєрж зв\'яжеться з вами у найкоротший термін.'
                   : 'Leave your number and our medical concierge will reach out at the earliest convenience.'}
               </p>
             </div>
-            <div className="bg-white p-8 md:p-12 rounded-xl shadow-sm">
+            <div className="bg-surface-container-lowest p-8 md:p-12 rounded-xl shadow-2xl shadow-primary/5 border border-surface-variant/40">
               <CallbackForm lang={l} />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── MAP / LOCATION SECTION ── */}
-      <section className="max-w-site mx-auto px-6 md:px-10 lg:px-12 pb-24 md:pb-32">
-        <div className="w-full h-[350px] md:h-[450px] rounded-xl overflow-hidden bg-surface-container-high relative border border-outline-variant/10">
-          <div className="absolute inset-0 bg-gradient-to-br from-surface-container-low to-surface-container-high" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center">
-              <div className="w-14 h-14 bg-primary rounded-full flex items-center justify-center shadow-2xl mx-auto mb-4">
-                <span
-                  className="material-symbols-outlined text-white"
-                  style={{ fontVariationSettings: "'FILL' 1" }}
-                >
-                  location_on
-                </span>
-              </div>
-              <p className="font-headline text-xl text-primary">
-                {l === 'ua' ? 'Наш офіс' : 'Our Location'}
-              </p>
-              {address && (
-                <p className="text-sm text-on-surface-variant mt-2 max-w-xs">{address}</p>
-              )}
+      {/* ── MAP / LOCATION ── */}
+      <section className="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-32">
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* Map placeholder */}
+          <div className="rounded-xl overflow-hidden h-80 md:h-full bg-surface-container-high relative border border-surface-variant shadow-inner min-h-[320px]">
+            <div className="absolute inset-0 flex items-center justify-center opacity-10">
+              <span className="material-symbols-outlined" style={{ fontSize: '128px' }}>map</span>
             </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent" />
+            <div className="absolute bottom-4 left-4 flex space-x-2 items-center bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-surface-variant">
+              <div className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
+              <span className="text-[9px] font-bold text-primary uppercase tracking-[0.2em]">
+                {l === 'ua' ? 'Присутність: 14 країн' : 'Live Presence: 14 Countries'}
+              </span>
+            </div>
+          </div>
+
+          {/* Location cards */}
+          <div className="space-y-6">
+            <div className="bg-surface-container-lowest p-8 rounded-xl border border-surface-variant/40 shadow-sm">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center shrink-0">
+                  <span className="material-symbols-outlined text-white text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>
+                    location_on
+                  </span>
+                </div>
+                <div>
+                  <h4 className="font-bold text-primary tracking-[0.08em] text-[10px] uppercase mb-2">
+                    {l === 'ua' ? 'Лондон' : 'London'}
+                  </h4>
+                  <p className="text-sm font-light" style={{ color: 'rgba(32,48,51,0.85)' }}>
+                    54 Curzon Street, Mayfair<br />London, W1J 5FB, United Kingdom
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-surface-container-lowest p-8 rounded-xl border border-surface-variant/40 shadow-sm">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center shrink-0">
+                  <span className="material-symbols-outlined text-white text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>
+                    location_on
+                  </span>
+                </div>
+                <div>
+                  <h4 className="font-bold text-primary tracking-[0.08em] text-[10px] uppercase mb-2">
+                    {l === 'ua' ? 'Цюрих' : 'Zurich'}
+                  </h4>
+                  <p className="text-sm font-light" style={{ color: 'rgba(32,48,51,0.85)' }}>
+                    Bahnhofstrasse 42<br />8001 Zurich, Switzerland
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <p className="text-[10px] text-on-surface-variant/70 leading-relaxed text-center uppercase tracking-[0.15em] font-medium pt-4">
+              {l === 'ua'
+                ? 'Конфіденційно • Захищено • HIPAA'
+                : 'Confidential • Secure • HIPAA Compliant'}
+            </p>
           </div>
         </div>
       </section>

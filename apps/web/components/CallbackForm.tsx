@@ -27,12 +27,12 @@ export function CallbackForm({ lang, captchaSiteKey }: { lang: Lang; captchaSite
 
   if (sent) {
     return (
-      <div style={{ padding: '2rem', background: 'rgba(45,80,22,0.06)', border: '1px solid rgba(45,80,22,0.2)', borderRadius: 2, textAlign: 'center' }}>
-        <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>✓</div>
-        <p style={{ color: 'var(--forest)', fontWeight: 600, marginBottom: '0.4rem' }}>
+      <div className="p-8 bg-secondary/10 border border-secondary/20 rounded-lg text-center">
+        <div className="text-2xl mb-3">✓</div>
+        <p className="text-primary font-semibold mb-1">
           {t('Запит надіслано!', 'Request sent!')}
         </p>
-        <p style={{ color: 'var(--stone)', fontSize: '0.88rem' }}>
+        <p className="text-on-surface-variant text-sm">
           {t('Ми передзвонимо вам якнайшвидше.', 'We will call you back as soon as possible.')}
         </p>
       </div>
@@ -61,7 +61,7 @@ export function CallbackForm({ lang, captchaSiteKey }: { lang: Lang; captchaSite
         {loading ? '...' : t('Передзвоніть мені', 'Call Me Back')}
       </button>
 
-      <p style={{ fontSize: '0.78rem', color: 'var(--stone)', lineHeight: 1.6 }}>
+      <p className="text-xs text-on-surface-variant leading-relaxed">
         {t('Натискаючи кнопку, ви погоджуєтеся з обробкою персональних даних.', 'By clicking the button, you agree to personal data processing.')}
       </p>
     </form>

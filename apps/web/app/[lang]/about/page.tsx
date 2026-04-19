@@ -1,6 +1,6 @@
 import { getPage, getSettings } from '@/lib/api';
 import type { Lang } from '@/lib/api';
-import Link from 'next/link';
+import { AboutInquiryForm } from '@/components/AboutInquiryForm';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -16,42 +16,33 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
 }
 
-const steps = [
+const pillars = [
   {
-    num: '01',
-    titleUa: 'Діагностика',
-    titleEn: 'Diagnosis',
+    icon: 'verified_user',
+    titleUa: 'Ретельний аудит',
+    titleEn: 'Rigorous Auditing',
     descUa:
-      'Комплексний аналіз із використанням найсучаснішої діагностики для розуміння вашого унікального фізіологічного профілю.',
+      'Кожна клініка-партнер проходить 120-бальну клінічну оцінку, гарантуючи відповідність хірургічних результатів найвищим міжнародним стандартам.',
     descEn:
-      'Comprehensive analysis using state-of-the-art diagnostics to understand your unique physiological blueprint.',
+      'Every partner clinic undergoes a 120-point clinical assessment, ensuring that surgical outcomes meet the highest global standards.',
   },
   {
-    num: '02',
-    titleUa: 'Курація',
-    titleEn: 'Curation',
+    icon: 'visibility',
+    titleUa: 'Радикальна прозорість',
+    titleEn: 'Radical Transparency',
     descUa:
-      'Підбір найвідповідніших спеціалістів та приватних клінік відповідно до ваших потреб.',
+      'Жодних прихованих комісій. Жодних прихованих даних. Ми надаємо чисті факти, щоб ви могли приймати обґрунтовані рішення.',
     descEn:
-      'Matching your needs with the world\'s most renowned specialists and private clinics.',
+      'No hidden commissions. No obscured data. We provide the raw facts so you can make empowered decisions about your well-being.',
   },
   {
-    num: '03',
-    titleUa: 'Занурення',
-    titleEn: 'Immersion',
+    icon: 'spa',
+    titleUa: 'Холістична безперервність',
+    titleEn: 'Holistic Continuity',
     descUa:
-      'Консьєрж-супровід під час перебування: преміальна логістика, переклад та приватні санктуарії.',
+      'Зцілення не закінчується при виписці. Ми координуємо післяопераційний догляд та емоційну підтримку після вашого повернення додому.',
     descEn:
-      'Concierge-led stay management including luxury logistics, translation, and private sanctuary arrangements.',
-  },
-  {
-    num: '04',
-    titleUa: 'Безперервність',
-    titleEn: 'Continuity',
-    descUa:
-      'Пост-терапевтичний моніторинг та інтегровані оздоровчі плани, що виходять далеко за межі вашого від\'їзду.',
-    descEn:
-      'Post-treatment monitoring and integrated wellness plans that extend far beyond your departure.',
+      'Healing doesn\'t stop at discharge. We coordinate post-operative care and emotional support long after you\'ve returned home.',
   },
 ];
 
@@ -64,115 +55,89 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
 
   return (
     <>
-      {/* ── HERO ── */}
-      <section className="relative max-w-site mx-auto px-6 md:px-10 lg:px-12 pt-36 pb-20 md:pt-44 md:pb-28">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          <div>
-            <span className="font-label text-xs tracking-[0.2em] text-on-surface-variant uppercase mb-6 block">
-              {l === 'ua' ? 'Наша філософія' : 'Our Philosophy'}
+      {/* ── HERO: The Clinical Atelier ── */}
+      <section className="max-w-7xl mx-auto px-6 md:px-12 pt-36 pb-20 md:pt-44 mb-24 lg:mb-32">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="relative z-10">
+            <span className="inline-block px-3 py-1 rounded-full bg-secondary-container/40 text-secondary font-bold font-label text-[10px] tracking-[0.2em] uppercase mb-8">
+              {l === 'ua' ? 'Клінічний ательє' : 'The Clinical Atelier'}
             </span>
-            <h1 className="font-headline text-5xl md:text-6xl lg:text-7xl font-light text-primary leading-tight mb-8">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-headline text-primary leading-[1.1] mb-8">
               {l === 'ua' ? (
-                <>
-                  Нова ера{' '}
-                  <span className="italic font-normal text-secondary">турботи</span>
-                  <br />
-                  про здоров&apos;я
-                </>
+                <>Курація як <span className="italic">зцілення</span>.</>
               ) : (
-                <>
-                  Crafting a New
-                  <br />
-                  Era of{' '}
-                  <span className="italic font-normal text-secondary">Care</span>
-                </>
+                <>Curation as a <span className="italic">Cure</span>.</>
               )}
             </h1>
-            <p className="text-on-surface-variant text-lg leading-relaxed max-w-xl">
-              {page?.content || (l === 'ua'
-                ? 'TEZAURUS-TOUR — це більше, ніж медичний консьєрж. Ми — архітектори довголіття, що поєднують медицину світового рівня з індивідуальним, артизанальним підходом до благополуччя кожного клієнта.'
-                : 'TEZAURUS-TOUR is more than a medical concierge. We are architects of longevity, bridging the gap between world-class medicine and a personalized, artisanal approach to patient wellbeing.')}
+            <p className="text-lg md:text-xl font-light leading-relaxed max-w-lg" style={{ color: 'rgba(32,48,51,0.85)' }}>
+              {page?.content ||
+                (l === 'ua'
+                  ? 'У Клінічному Ательє ми долаємо розрив між глобальною медичною досконалістю та особистим комфортом. Ми не просто знаходимо лікування; ми курируємо подорожі відновлення.'
+                  : 'At The Clinical Atelier, we bridge the gap between global medical excellence and personal sanctuary. We don\'t just find treatments; we curate journeys of restoration.')}
             </p>
           </div>
 
-          <div className="relative h-[400px] md:h-[550px] lg:h-[600px]">
-            <div className="absolute inset-0 bg-surface-container-low rounded-xl -rotate-2" />
-            <div className="relative z-10 w-full h-full rounded-xl overflow-hidden shadow-xl bg-surface-container-high flex items-center justify-center">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary-container to-secondary opacity-30" />
-              <span className="material-symbols-outlined text-white/40 relative z-10" style={{ fontSize: '80px' }}>
-                local_hospital
-              </span>
+          <div className="relative">
+            <div className="aspect-[4/5] rounded-xl overflow-hidden shadow-2xl shadow-primary/10 bg-surface-container-high">
+              <div className="w-full h-full bg-gradient-to-br from-primary-container to-secondary/40 flex items-center justify-center">
+                <span
+                  className="material-symbols-outlined text-white/30"
+                  style={{ fontSize: '96px' }}
+                >
+                  local_hospital
+                </span>
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── THE ATELIER WAY ── */}
-      <section className="bg-surface-container-low py-24 md:py-32">
-        <div className="max-w-site mx-auto px-6 md:px-10 lg:px-12">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-8">
-            <div className="max-w-2xl">
-              <h2 className="font-headline text-4xl md:text-5xl font-light text-primary mb-6">
-                {l === 'ua' ? 'Наш метод' : 'The Atelier Way'}
-              </h2>
-              <p className="text-on-surface-variant leading-relaxed">
+            {/* Concierge quote card */}
+            <div className="absolute -bottom-12 -left-12 hidden xl:block w-72 p-8 bg-primary rounded-xl shadow-2xl z-20">
+              <span className="material-symbols-outlined text-secondary-fixed mb-4 text-3xl">medical_services</span>
+              <p className="text-sm font-light leading-relaxed italic" style={{ color: 'rgba(255,255,255,0.82)' }}>
                 {l === 'ua'
-                  ? 'Чотириетапний процес, створений для того, щоб ваша подорож була бездоганною та ефективною. Ми беремо на себе всю складність, щоб ви зосередилися на відновленні.'
-                  : 'A four-stage process designed to ensure your journey is as seamless as it is effective. We handle the complexity, so you can focus on restoration.'}
+                  ? '"Індивідуальний підхід, де точна медицина зустрічається з мистецтвом гостинності."'
+                  : '"A bespoke approach where precision medicine meets the art of hospitality."'}
               </p>
-            </div>
-            <div className="md:text-right text-primary-container italic text-lg border-l md:border-l-0 md:border-r border-primary/10 pl-6 md:pl-0 md:pr-6 shrink-0">
-              {l === 'ua'
-                ? '"Елегантність у кожному кроці."'
-                : '"Elegance in every intervention."'}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
-            {steps.map((step) => (
-              <div key={step.num} className="group">
-                <div className="text-5xl font-headline text-secondary/30 mb-8 group-hover:text-secondary transition-colors duration-300">
-                  {step.num}
-                </div>
-                <h3 className="font-headline text-xl mb-4 text-primary">
-                  {l === 'ua' ? step.titleUa : step.titleEn}
-                </h3>
-                <p className="text-sm text-on-surface-variant leading-loose">
-                  {l === 'ua' ? step.descUa : step.descEn}
-                </p>
+              <div className="mt-4 pt-4 border-t border-white/10">
+                <span className="text-[10px] font-bold tracking-[0.2em] uppercase" style={{ color: 'rgba(255,255,255,0.7)' }}>
+                  EST. 2016
+                </span>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── STATS ── */}
-      <section className="py-24 md:py-32">
-        <div className="max-w-site mx-auto px-6 md:px-10 lg:px-12">
-          <div className="text-center mb-16">
-            <span className="font-label text-xs tracking-[0.2em] text-secondary uppercase mb-4 block">
-              {l === 'ua' ? 'У цифрах' : 'By the Numbers'}
-            </span>
-            <h2 className="font-headline text-4xl text-primary italic">
-              {l === 'ua' ? 'Наш досвід' : 'Our Track Record'}
+      {/* ── OUR FOUNDATIONAL PILLARS ── */}
+      <section className="bg-surface-container-low py-24 md:py-32">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <div className="mb-20 max-w-2xl">
+            <h2 className="text-4xl md:text-5xl font-headline text-primary mb-6">
+              {l === 'ua' ? 'Наші фундаментальні принципи' : 'Our Foundational Pillars'}
             </h2>
+            <p className="font-light" style={{ color: 'rgba(32,48,51,0.85)' }}>
+              {l === 'ua'
+                ? 'Навігація в міжнародній охороні здоров\'я вимагає більше, ніж логістики; це вимагає етичного компасу та ока на якість.'
+                : 'Navigating international healthcare requires more than logistics; it requires an ethical compass and an eye for quality.'}
+            </p>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { num: '10+', labelUa: 'Років на ринку', labelEn: 'Years in Business' },
-              { num: '500+', labelUa: 'Задоволених клієнтів', labelEn: 'Satisfied Clients' },
-              { num: '30+', labelUa: 'Країн присутності', labelEn: 'Countries Covered' },
-              { num: '15+', labelUa: 'Клінік-партнерів', labelEn: 'Clinic Partners' },
-            ].map((stat) => (
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {pillars.map((pillar, i) => (
               <div
-                key={stat.num}
-                className="bg-white p-8 rounded-xl border-l-4 border-gold shadow-sm text-center md:text-left"
+                key={pillar.icon}
+                className={`bg-surface-container-lowest p-10 rounded-xl group hover:shadow-xl transition-all duration-500 border border-surface-variant/50 ${
+                  i === 1 ? 'md:translate-y-8' : ''
+                }`}
               >
-                <p className="font-headline text-4xl md:text-5xl font-light text-primary mb-3">
-                  {stat.num}
-                </p>
-                <p className="text-sm text-on-surface-variant">
-                  {l === 'ua' ? stat.labelUa : stat.labelEn}
+                <div className="w-12 h-12 rounded-lg bg-primary-container flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                  <span className="material-symbols-outlined text-on-primary-container text-2xl">
+                    {pillar.icon}
+                  </span>
+                </div>
+                <h3 className="text-2xl font-headline text-primary mb-4">
+                  {l === 'ua' ? pillar.titleUa : pillar.titleEn}
+                </h3>
+                <p className="text-sm font-light leading-relaxed" style={{ color: 'rgba(32,48,51,0.85)' }}>
+                  {l === 'ua' ? pillar.descUa : pillar.descEn}
                 </p>
               </div>
             ))}
@@ -180,38 +145,143 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
         </div>
       </section>
 
-      {/* ── CTA BANNER ── */}
-      <section className="bg-primary text-on-primary py-24 md:py-32">
-        <div className="max-w-site mx-auto px-6 md:px-10 lg:px-12 text-center">
-          <h2 className="font-headline text-3xl md:text-5xl italic mb-6 leading-tight">
-            {l === 'ua' ? (
-              <>Готові розпочати<br />свою подорож?</>
-            ) : (
-              <>Ready to Start<br />Your Journey?</>
-            )}
-          </h2>
-          <p className="text-on-primary-container max-w-xl mx-auto mb-10 leading-relaxed">
-            {l === 'ua'
-              ? 'Зв\'яжіться з нашою командою спеціалістів, щоб дізнатися, як ми можемо створити індивідуальний медичний маршрут саме для вас.'
-              : 'Consult with our specialist team to discover how we can tailor a medical path specifically for you.'}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link
-              href={`/${l}/contacts`}
-              className="inline-flex items-center gap-2 bg-white text-primary px-10 py-4 rounded-full font-label font-medium tracking-wide hover:bg-surface-container-low transition-colors shadow-lg"
-            >
-              {l === 'ua' ? 'Зв\'язатися з нами' : 'Contact Us'}
-              <span className="material-symbols-outlined text-[20px]">east</span>
-            </Link>
-            {phone && (
-              <a
-                href={`tel:${phone.replace(/\s/g, '')}`}
-                className="inline-flex items-center gap-2 border border-white/30 text-white px-10 py-4 rounded-full font-label font-medium tracking-wide hover:bg-white/10 transition-colors"
-              >
-                <span className="material-symbols-outlined text-[20px]">call</span>
-                {phone}
-              </a>
-            )}
+      {/* ── GLOBAL REACH + CONTACT FORM ── */}
+      <section className="py-24 md:py-32">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <div className="grid lg:grid-cols-5 gap-16">
+            {/* Left: Offices */}
+            <div className="lg:col-span-2 space-y-12">
+              <div>
+                <h2 className="text-4xl font-headline text-primary mb-4">
+                  {l === 'ua' ? 'Глобальна присутність' : 'Global Reach'}
+                </h2>
+                <p className="font-light mb-12" style={{ color: 'rgba(32,48,51,0.85)' }}>
+                  {l === 'ua'
+                    ? 'Зв\'язуємо вас із хірургічними центрами від Цюриха до Сеула.'
+                    : 'Connecting you to surgical hubs from Zurich to Seoul.'}
+                </p>
+              </div>
+
+              {/* Office: London */}
+              <div className="flex gap-6 group">
+                <div className="w-24 h-24 flex-shrink-0 bg-surface-container rounded-lg overflow-hidden grayscale group-hover:grayscale-0 transition-all border border-surface-variant flex items-center justify-center">
+                  <span className="material-symbols-outlined text-primary/30 text-4xl">apartment</span>
+                </div>
+                <div>
+                  <h4 className="font-bold text-primary tracking-[0.08em] text-[10px] uppercase mb-2">
+                    {l === 'ua' ? 'Європейський хаб' : 'European Hub'}
+                  </h4>
+                  <p className="font-light text-sm" style={{ color: 'rgba(32,48,51,0.85)' }}>
+                    54 Curzon Street, Mayfair<br />London, W1J 5FB, UK
+                  </p>
+                  <p className="text-secondary text-sm mt-2 font-bold tracking-tight">+44 20 7946 0123</p>
+                </div>
+              </div>
+
+              {/* Office: Zurich */}
+              <div className="flex gap-6 group">
+                <div className="w-24 h-24 flex-shrink-0 bg-surface-container rounded-lg overflow-hidden grayscale group-hover:grayscale-0 transition-all border border-surface-variant flex items-center justify-center">
+                  <span className="material-symbols-outlined text-primary/30 text-4xl">location_city</span>
+                </div>
+                <div>
+                  <h4 className="font-bold text-primary tracking-[0.08em] text-[10px] uppercase mb-2">
+                    {l === 'ua' ? 'Центральний офіс' : 'Central Operations'}
+                  </h4>
+                  <p className="font-light text-sm" style={{ color: 'rgba(32,48,51,0.85)' }}>
+                    Bahnhofstrasse 42<br />8001 Zurich, Switzerland
+                  </p>
+                  <p className="text-secondary text-sm mt-2 font-bold tracking-tight">+41 44 271 4440</p>
+                </div>
+              </div>
+
+              {/* Mini map placeholder */}
+              <div className="rounded-xl overflow-hidden h-64 bg-surface-container-high relative border border-surface-variant shadow-inner">
+                <div className="absolute inset-0 flex items-center justify-center opacity-10">
+                  <span className="material-symbols-outlined" style={{ fontSize: '128px' }}>map</span>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent" />
+                <div className="absolute bottom-4 left-4 flex space-x-2 items-center bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-surface-variant">
+                  <div className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
+                  <span className="text-[9px] font-bold text-primary uppercase tracking-[0.2em]">
+                    {l === 'ua' ? 'Присутність: 14 країн' : 'Live Presence: 14 Countries'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Lead inquiry form */}
+            <div className="lg:col-span-3 bg-surface-container-lowest p-8 md:p-12 rounded-xl shadow-2xl shadow-primary/5 border border-surface-variant/40">
+              <div className="mb-10">
+                <h3 className="text-3xl font-headline text-primary mb-2">
+                  {l === 'ua' ? 'Розпочніть вашу подорож' : 'Begin Your Journey'}
+                </h3>
+                <p className="text-sm font-light" style={{ color: 'rgba(32,48,51,0.85)' }}>
+                  {l === 'ua'
+                    ? 'Наш куратор відповість на ваш запит протягом 4 робочих годин.'
+                    : 'A dedicated curator will respond to your inquiry within 4 business hours.'}
+                </p>
+              </div>
+              <AboutInquiryForm lang={l} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── REGULATORY & LEGAL COMPLIANCE ── */}
+      <section className="bg-surface-container py-16">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h4 className="font-headline text-xl text-primary mb-4">
+                {l === 'ua' ? 'Регуляторна та юридична відповідність' : 'Regulatory & Legal Compliance'}
+              </h4>
+              <p className="text-xs leading-relaxed max-w-lg mb-4" style={{ color: 'rgba(32,48,51,0.85)' }}>
+                {l === 'ua'
+                  ? 'TEZAURUS-TOUR є зареєстрованим фасилітатором медичного туризму та консьєрж-агентством. Ми не надаємо медичних консультацій, діагнозів або лікування. Усі хірургічні рішення приймаються між пацієнтом та ліцензованим медичним провайдером. Ми рекомендуємо всім пацієнтам проконсультуватися зі своїм лікарем перед міжнародною медичною подорожжю.'
+                  : 'TEZAURUS-TOUR is a registered medical tourism facilitator and concierge agency. We do not provide medical advice, diagnosis, or treatment. All surgical decisions are between the patient and the licensed medical provider. We recommend all patients consult with their local physician before engaging in international medical travel.'}
+              </p>
+              <div className="flex flex-wrap gap-3 mt-6">
+                <span className="text-[9px] font-bold text-primary/60 uppercase tracking-[0.2em] border border-primary/20 px-3 py-1.5 rounded-full bg-white/50">
+                  ISO 9001
+                </span>
+                <span className="text-[9px] font-bold text-primary/60 uppercase tracking-[0.2em] border border-primary/20 px-3 py-1.5 rounded-full bg-white/50">
+                  HIPAA
+                </span>
+                <span className="text-[9px] font-bold text-primary/60 uppercase tracking-[0.2em] border border-primary/20 px-3 py-1.5 rounded-full bg-white/50">
+                  IATA
+                </span>
+              </div>
+            </div>
+
+            <div className="bg-surface-container-lowest p-8 rounded-xl border border-surface-variant shadow-sm">
+              <h5 className="font-bold text-primary tracking-[0.08em] text-[10px] uppercase mb-4 border-b border-surface-variant pb-2">
+                {l === 'ua' ? 'Реєстрація компанії' : 'Company Registration'}
+              </h5>
+              <ul className="space-y-3 text-xs font-light" style={{ color: 'rgba(32,48,51,0.85)' }}>
+                <li className="flex justify-between">
+                  <span className="font-bold text-primary/60 uppercase text-[9px] tracking-[0.2em]">
+                    {l === 'ua' ? 'Назва' : 'Entity'}
+                  </span>
+                  <span className="text-right">TEZAURUS-TOUR International Ltd.</span>
+                </li>
+                <li className="flex justify-between">
+                  <span className="font-bold text-primary/60 uppercase text-[9px] tracking-[0.2em]">
+                    {l === 'ua' ? 'Рег. №' : 'Reg No'}
+                  </span>
+                  <span className="text-right">CH-201.3.456.789-0</span>
+                </li>
+                <li className="flex justify-between">
+                  <span className="font-bold text-primary/60 uppercase text-[9px] tracking-[0.2em]">VAT ID</span>
+                  <span className="text-right">GB 123 4567 89</span>
+                </li>
+                <li className="flex justify-between">
+                  <span className="font-bold text-primary/60 uppercase text-[9px] tracking-[0.2em]">
+                    {l === 'ua' ? 'Офіс' : 'Office'}
+                  </span>
+                  <span className="text-right">Bahnhofstrasse 42, 8001 Zurich</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>

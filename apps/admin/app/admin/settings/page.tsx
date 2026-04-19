@@ -3,6 +3,30 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { api } from '@/lib/api';
+import { getAdminLang, t, type AdminLang } from '@/lib/i18n';
+
+const dict = {
+  title: { ua: 'Налаштування', en: 'Settings' },
+  savedSuccess: { ua: 'Успішно збережено', en: 'Saved successfully' },
+  phones: { ua: 'Телефони', en: 'Phone Numbers' },
+  addPhone: { ua: 'Додати телефон', en: 'Add Phone' },
+  noPhones: { ua: 'Телефонів ще немає.', en: 'No phone numbers added yet.' },
+  contacts: { ua: 'Контакти', en: 'Contacts' },
+  emailReceivers: { ua: 'Отримувачі email', en: 'Email receivers' },
+  addEmail: { ua: 'Додати email', en: 'Add Email' },
+  address: { ua: 'Адреса', en: 'Address' },
+  addressPlaceholder: { ua: 'Адреса компанії...', en: 'Company address...' },
+  messengers: { ua: 'Месенджери', en: 'Messengers' },
+  addMessenger: { ua: 'Додати месенджер', en: 'Add Messenger' },
+  noMessengers: { ua: 'Месенджери не налаштовані.', en: 'No messengers configured.' },
+  keyPlaceholder: { ua: 'Ключ (напр. telegram)', en: 'Key (e.g. telegram)' },
+  valuePlaceholder: { ua: 'URL або нік', en: 'URL or handle' },
+  analytics: { ua: 'Аналітика', en: 'Analytics' },
+  gaId: { ua: 'Google Analytics ID', en: 'Google Analytics ID' },
+  gtmId: { ua: 'Google Tag Manager ID', en: 'Google Tag Manager ID' },
+  saving: { ua: 'Збереження...', en: 'Saving...' },
+  saveSettings: { ua: 'Зберегти налаштування', en: 'Save Settings' },
+} as const;
 
 export default function SettingsPage() {
   const [data, setData] = useState<Record<string, unknown>>({});
@@ -10,6 +34,9 @@ export default function SettingsPage() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const router = useRouter();
+  const [lang, setLang] = useState<AdminLang>('ua');
+  useEffect(() => { setLang(getAdminLang()); }, []);
+  useEffect(() => { const i = setInterval(() => { const l = getAdminLang(); if (l !== lang) setLang(l); }, 500); return () => clearInterval(i); });
 
   useEffect(() => {
     api.get('/admin/settings')
@@ -47,11 +74,11 @@ export default function SettingsPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
+        <h1 className="text-2xl font-bold text-gray-900">{t(dict, 'title', lang)}</h1>
         {saved && (
           <div className="flex items-center gap-2 text-emerald-600 text-sm font-medium animate-in fade-in">
             <span className="material-symbols-outlined !text-[18px]">check_circle</span>
-            Saved successfully
+            {t(dict, 'savedSuccess', lang)}
           </div>
         )}
       </div>
@@ -62,7 +89,7 @@ export default function SettingsPage() {
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
               <span className="material-symbols-outlined !text-[18px] mr-2 align-text-bottom text-gray-400">phone</span>
-              Phone Numbers
+              {t(dict, 'phones', lang)}
             </h2>
             <button
               type="button"
@@ -70,11 +97,11 @@ export default function SettingsPage() {
               className="btn-ghost !px-2 !py-1 text-xs"
             >
               <span className="material-symbols-outlined !text-[16px]">add</span>
-              Add Phone
+              {t(dict, 'addPhone', lang)}
             </button>
           </div>
           {phones.length === 0 && (
-            <p className="text-sm text-gray-400">No phone numbers added yet.</p>
+            <p className="text-sm text-gray-400">{t(dict, 'noPhones', lang)}</p>
           )}
           <div className="space-y-2">
             {phones.map((phone, i) => (
@@ -101,17 +128,17 @@ export default function SettingsPage() {
         <div className="card p-6 space-y-4">
           <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
             <span className="material-symbols-outlined !text-[18px] mr-2 align-text-bottom text-gray-400">mail</span>
-            Contacts
+            {t(dict, 'contacts', lang)}
           </h2>
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-gray-500">Email receivers</span>
+            <span className="text-sm font-medium text-gray-500">{t(dict, 'emailReceivers', lang)}</span>
             <button
               type="button"
               onClick={() => setEmailReceivers([...emailReceivers, ''])}
               className="btn-ghost !px-2 !py-1 text-xs"
             >
               <span className="material-symbols-outlined !text-[16px]">add</span>
-              Add Email
+              {t(dict, 'addEmail', lang)}
             </button>
           </div>
           <div className="space-y-2">
@@ -135,10 +162,10 @@ export default function SettingsPage() {
             ))}
           </div>
           <div className="border-t border-gray-100 pt-4">
-            <label className="label">Address</label>
+            <label className="label">{t(dict, 'address', lang)}</label>
             <textarea
               className="input"
-              placeholder="Company address..."
+              placeholder={t(dict, 'addressPlaceholder', lang)}
               value={(data.address as string) ?? ''}
               onChange={(e) => setData((d) => ({ ...d, address: e.target.value }))}
               rows={2}
@@ -151,7 +178,7 @@ export default function SettingsPage() {
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
               <span className="material-symbols-outlined !text-[18px] mr-2 align-text-bottom text-gray-400">chat</span>
-              Messengers
+              {t(dict, 'messengers', lang)}
             </h2>
             <button
               type="button"
@@ -159,18 +186,18 @@ export default function SettingsPage() {
               className="btn-ghost !px-2 !py-1 text-xs"
             >
               <span className="material-symbols-outlined !text-[16px]">add</span>
-              Add Messenger
+              {t(dict, 'addMessenger', lang)}
             </button>
           </div>
           {Object.keys(messengers).length === 0 && (
-            <p className="text-sm text-gray-400">No messengers configured.</p>
+            <p className="text-sm text-gray-400">{t(dict, 'noMessengers', lang)}</p>
           )}
           <div className="space-y-2">
             {Object.entries(messengers).map(([key, value], i) => (
               <div key={i} className="flex items-center gap-2">
                 <input
                   className="input flex-1"
-                  placeholder="Key (e.g. telegram)"
+                  placeholder={t(dict, 'keyPlaceholder', lang)}
                   value={key}
                   onChange={(e) => {
                     const entries = Object.entries(messengers);
@@ -180,7 +207,7 @@ export default function SettingsPage() {
                 />
                 <input
                   className="input flex-[2]"
-                  placeholder="URL or handle"
+                  placeholder={t(dict, 'valuePlaceholder', lang)}
                   value={value}
                   onChange={(e) => {
                     setMessengers({ ...messengers, [key]: e.target.value });
@@ -206,15 +233,15 @@ export default function SettingsPage() {
         <div className="card p-6 space-y-5">
           <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
             <span className="material-symbols-outlined !text-[18px] mr-2 align-text-bottom text-gray-400">analytics</span>
-            Analytics
+            {t(dict, 'analytics', lang)}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <label className="label">Google Analytics ID</label>
+              <label className="label">{t(dict, 'gaId', lang)}</label>
               <input className="input" placeholder="G-XXXXXXXXXX" value={(data.ga_id as string) ?? ''} onChange={(e) => setData((d) => ({ ...d, ga_id: e.target.value }))} />
             </div>
             <div>
-              <label className="label">Google Tag Manager ID</label>
+              <label className="label">{t(dict, 'gtmId', lang)}</label>
               <input className="input" placeholder="GTM-XXXXXXX" value={(data.gtm_id as string) ?? ''} onChange={(e) => setData((d) => ({ ...d, gtm_id: e.target.value }))} />
             </div>
           </div>
@@ -226,12 +253,12 @@ export default function SettingsPage() {
             {saving ? (
               <>
                 <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
-                Saving...
+                {t(dict, 'saving', lang)}
               </>
             ) : (
               <>
                 <span className="material-symbols-outlined">save</span>
-                Save Settings
+                {t(dict, 'saveSettings', lang)}
               </>
             )}
           </button>

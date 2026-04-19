@@ -41,6 +41,7 @@ export class PublicBlogService {
       slug: post.slug,
       title,
       excerpt,
+      image: post.coverImage ?? null,
       category,
       tags: post.tags ?? [],
       publishedAt: post.publishedAt,

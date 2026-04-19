@@ -1,134 +1,188 @@
-# TEZAURUS-TOUR MVP
+# TEZAURUS-TOUR
 
-Public website (UA/EN), admin panel, and API for TEZAURUS-TOUR (luxury tourism & medical services).
+Публічний сайт (UA/EN), адмін-панель та API для TEZAURUS-TOUR — преміальний медичний туризм та оздоровчі послуги.
 
-## Stack
+## Технології
 
-- **Public site**: Next.js 14 (App Router), SSR (force-dynamic), i18n `/ua` / `/en`
-- **Admin**: Next.js 14 under `/admin`  
-- **API**: NestJS 10, PostgreSQL (Prisma 5), JWT auth, RBAC, Throttler
-- **Deploy**: Docker Compose + Nginx
+| Компонент | Стек |
+|-----------|------|
+| **Публічний сайт** | Next.js 14 (App Router), Tailwind CSS, SSR, i18n `/ua` / `/en` |
+| **Адмін-панель** | Next.js 14, Tailwind CSS, JWT auth, RBAC |
+| **API** | NestJS 10, PostgreSQL, Prisma 5, JWT, Swagger |
+| **Деплой** | Docker Compose + Nginx / Render.com |
 
-## Quick start (local development)
+## Швидкий старт (локальна розробка)
 
-### Prerequisites
+### Вимоги
 
 - Node.js 18+
-- PostgreSQL 14+ running locally
+- PostgreSQL 16+ (або Docker)
+- npm
 
-### 1. Setup environment
+### 1. Запуск PostgreSQL через Docker
+
+```bash
+docker-compose up -d postgres
+```
+
+Або якщо PostgreSQL вже встановлений локально — пропустіть цей крок.
+
+### 2. Налаштування середовища
+
+```bash
+# Скопіюйте приклад env
+cp .env.example apps/api/.env
+
+# Відредагуйте apps/api/.env — вкажіть DATABASE_URL:
+# DATABASE_URL="postgresql://tezaurus:tezaurus_secret@localhost:5432/tezaurus_tour"
+```
+
+### 3. Встановлення залежностей
+
+```bash
+cd apps/api   && npm install && cd ../..
+cd apps/web   && npm install && cd ../..
+cd apps/admin && npm install && cd ../..
+```
+
+### 4. Налаштування бази даних
 
 ```bash
 cd apps/api
-copy ..\..\env.example .env    # Windows
-cp ../../.env.example .env     # Linux/Mac
+
+# Застосувати міграції
+npx prisma migrate dev
+
+# Заповнити тестовими даними (клініки, послуги, блог, користувачі)
+npx ts-node prisma/seed.ts
 ```
 
-Edit `apps/api/.env` and set your `DATABASE_URL`.
+Seed створює:
+- **Адмін**: `admin@tezaurustour.com` / `admin123`
+- **Менеджер**: `manager@tezaurustour.com` / `manager123`
+- 12 клінік, 12 послуг, 4 блог-пости, 3 сторінки
 
-### 2. Install dependencies
+### 5. Запуск усіх сервісів
 
-```bash
-cd apps/api   && npm install
-cd apps/web   && npm install
-cd apps/admin && npm install
-```
+Відкрийте 3 термінали:
 
-### 3. Setup database
-
-```bash
-cd apps/api
-npx prisma db push           # create tables
-npx ts-node prisma/seed.ts   # seed admin user + email receivers
-```
-
-Seed creates: `admin@tezaurustour.com` / `admin123`
-
-### 4. Build API
-
+**Термінал 1 — API:**
 ```bash
 cd apps/api
-npm run build
+npm run dev
 ```
 
-### 5. Run all services
-
-**Terminal 1 — API:**
-```bash
-cd apps/api
-node dist/src/main.js
-# or for development: npm run dev
-```
-
-**Terminal 2 — Public site:**
+**Термінал 2 — Публічний сайт:**
 ```bash
 cd apps/web
-npx next dev -p 3000
+npm run dev
 ```
 
-**Terminal 3 — Admin:**
+**Термінал 3 — Адмін-панель:**
 ```bash
 cd apps/admin
-npx next dev -p 3001
+npm run dev
 ```
 
-### URLs
+### URL-адреси
 
-| Service | URL |
-|---------|-----|
-| Public site | http://localhost:3000/ua |
-| Public site EN | http://localhost:3000/en |
-| Admin panel | http://localhost:3001/admin/login |
+| Сервіс | URL |
+|--------|-----|
+| Публічний сайт (UA) | http://localhost:3000/ua |
+| Публічний сайт (EN) | http://localhost:3000/en |
+| Адмін-панель | http://localhost:3001/admin/login |
 | API | http://localhost:4000/api |
-| API docs (Swagger) | http://localhost:4000/api/docs |
+| API документація (Swagger) | http://localhost:4000/api/docs |
 
-## Features (MVP)
+## Функціонал
 
-### Public site
-- UA/EN (`/ua/...`, `/en/...`) with language switcher (preserves current page)
-- All pages SSR (Server-Side Rendered) — full SEO support
-- Pages: Home, About, Services, Clinics catalog + detail, Blog, Contacts, Privacy, Cookies, Medical disclaimer
-- Form "Leave a request" (name, phone, email, type, country, message, consent)
-- Form "Call me back" (phone, name)
-- `sitemap.xml`, `robots.txt`, dynamic metadata per page/clinic/post
+### Публічний сайт
+- Двомовність UA/EN з перемикачем мови
+- Сторінки: Головна, Послуги, Клініки (каталог + деталі), Блог, Про нас, Контакти
+- Інтерактивні фільтри та пошук на сторінках послуг і клінік
+- Форми: "Залишити заявку" та "Передзвоніть мені"
+- SSR, SEO (sitemap.xml, robots.txt, мета-теги)
 
 ### API (NestJS)
-- Public read-only: `/api/public/pages`, `/api/public/clinics`, `/api/public/blog`, `/api/public/settings`
-- Leads: `POST /api/public/leads` — rate limited (10/15min per IP), optional Turnstile captcha
-- Admin CRUD: pages, clinics, blog categories+posts, leads, media, settings, users, redirects
-- Auth: `POST /api/auth/login|refresh|logout|me` — JWT access + httpOnly refresh cookie
-- RBAC roles: Admin / Content Manager / Sales
+- Публічні ендпоінти: `/api/public/pages`, `/api/public/clinics`, `/api/public/services`, `/api/public/blog`, `/api/public/settings`
+- Ліди: `POST /api/public/leads` — rate limiting, опціональна captcha
+- Адмін CRUD: сторінки, клініки, послуги, блог, ліди, медіа, налаштування, користувачі, редіректи
+- Дашборд зі статистикою: `GET /api/admin/dashboard/stats`
+- Auth: JWT access token + httpOnly refresh cookie
+- RBAC ролі: Admin / Content Manager / Sales
 
-### Admin panel
-- Login page → JWT stored in localStorage + refresh cookie
-- Auth guard: auto-redirect to login if token missing
-- Modules: Pages, Clinics, Blog (categories + posts), Leads (filters + status + CSV export), Media (upload/delete), Settings (email receivers, GA/GTM, phones, messengers), Users (Admin only), Redirects
+### Адмін-панель
+- Авторизація з JWT
+- Ролі: Admin (повний доступ + статистика), Content Manager (контент), Sales (ліди)
+- Модулі: Дашборд, Сторінки, Клініки, Послуги, Блог (категорії + пости), Ліди, Медіа, Налаштування, Користувачі, Редіректи
 
-## Docker deployment
+## Docker деплой (локальний)
 
 ```bash
-# Copy and configure environment
+# Скопіюйте та налаштуйте середовище
 cp .env.example .env
-# Edit .env with production values
+# Відредагуйте .env з продакшен значеннями
 
-# Build and start
-docker-compose up -d postgres
-docker-compose up -d api web admin nginx
+# Запуск всього стеку
+docker-compose up -d
 ```
 
-For HTTPS: obtain Let's Encrypt certs via certbot, place in `nginx/ssl/`, then uncomment the `server { listen 443 ssl ... }` block in `nginx/nginx.conf`.
+Сервіси: PostgreSQL, API (порт 4000), Web (порт 3000), Admin (порт 3001), Nginx (порт 80).
 
-## Bug fixes applied
+Для HTTPS: отримайте сертифікати Let's Encrypt, помістіть у `nginx/ssl/`, розкоментуйте HTTPS блок у `nginx/nginx.conf`.
 
-1. Missing `passport-local` dependency added
-2. Language switcher now preserves current page (`/ua/clinics/slug` ↔ `/en/clinics/slug`)
-3. ThrottlerGuard registered globally via `APP_GUARD`
-4. All API fetch functions are network-error resilient (graceful fallback)
-5. `export const dynamic = 'force-dynamic'` added to `[lang]` layout for proper SSR
-6. Admin `AdminLayoutClient` auto-redirects to `/admin/login` if not authenticated
-7. NestJS `LeadsModule` now imports `SettingsModule` (was causing DI error)
-8. `cookieParser` import changed from ESM `default` to CommonJS `* as`
-9. API start path fixed to `dist/src/main.js`
-10. Export endpoint sends CSV with UTF-8 BOM for correct Excel encoding
-11. Docker Compose `NEXT_PUBLIC_API_URL` uses build-time arg (not runtime env)
-12. `nginx.conf` structure fixed (valid nginx syntax with HTTPS block commented)
+## Деплой на Render.com
+
+Проект містить `render.yaml` Blueprint для автоматичного деплою:
+
+1. Запушити код на GitHub
+2. На [dashboard.render.com](https://dashboard.render.com) створити **New → Blueprint**
+3. Підключити GitHub репозиторій
+4. Render створить: PostgreSQL, API, Web, Admin
+5. Після деплою запустити seed через Shell API сервісу:
+   ```bash
+   npx ts-node prisma/seed.ts
+   ```
+
+### Render URL-адреси
+
+| Сервіс | URL |
+|--------|-----|
+| Сайт | https://tezaurus-web.onrender.com |
+| Адмін | https://tezaurus-admin.onrender.com/admin/login |
+| API | https://tezaurus-api.onrender.com/api |
+
+## Структура проекту
+
+```
+tezaurus-tour/
+├── apps/
+│   ├── api/            # NestJS API + Prisma
+│   │   ├── prisma/     # Схема, міграції, seed
+│   │   └── src/        # Контролери, сервіси, модулі
+│   ├── web/            # Next.js публічний сайт
+│   │   ├── app/        # App Router сторінки
+│   │   ├── components/ # React компоненти
+│   │   └── lib/        # API хелпери
+│   └── admin/          # Next.js адмін-панель
+│       ├── app/        # App Router сторінки
+│       ├── components/ # React компоненти
+│       └── lib/        # API хелпери
+├── nginx/              # Nginx конфігурація
+├── docker-compose.yml  # Docker стек
+├── render.yaml         # Render.com Blueprint
+└── .env.example        # Приклад змінних середовища
+```
+
+## Змінні середовища
+
+Дивіться `.env.example` для повного списку. Основні:
+
+| Змінна | Опис |
+|--------|------|
+| `DATABASE_URL` | PostgreSQL connection string |
+| `JWT_ACCESS_SECRET` | Секрет для access токенів (мін. 32 символи) |
+| `JWT_REFRESH_SECRET` | Секрет для refresh токенів (мін. 32 символи) |
+| `WEB_URL` | URL публічного сайту (для CORS) |
+| `ADMIN_URL` | URL адмін-панелі (для CORS) |
+| `NEXT_PUBLIC_API_URL` | URL API для фронтенду |

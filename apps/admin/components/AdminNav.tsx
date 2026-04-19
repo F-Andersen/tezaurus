@@ -3,37 +3,38 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { logout, getCurrentUser, type UserRole } from '@/lib/api';
+import { nav, t, type AdminLang } from '@/lib/i18n';
 
 interface NavItem {
   href: string;
-  label: string;
+  labelKey: string;
   icon: string;
   roles: UserRole[];
   group: string;
 }
 
 const items: NavItem[] = [
-  { href: '/admin', label: 'Dashboard', icon: 'dashboard', roles: ['ADMIN', 'CONTENT_MANAGER', 'SALES'], group: 'main' },
-  { href: '/admin/leads', label: 'Leads', icon: 'contact_mail', roles: ['ADMIN', 'SALES'], group: 'main' },
+  { href: '/admin', labelKey: 'dashboard', icon: 'dashboard', roles: ['ADMIN', 'CONTENT_MANAGER', 'SALES'], group: 'main' },
+  { href: '/admin/leads', labelKey: 'leads', icon: 'contact_mail', roles: ['ADMIN', 'SALES'], group: 'main' },
 
-  { href: '/admin/pages', label: 'Pages', icon: 'article', roles: ['ADMIN', 'CONTENT_MANAGER'], group: 'content' },
-  { href: '/admin/clinics', label: 'Clinics', icon: 'local_hospital', roles: ['ADMIN', 'CONTENT_MANAGER'], group: 'content' },
-  { href: '/admin/services', label: 'Services', icon: 'medical_services', roles: ['ADMIN', 'CONTENT_MANAGER'], group: 'content' },
-  { href: '/admin/blog', label: 'Blog', icon: 'edit_note', roles: ['ADMIN', 'CONTENT_MANAGER'], group: 'content' },
-  { href: '/admin/media', label: 'Media', icon: 'perm_media', roles: ['ADMIN', 'CONTENT_MANAGER'], group: 'content' },
+  { href: '/admin/pages', labelKey: 'pages', icon: 'article', roles: ['ADMIN', 'CONTENT_MANAGER'], group: 'content' },
+  { href: '/admin/clinics', labelKey: 'clinics', icon: 'local_hospital', roles: ['ADMIN', 'CONTENT_MANAGER'], group: 'content' },
+  { href: '/admin/services', labelKey: 'services', icon: 'medical_services', roles: ['ADMIN', 'CONTENT_MANAGER'], group: 'content' },
+  { href: '/admin/blog', labelKey: 'blog', icon: 'edit_note', roles: ['ADMIN', 'CONTENT_MANAGER'], group: 'content' },
+  { href: '/admin/media', labelKey: 'media', icon: 'perm_media', roles: ['ADMIN', 'CONTENT_MANAGER'], group: 'content' },
 
-  { href: '/admin/settings', label: 'Settings', icon: 'settings', roles: ['ADMIN'], group: 'system' },
-  { href: '/admin/users', label: 'Users', icon: 'group', roles: ['ADMIN'], group: 'system' },
-  { href: '/admin/redirects', label: 'Redirects', icon: 'alt_route', roles: ['ADMIN'], group: 'system' },
+  { href: '/admin/settings', labelKey: 'settings', icon: 'settings', roles: ['ADMIN'], group: 'system' },
+  { href: '/admin/users', labelKey: 'users', icon: 'group', roles: ['ADMIN'], group: 'system' },
+  { href: '/admin/redirects', labelKey: 'redirects', icon: 'alt_route', roles: ['ADMIN'], group: 'system' },
 ];
 
-const groupLabels: Record<string, string> = {
-  main: 'Overview',
-  content: 'Content',
-  system: 'System',
+const groupLabelKeys: Record<string, string> = {
+  main: 'overview',
+  content: 'content',
+  system: 'system',
 };
 
-export function AdminNav({ collapsed = false }: { collapsed?: boolean }) {
+export function AdminNav({ collapsed = false, lang }: { collapsed?: boolean; lang: AdminLang }) {
   const pathname = usePathname();
   const router = useRouter();
   const user = getCurrentUser();
@@ -54,7 +55,6 @@ export function AdminNav({ collapsed = false }: { collapsed?: boolean }) {
 
   return (
     <aside className={`fixed left-0 top-0 h-screen bg-sidebar text-white flex flex-col z-40 transition-all duration-200 ${collapsed ? 'w-16' : 'w-64'}`}>
-      {/* Brand */}
       <div className="h-16 flex items-center px-5 border-b border-white/10 flex-shrink-0">
         {!collapsed && (
           <span className="text-lg font-bold tracking-tight">
@@ -65,7 +65,6 @@ export function AdminNav({ collapsed = false }: { collapsed?: boolean }) {
         {collapsed && <span className="text-blue-400 font-bold text-lg mx-auto">T</span>}
       </div>
 
-      {/* User info */}
       {!collapsed && user && (
         <div className="px-5 py-4 border-b border-white/10">
           <div className="flex items-center gap-3">
@@ -80,13 +79,12 @@ export function AdminNav({ collapsed = false }: { collapsed?: boolean }) {
         </div>
       )}
 
-      {/* Nav */}
       <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-6">
         {groups.map((group) => (
           <div key={group}>
             {!collapsed && (
               <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-gray-500 px-2 mb-2">
-                {groupLabels[group]}
+                {t(nav, groupLabelKeys[group], lang)}
               </p>
             )}
             <div className="space-y-0.5">
@@ -101,11 +99,11 @@ export function AdminNav({ collapsed = false }: { collapsed?: boolean }) {
                         ? 'bg-sidebar-active text-white'
                         : 'text-gray-400 hover:text-white hover:bg-sidebar-hover'
                     }`}
-                    title={collapsed ? item.label : undefined}
+                    title={collapsed ? t(nav, item.labelKey, lang) : undefined}
                   >
                     <span className="material-symbols-outlined !text-[20px]">{item.icon}</span>
-                    {!collapsed && <span>{item.label}</span>}
-                    {item.label === 'Leads' && !collapsed && (
+                    {!collapsed && <span>{t(nav, item.labelKey, lang)}</span>}
+                    {item.labelKey === 'leads' && !collapsed && (
                       <span className="ml-auto bg-red-500/20 text-red-300 text-xs px-2 py-0.5 rounded-full font-medium" id="leads-badge" />
                     )}
                   </Link>
@@ -115,14 +113,13 @@ export function AdminNav({ collapsed = false }: { collapsed?: boolean }) {
         ))}
       </nav>
 
-      {/* Logout */}
       <div className="p-3 border-t border-white/10 flex-shrink-0">
         <button
           onClick={handleLogout}
           className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-sidebar-hover w-full transition-colors"
         >
           <span className="material-symbols-outlined !text-[20px]">logout</span>
-          {!collapsed && <span>Logout</span>}
+          {!collapsed && <span>{t(nav, 'logout', lang)}</span>}
         </button>
       </div>
     </aside>

@@ -38,12 +38,15 @@ export class PublicClinicsService {
     const metaTitle = (lang === 'ua' ? clinic.metaTitleUa : clinic.metaTitleEn) ?? name;
     const metaDescription = (lang === 'ua' ? clinic.metaDescriptionUa : clinic.metaDescriptionEn) ?? '';
     const baseUrl = process.env.S3_PUBLIC_URL ? process.env.S3_PUBLIC_URL.replace(/\/$/, '') : '';
-    const images = (clinic.images ?? []).map((i: { media: Record<string, unknown> }) => ({
+    let images = (clinic.images ?? []).map((i: { media: Record<string, unknown> }) => ({
       id: i.media?.id,
       key: i.media?.key,
       url: baseUrl && i.media?.key ? `${baseUrl}/${i.media.key}` : null,
       alt: (lang === 'ua' ? i.media?.altUa : i.media?.altEn) ?? i.media?.altUa ?? i.media?.altEn,
     }));
+    if (images.length === 0 && clinic.imageUrl) {
+      images = [{ id: 'fallback', key: '', url: clinic.imageUrl as string, alt: name }];
+    }
     return {
       id: clinic.id,
       slug: clinic.slug,

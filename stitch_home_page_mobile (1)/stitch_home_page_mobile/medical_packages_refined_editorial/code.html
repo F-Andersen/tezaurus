@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@300;400;500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed-variant": "#324b4e",
+                    "on-primary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "background": "#f7fafb",
+                    "on-surface": "#203033",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#234c59",
+                    "on-secondary": "#ffffff",
+                    "primary": "#203033",
+                    "on-secondary-container": "#0b6c7b",
+                    "inverse-primary": "#a4cddd",
+                    "primary-fixed": "#bfe9fa",
+                    "secondary": "#006877",
+                    "tertiary-container": "#203033",
+                    "secondary-fixed": "#a3eeff",
+                    "on-tertiary": "#ffffff",
+                    "outline-variant": "#c1c7cb",
+                    "secondary-fixed-dim": "#85d2e3",
+                    "on-primary-fixed": "#001f28",
+                    "on-secondary-fixed": "#001f25",
+                    "tertiary-fixed": "#cce8eb",
+                    "inverse-surface": "#2d3132",
+                    "on-surface-variant": "rgba(32, 48, 51, 0.85)",
+                    "secondary-container": "#9eecfd",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#f1f4f5",
+                    "surface-variant": "#e0e3e4",
+                    "surface-container-highest": "#e0e3e4",
+                    "on-tertiary-fixed": "#041f22",
+                    "on-background": "#203033",
+                    "primary-container": "#203033",
+                    "surface-bright": "#f7fafb",
+                    "surface-tint": "#3c6472",
+                    "primary-fixed-dim": "#a4cddd",
+                    "outline": "#71787b",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed-dim": "#b0ccce",
+                    "surface-container": "#ebeeef",
+                    "on-tertiary-container": "#ebfafa",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-container": "#ffffff",
+                    "tertiary": "#0a2528",
+                    "surface-container-high": "#e5e9ea",
+                    "surface": "#f7fafb",
+                    "inverse-on-surface": "#eef1f2",
+                    "on-secondary-fixed-variant": "#004e5a",
+                    "surface-dim": "#d7dadc"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "1rem",
+                    "xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Serif"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .editorial-shadow {
+            box-shadow: 0 40px 60px -15px rgba(15, 60, 73, 0.05);
+        }
+        .package-card-shadow {
+            box-shadow: 0 4px 20px -2px rgba(32, 48, 51, 0.05);
+        }
+        .package-card-shadow:hover {
+            box-shadow: 0 12px 30px -4px rgba(32, 48, 51, 0.12);
+        }
+        .text-near-white-92 { color: rgba(255, 255, 255, 0.92); }
+        .text-near-white-82 { color: rgba(255, 255, 255, 0.82); }
+        .text-near-white-70 { color: rgba(255, 255, 255, 0.70); }
+        .link-dark-hover:hover { color: #a3eeff; text-decoration: underline; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl shadow-sm transition-all duration-300">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-12 py-6">
+<a class="text-2xl font-serif italic text-primary" href="#">Clinical Curator</a>
+<div class="hidden md:flex items-center gap-10">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label tracking-widest text-[11px] uppercase" href="#">Home</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label tracking-widest text-[11px] uppercase" href="#">Packages</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label tracking-widest text-[11px] uppercase" href="#">Clinics</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label tracking-widest text-[11px] uppercase" href="#">Blog</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label tracking-widest text-[11px] uppercase" href="#">About</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label tracking-widest text-[11px] uppercase" href="#">Contact</a>
+</div>
+<div class="flex items-center gap-6">
+<span class="text-[10px] font-label tracking-widest text-on-surface-variant uppercase">UA/EN/RU</span>
+<button class="bg-primary text-white px-6 py-2.5 rounded-lg font-label text-[11px] tracking-widest uppercase hover:opacity-90 transition-all">
+                +1 800 MEDICAL
+            </button>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-24">
+<div class="max-w-7xl mx-auto px-12">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-3 text-[10px] font-label tracking-[0.2em] text-on-surface-variant uppercase mb-12">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span class="text-primary font-bold">Medical Packages</span>
+</nav>
+<!-- Header Section -->
+<div class="mb-20">
+<h1 class="font-headline text-5xl md:text-6xl text-primary mb-6 leading-tight">Curated Journeys <br/><span class="italic font-normal text-secondary">of Restoration</span></h1>
+<p class="max-w-2xl text-on-surface-variant font-body text-lg leading-relaxed">Discover elite medical procedures paired with restorative luxury. Our curators have selected the world's most advanced clinics offering holistic care environments.</p>
+</div>
+<!-- Filter Bar -->
+<div class="sticky top-28 z-40 bg-white/90 backdrop-blur-md border border-[rgba(32,48,51,0.10)] rounded-xl p-6 package-card-shadow mb-16 flex flex-wrap items-end gap-8">
+<div class="flex-1 min-w-[200px]">
+<label class="block text-[10px] font-label tracking-[0.2em] text-on-surface-variant uppercase mb-3 px-1">Treatment Type</label>
+<div class="relative group">
+<select class="w-full appearance-none bg-surface-container-low border-none rounded-lg px-4 py-3 text-xs font-label tracking-wider focus:ring-2 focus:ring-primary/10 cursor-pointer">
+<option>All Specializations</option>
+<option>Ophthalmology</option>
+<option>Orthopedic Surgery</option>
+<option>Regenerative Medicine</option>
+<option>Cosmetic Reconstruction</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-sm">expand_more</span>
+</div>
+</div>
+<div class="flex-1 min-w-[200px]">
+<label class="block text-[10px] font-label tracking-[0.2em] text-on-surface-variant uppercase mb-3 px-1">Destination</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface-container-low border-none rounded-lg px-4 py-3 text-xs font-label tracking-wider focus:ring-2 focus:ring-primary/10 cursor-pointer">
+<option>Global Locations</option>
+<option>Switzerland</option>
+<option>Singapore</option>
+<option>Germany</option>
+<option>South Korea</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-sm">expand_more</span>
+</div>
+</div>
+<div class="flex-1 min-w-[200px]">
+<label class="block text-[10px] font-label tracking-[0.2em] text-on-surface-variant uppercase mb-3 px-1">Budget Range</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface-container-low border-none rounded-lg px-4 py-3 text-xs font-label tracking-wider focus:ring-2 focus:ring-primary/10 cursor-pointer">
+<option>Select Range</option>
+<option>$5,000 - $15,000</option>
+<option>$15,000 - $30,000</option>
+<option>$30,000+</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-sm">expand_more</span>
+</div>
+</div>
+<button class="bg-primary text-white h-[44px] px-8 rounded-lg font-label text-[11px] tracking-[0.2em] uppercase hover:bg-secondary transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">search</span>
+                Find Packages
+            </button>
+</div>
+<!-- Packages Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Package Card 1 -->
+<div class="group bg-white rounded-lg border border-[rgba(32,48,51,0.10)] package-card-shadow p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(49,132,145,0.35)] flex flex-col">
+<div class="relative overflow-hidden rounded-lg aspect-[4/5] mb-6">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="luxury modern clinic interior in switzerland with floor to ceiling windows overlooking the alps at sunrise" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvu-6ovcPoc90fJ4-X9cG5Q1xEWnzkCvGttH7a8FnRoro0AJyfPJnRJg_bMwbP1oHCthb-vqk1fYjNSRs79_x5igxSS2AcOktvJV9mDTanZuuf7nE78eMX3caT4ilkm3r-LSbE-9tRIEaAjcMi62ne27GimTLz5kgbLEatM31G0NiOChZHRurmb5stU5kqDaT3A08nbNojLV53v2_X-ETp3LBGoWtUCxhlxloSkDXGabWlMqKf61yorEq0c5MNkNv9na16YF2UTefi"/>
+<div class="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3 py-1 rounded-sm text-[10px] font-label tracking-[0.2em] text-primary font-bold uppercase">Elite Tier</div>
+</div>
+<div class="flex flex-col flex-grow">
+<p class="text-[10px] font-label tracking-[0.2em] text-secondary uppercase mb-2">Switzerland</p>
+<h3 class="font-headline text-2xl text-primary leading-tight mb-4 group-hover:text-secondary transition-colors">Precision Joint Reconstruction</h3>
+<p class="text-on-surface-variant font-body text-sm leading-relaxed mb-8 flex-grow">World-class arthroscopic surgery at the Zurich Alpine Clinic, including 7-day post-op recovery in a lakeside suite.</p>
+<div class="flex items-center justify-between mt-auto pt-6 border-t border-[rgba(32,48,51,0.06)]">
+<div>
+<p class="text-[9px] font-label text-on-surface-variant uppercase tracking-[0.2em] mb-1">Starting from</p>
+<p class="text-xl font-headline text-primary">$28,500</p>
+</div>
+<button class="bg-surface-container-low text-primary px-5 py-3 rounded-lg font-label text-[10px] tracking-[0.2em] uppercase hover:bg-primary hover:text-white transition-all">Details</button>
+</div>
+</div>
+</div>
+<!-- Package Card 2 -->
+<div class="group bg-white rounded-lg border border-[rgba(32,48,51,0.10)] package-card-shadow p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(49,132,145,0.35)] flex flex-col">
+<div class="relative overflow-hidden rounded-lg aspect-[4/5] mb-6">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="serene wellness spa in singapore with tropical greenery and soft teal ambient lighting for restorative care" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALEBcGxR_byBLs3txhvy3VmBprnBOArXg4bwf4TBl2jMUsZ3zVPwQ6XIRPkvkmi6bLntEq-zoViTKfUq478RZBTzOyd3Kueh7Oo0skmanaLjTU28mE4ohccmYuc2aArGS86rHkPSd4iAKmrW5khxfQt0eAFv3rmaPGaccEf52OBY1GjTPQqUJ9anln4UxI8-E9Z9i8dXzveAV4748DEm0b9XMvN7Bc9yPubeBK_KqVWI-abFmcsrblXA-mjf8ueF7Da0hse5uNUhiW"/>
+<div class="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3 py-1 rounded-sm text-[10px] font-label tracking-[0.2em] text-primary font-bold uppercase">Regenerative</div>
+</div>
+<div class="flex flex-col flex-grow">
+<p class="text-[10px] font-label tracking-[0.2em] text-secondary uppercase mb-2">Singapore</p>
+<h3 class="font-headline text-2xl text-primary leading-tight mb-4 group-hover:text-secondary transition-colors">Advanced Longevity Protocol</h3>
+<p class="text-on-surface-variant font-body text-sm leading-relaxed mb-8 flex-grow">Integrative stem cell therapy and biometric optimization at the Marina Bay Health Institute. Focus on cellular restoration.</p>
+<div class="flex items-center justify-between mt-auto pt-6 border-t border-[rgba(32,48,51,0.06)]">
+<div>
+<p class="text-[9px] font-label text-on-surface-variant uppercase tracking-[0.2em] mb-1">Starting from</p>
+<p class="text-xl font-headline text-primary">$42,000</p>
+</div>
+<button class="bg-surface-container-low text-primary px-5 py-3 rounded-lg font-label text-[10px] tracking-[0.2em] uppercase hover:bg-primary hover:text-white transition-all">Details</button>
+</div>
+</div>
+</div>
+<!-- Package Card 3 -->
+<div class="group bg-white rounded-lg border border-[rgba(32,48,51,0.10)] package-card-shadow p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(49,132,145,0.35)] flex flex-col">
+<div class="relative overflow-hidden rounded-lg aspect-[4/5] mb-6">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="high-tech surgical suite with teal glowing accents and minimalist medical equipment for precision surgery" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdXzwVPuOPsOjcrTdarW2tyWEV7rMRf67ZJsbtlsEGegsLxyEX3qFHADHlO2ekXLLX8Dl5UcA7ATLlW0C3pEmprwfUbZ6CwH2bSYrl_rLsQGlAV0n1djDo8YYQYjj7q9ftISlvN0VXmkjZSf9-hk7izXu8cqDK74y3IEP4rxZh_7Ad1XVF22SL38fMCk0RoiZq7MaCGS5J8xwqan3WMGtP2apgd24lLkw9rGSD8Hw6z2KuuhV2yIlC_iYLKk1NSYizfd7Yfg0eLcrt"/>
+<div class="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3 py-1 rounded-sm text-[10px] font-label tracking-[0.2em] text-primary font-bold uppercase">Specialized</div>
+</div>
+<div class="flex flex-col flex-grow">
+<p class="text-[10px] font-label tracking-[0.2em] text-secondary uppercase mb-2">Germany</p>
+<h3 class="font-headline text-2xl text-primary leading-tight mb-4 group-hover:text-secondary transition-colors">Robotic Spinal Alignment</h3>
+<p class="text-on-surface-variant font-body text-sm leading-relaxed mb-8 flex-grow">Minimally invasive neurosurgery using AI-guided robotics. Includes rehabilitation at a private Black Forest resort.</p>
+<div class="flex items-center justify-between mt-auto pt-6 border-t border-[rgba(32,48,51,0.06)]">
+<div>
+<p class="text-[9px] font-label text-on-surface-variant uppercase tracking-[0.2em] mb-1">Starting from</p>
+<p class="text-xl font-headline text-primary">$19,200</p>
+</div>
+<button class="bg-surface-container-low text-primary px-5 py-3 rounded-lg font-label text-[10px] tracking-[0.2em] uppercase hover:bg-primary hover:text-white transition-all">Details</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination & Sort -->
+<div class="mt-24 flex flex-col md:flex-row items-center justify-between gap-8 border-t border-[rgba(32,48,51,0.10)] pt-12">
+<div class="flex items-center gap-2">
+<span class="text-[11px] font-label tracking-[0.2em] text-on-surface-variant uppercase">Showing</span>
+<span class="text-sm font-label font-bold text-primary">01—03</span>
+<span class="text-[11px] font-label tracking-[0.2em] text-on-surface-variant uppercase">of 24 Packages</span>
+</div>
+<div class="flex items-center gap-12">
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 rounded-full flex items-center justify-center border border-[rgba(32,48,51,0.10)] text-on-surface-variant hover:border-primary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-sm">west</span>
+</button>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-label text-sm">1</button>
+<button class="w-10 h-10 rounded-full text-on-surface-variant hover:bg-surface-container transition-all font-label text-sm">2</button>
+<button class="w-10 h-10 rounded-full text-on-surface-variant hover:bg-surface-container transition-all font-label text-sm">3</button>
+<span class="px-2 text-outline-variant">...</span>
+<button class="w-10 h-10 rounded-full text-on-surface-variant hover:bg-surface-container transition-all font-label text-sm">8</button>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center border border-[rgba(32,48,51,0.10)] text-on-surface-variant hover:border-primary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-sm">east</span>
+</button>
+</div>
+<div class="h-8 w-px bg-[rgba(32,48,51,0.10)] hidden md:block"></div>
+<div class="flex items-center gap-3">
+<span class="text-[11px] font-label tracking-[0.2em] text-on-surface-variant uppercase">Sort By:</span>
+<button class="font-label text-[10px] tracking-[0.2em] uppercase font-bold text-primary flex items-center gap-2 group">
+                        Most Relevant
+                        <span class="material-symbols-outlined text-xs group-hover:translate-y-0.5 transition-transform">keyboard_arrow_down</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Concierge Card -->
+<div class="mt-32 bg-tertiary-container rounded-lg p-16 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-12 editorial-shadow">
+<div class="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.03)_50%,transparent_75%)] bg-[length:250px_250px]"></div>
+<div class="relative z-10 max-w-xl">
+<h2 class="font-headline text-3xl text-near-white-92 mb-6 italic leading-relaxed">"True luxury is not just the destination, but the absolute peace of mind during recovery."</h2>
+<p class="font-label text-[10px] tracking-[0.3em] text-near-white-70 uppercase">The Curator's Promise</p>
+</div>
+<div class="relative z-10 text-center md:text-right">
+<p class="font-body text-near-white-82 mb-8 text-lg">Request a bespoke itinerary from our clinicians.</p>
+<button class="bg-secondary-container text-primary px-10 py-4 rounded-lg font-label text-[11px] tracking-[0.2em] uppercase hover:opacity-95 transition-all shadow-xl shadow-black/10">Personal Consultation</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-primary w-full py-24 px-12">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
+<div class="col-span-1 md:col-span-1">
+<h2 class="text-3xl font-serif text-near-white-92 mb-8">Clinical Curator</h2>
+<p class="text-near-white-82 font-body text-sm leading-relaxed">Elevating medical travel to a bespoke art form through global expertise and restorative luxury.</p>
+</div>
+<div>
+<h4 class="font-headline text-near-white-92 mb-8 tracking-wide text-lg">Quick Links</h4>
+<ul class="space-y-4">
+<li><a class="text-near-white-70 link-dark-hover transition-all font-label text-[11px] tracking-[0.2em] uppercase block" href="#">Procedure Index</a></li>
+<li><a class="text-near-white-70 link-dark-hover transition-all font-label text-[11px] tracking-[0.2em] uppercase block" href="#">Accreditation Standards</a></li>
+<li><a class="text-near-white-70 link-dark-hover transition-all font-label text-[11px] tracking-[0.2em] uppercase block" href="#">Concierge Services</a></li>
+<li><a class="text-near-white-70 link-dark-hover transition-all font-label text-[11px] tracking-[0.2em] uppercase block" href="#">Partner Clinics</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-headline text-near-white-92 mb-8 tracking-wide text-lg">Legal</h4>
+<ul class="space-y-4">
+<li><a class="text-near-white-70 link-dark-hover transition-all font-label text-[11px] tracking-[0.2em] uppercase block" href="#">Privacy Policy</a></li>
+<li><a class="text-near-white-70 link-dark-hover transition-all font-label text-[11px] tracking-[0.2em] uppercase block" href="#">Terms of Service</a></li>
+<li><a class="text-near-white-70 link-dark-hover transition-all font-label text-[11px] tracking-[0.2em] uppercase block" href="#">Medical Disclaimer</a></li>
+<li><a class="text-near-white-70 link-dark-hover transition-all font-label text-[11px] tracking-[0.2em] uppercase block" href="#">Contact Support</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-headline text-near-white-92 mb-8 tracking-wide text-lg">Newsletter</h4>
+<p class="text-near-white-82 text-sm font-body mb-8 leading-relaxed">Join our curated list for the latest breakthroughs in global medicine.</p>
+<div class="relative">
+<input class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-4 text-white font-label text-xs tracking-wider focus:outline-none focus:border-secondary transition-colors" placeholder="EMAIL ADDRESS" type="email"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">east</span>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto mt-24 pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+<p class="text-near-white-70 font-label text-[10px] tracking-[0.3em] uppercase">© 2024 Clinical Curator. All rights reserved.</p>
+<div class="flex gap-10">
+<a class="text-near-white-70 link-dark-hover transition-colors font-label text-[10px] tracking-[0.2em] uppercase" href="#">Instagram</a>
+<a class="text-near-white-70 link-dark-hover transition-colors font-label text-[10px] tracking-[0.2em] uppercase" href="#">LinkedIn</a>
+<a class="text-near-white-70 link-dark-hover transition-colors font-label text-[10px] tracking-[0.2em] uppercase" href="#">Twitter</a>
+</div>
+</div>
+</footer>
+</body></html>

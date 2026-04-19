@@ -4,6 +4,29 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { api } from '@/lib/api';
+import { getAdminLang, t, common, type AdminLang } from '@/lib/i18n';
+
+const dict = {
+  title: { ua: 'Послуги та пакети', en: 'Services & Packages' },
+  addService: { ua: 'Додати послугу', en: 'Add Service' },
+  totalSuffix: { ua: 'всього', en: 'total' },
+  service: { ua: 'послуга', en: 'service' },
+  services: { ua: 'послуг', en: 'services' },
+  noServices: { ua: 'Послуг ще немає. Додайте першу послугу або пакет.', en: 'No services yet. Add your first service or package.' },
+  image: { ua: 'Зображення', en: 'Image' },
+  name: { ua: 'Назва', en: 'Name' },
+  category: { ua: 'Категорія', en: 'Category' },
+  location: { ua: 'Локація', en: 'Location' },
+  price: { ua: 'Ціна', en: 'Price' },
+  featured: { ua: 'Обране', en: 'Featured' },
+  published: { ua: 'Опублікований', en: 'Published' },
+  sort: { ua: 'Порядок', en: 'Sort' },
+  actions: { ua: 'Дії', en: 'Actions' },
+  edit: { ua: 'Редагувати', en: 'Edit' },
+  removeFeatured: { ua: 'Прибрати з обраних', en: 'Remove from featured' },
+  markFeatured: { ua: 'Позначити як обране', en: 'Mark as featured' },
+  confirmDeleteService: { ua: 'Ви впевнені, що хочете видалити цю послугу?', en: 'Are you sure you want to delete this service?' },
+} as const;
 
 interface Service {
   id: string;
@@ -25,6 +48,9 @@ export default function ServicesList() {
   const [list, setList] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const [lang, setLang] = useState<AdminLang>('ua');
+  useEffect(() => { setLang(getAdminLang()); }, []);
+  useEffect(() => { const i = setInterval(() => { const l = getAdminLang(); if (l !== lang) setLang(l); }, 500); return () => clearInterval(i); });
 
   useEffect(() => {
     api.get('/admin/services')
@@ -34,7 +60,7 @@ export default function ServicesList() {
   }, [router]);
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this service?')) return;
+    if (!confirm(t(dict, 'confirmDeleteService', lang))) return;
     await api.delete(`/admin/services/${id}`);
     setList((prev) => prev.filter((s) => s.id !== id));
   };
@@ -55,12 +81,12 @@ export default function ServicesList() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Services &amp; Packages</h1>
-          <p className="text-sm text-gray-500 mt-1">{list.length} service{list.length !== 1 ? 's' : ''} total</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t(dict, 'title', lang)}</h1>
+          <p className="text-sm text-gray-500 mt-1">{list.length} {list.length !== 1 ? t(dict, 'services', lang) : t(dict, 'service', lang)} {t(dict, 'totalSuffix', lang)}</p>
         </div>
         <Link href="/admin/services/new" className="btn-primary">
           <span className="material-symbols-outlined">add</span>
-          Add Service
+          {t(dict, 'addService', lang)}
         </Link>
       </div>
 
@@ -82,22 +108,22 @@ export default function ServicesList() {
         ) : list.length === 0 ? (
           <div className="text-center py-12">
             <span className="material-symbols-outlined text-4xl text-gray-300">medical_services</span>
-            <p className="mt-2 text-sm text-gray-500">No services yet. Add your first service or package.</p>
+            <p className="mt-2 text-sm text-gray-500">{t(dict, 'noServices', lang)}</p>
           </div>
         ) : (
           <div className="table-container">
             <table>
               <thead>
                 <tr>
-                  <th>Image</th>
-                  <th>Name</th>
-                  <th>Category</th>
-                  <th>Location</th>
-                  <th>Price</th>
-                  <th className="text-center">Featured</th>
-                  <th className="text-center">Published</th>
-                  <th className="text-center">Sort</th>
-                  <th className="text-right">Actions</th>
+                  <th>{t(dict, 'image', lang)}</th>
+                  <th>{t(dict, 'name', lang)}</th>
+                  <th>{t(dict, 'category', lang)}</th>
+                  <th>{t(dict, 'location', lang)}</th>
+                  <th>{t(dict, 'price', lang)}</th>
+                  <th className="text-center">{t(dict, 'featured', lang)}</th>
+                  <th className="text-center">{t(dict, 'published', lang)}</th>
+                  <th className="text-center">{t(dict, 'sort', lang)}</th>
+                  <th className="text-right">{t(dict, 'actions', lang)}</th>
                 </tr>
               </thead>
               <tbody>
@@ -139,7 +165,7 @@ export default function ServicesList() {
                         type="button"
                         onClick={() => handleToggleFeatured(s)}
                         className="inline-flex items-center justify-center"
-                        title={s.featured ? 'Remove from featured' : 'Mark as featured'}
+                        title={s.featured ? t(dict, 'removeFeatured', lang) : t(dict, 'markFeatured', lang)}
                       >
                         <span className={`material-symbols-outlined !text-[20px] ${
                           s.featured
@@ -170,7 +196,7 @@ export default function ServicesList() {
                       <div className="flex items-center justify-end gap-1">
                         <Link href={`/admin/services/${s.id}`} className="btn-ghost !px-2 !py-1.5 text-xs">
                           <span className="material-symbols-outlined !text-[16px]">edit</span>
-                          Edit
+                          {t(dict, 'edit', lang)}
                         </Link>
                         <button type="button" onClick={() => handleDelete(s.id)} className="btn-ghost !px-2 !py-1.5 text-xs text-red-600 hover:text-red-700 hover:bg-red-50">
                           <span className="material-symbols-outlined !text-[16px]">delete</span>

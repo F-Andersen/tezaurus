@@ -4,14 +4,21 @@ import { useState } from 'react';
 import { submitLead } from '@/lib/api';
 import type { Lang } from '@/lib/api';
 
-export function LeadForm({ lang, captchaSiteKey }: { lang: Lang; captchaSiteKey?: string }) {
+export function LeadForm({ lang, captchaSiteKey, subject, defaultRequestType }: {
+  lang: Lang;
+  captchaSiteKey?: string;
+  subject?: string;
+  defaultRequestType?: string;
+}) {
   const [sent, setSent] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     name: '', phone: '', email: '',
-    requestType: 'Tourism',
-    country: '', message: '', consent: false,
+    requestType: defaultRequestType || 'Tourism',
+    country: '',
+    message: subject ? `${lang === 'ua' ? 'Цікавить' : 'Interested in'}: ${subject}` : '',
+    consent: false,
   });
 
   const t = (ua: string, en: string) => lang === 'ua' ? ua : en;
@@ -33,12 +40,12 @@ export function LeadForm({ lang, captchaSiteKey }: { lang: Lang; captchaSiteKey?
 
   if (sent) {
     return (
-      <div style={{ padding: '2rem', background: 'rgba(45,80,22,0.06)', border: '1px solid rgba(45,80,22,0.2)', borderRadius: 2, textAlign: 'center' }}>
-        <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>✓</div>
-        <p style={{ color: 'var(--forest)', fontWeight: 600, marginBottom: '0.4rem' }}>
+      <div className="p-8 bg-secondary/10 border border-secondary/20 rounded-lg text-center">
+        <div className="text-2xl mb-3">✓</div>
+        <p className="text-primary font-semibold mb-1">
           {t('Заявку надіслано!', 'Request sent!')}
         </p>
-        <p style={{ color: 'var(--stone)', fontSize: '0.88rem' }}>
+        <p className="text-on-surface-variant text-sm">
           {t('Ми зв\'яжемося з вами протягом 24 годин.', 'We will contact you within 24 hours.')}
         </p>
       </div>
@@ -86,8 +93,8 @@ export function LeadForm({ lang, captchaSiteKey }: { lang: Lang; captchaSiteKey?
 
       <label style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', cursor: 'pointer' }}>
         <input type="checkbox" checked={form.consent} onChange={(e) => setForm((f) => ({ ...f, consent: e.target.checked }))}
-          style={{ marginTop: '3px', accentColor: 'var(--navy)', width: 16, height: 16, flexShrink: 0 }} />
-        <span style={{ fontSize: '0.8rem', color: 'var(--stone)', lineHeight: 1.6 }}>
+          style={{ marginTop: '3px', accentColor: '#318491', width: 16, height: 16, flexShrink: 0 }} />
+        <span className="text-xs text-on-surface-variant leading-relaxed">
           {t('Я погоджуюся з обробкою персональних даних *', 'I agree to personal data processing *')}
         </span>
       </label>

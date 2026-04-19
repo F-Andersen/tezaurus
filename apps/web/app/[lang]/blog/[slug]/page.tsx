@@ -112,7 +112,7 @@ export default async function BlogPostPage({
         <header className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-end mb-16 md:mb-20">
           <div className="lg:col-span-8">
             {post.category?.name && (
-              <span className="inline-block font-label text-xs tracking-widest text-on-tertiary-container uppercase px-3 py-1 bg-tertiary-fixed rounded-full mb-6">
+              <span className="inline-block font-label text-xs tracking-widest text-on-surface-variant uppercase px-3 py-1 bg-surface-container-low rounded-full mb-6">
                 {post.category.name}
               </span>
             )}
@@ -311,9 +311,9 @@ export default async function BlogPostPage({
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
               {related.map((r) => (
-                <Link key={r.id} href={`/${lang}/blog/${r.slug}`} className="group block">
+                <Link key={r.id} href={`/${lang}/blog/${r.slug}`} className="group block rounded-2xl border border-primary/10 hover:border-secondary/35 transition-colors overflow-hidden bg-white">
                   <article>
-                    <div className="aspect-[4/5] rounded-xl overflow-hidden mb-6 bg-surface-container-low">
+                    <div className="aspect-[4/5] overflow-hidden bg-surface-container-low">
                       {r.image ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
@@ -327,14 +327,16 @@ export default async function BlogPostPage({
                         </div>
                       )}
                     </div>
-                    {r.category?.name && (
-                      <span className="text-xs font-bold text-on-secondary-container bg-secondary-container px-3 py-1 rounded-full uppercase tracking-widest mb-3 inline-block">
-                        {r.category.name}
-                      </span>
-                    )}
-                    <h3 className="text-xl lg:text-2xl font-headline text-primary group-hover:text-on-primary-container transition-colors leading-snug">
-                      {r.title}
-                    </h3>
+                    <div className="p-5">
+                      {r.category?.name && (
+                        <span className="text-xs font-bold text-on-surface-variant bg-surface-container-low px-3 py-1 rounded-full uppercase tracking-widest mb-3 inline-block">
+                          {r.category.name}
+                        </span>
+                      )}
+                      <h3 className="text-xl lg:text-2xl font-headline text-primary group-hover:text-primary/70 transition-colors leading-snug">
+                        {r.title}
+                      </h3>
+                    </div>
                   </article>
                 </Link>
               ))}
