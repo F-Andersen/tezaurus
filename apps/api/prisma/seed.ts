@@ -895,40 +895,76 @@ async function main() {
     {
       slug: 'home',
       titleUa: 'Головна', titleEn: 'Home',
+      contentUa: `<h2>Преміальний медичний туризм і wellness-подорожі</h2>
+<p>TEZAURUS-TOUR — це українське агентство медичного туризму, яке супроводжує пацієнтів на шляху від першої консультації до повного відновлення. Ми працюємо з провідними клініками Німеччини, Швейцарії, Ізраїлю, Туреччини, Чехії, Італії, Південної Кореї та Австрії, ретельно відбираючи заклади з міжнародною акредитацією JCI та підтвердженою репутацією у складних випадках.</p>
+<p>Наша команда супроводжує клієнта персонально: лікарі-кординатори відкривають медичну справу, перекладачі готують документацію двома мовами, менеджери бронюють переліт, трансфери та проживання поруч із клінікою. Ми пояснюємо структуру кошторису без прихованих платежів та фіксуємо гарантії у прозорому договорі.</p>
+<p>Обирайте з понад 12 медичних пакетів: діагностика серця, онкологічний скринінг, естетична і реконструктивна хірургія, IVF, стоматологічна імплантація, ортопедія, реабілітація та програми довголіття. Після процедур — відновлення у санаторіях Європи з індивідуально складеною wellness-програмою.</p>`,
+      contentEn: `<h2>Premium medical tourism and wellness journeys</h2>
+<p>TEZAURUS-TOUR is a Ukrainian medical tourism agency that accompanies patients from the initial consultation all the way through complete recovery. We work with leading clinics in Germany, Switzerland, Israel, Turkey, the Czech Republic, Italy, South Korea and Austria — carefully selecting facilities with JCI accreditation and a proven track record in complex cases.</p>
+<p>Our team provides personal guidance: medical coordinators open the case, translators prepare the documentation in both languages, and managers book flights, transfers and accommodation next to the clinic. We explain the cost breakdown with no hidden fees and document all guarantees in a transparent contract.</p>
+<p>Choose from more than 12 medical packages: cardiac diagnostics, oncology screening, aesthetic and reconstructive surgery, IVF, dental implants, orthopedics, rehabilitation and longevity programs. After treatment — recovery at European spa resorts with a tailored wellness itinerary.</p>`,
       metaTitleUa: 'TEZAURUS-TOUR — Преміальний медичний туризм', metaTitleEn: 'TEZAURUS-TOUR — Premium Medical Tourism',
-      metaDescriptionUa: 'Медичний туризм світового рівня. Клініки, лікування та оздоровчі програми.', metaDescriptionEn: 'World-class medical tourism. Clinics, treatment, and wellness programs.',
+      metaDescriptionUa: 'Медичний туризм світового рівня. Клініки, лікування та оздоровчі програми від TEZAURUS-TOUR.', metaDescriptionEn: 'World-class medical tourism. Clinics, treatments and wellness programs by TEZAURUS-TOUR.',
       published: true,
     },
     {
       slug: 'services',
       titleUa: 'Курортні Wellness-Подорожі', titleEn: 'Curated Wellness Journeys',
+      contentUa: `<h2>Медичні пакети та оздоровчі подорожі TEZAURUS-TOUR</h2>
+<p>У нашому каталозі — перевірені медичні послуги з фіксованим кошторисом: від повного кардіологічного чекапу в Мюнхені до стоматологічної імплантації в Анталії та IVF-програм у Празі. Кожен пакет включає консультацію профільного лікаря, необхідну діагностику, саму процедуру, базове відновлення та переклад медичних документів українською або англійською мовою.</p>
+<p>Ми комплектуємо подорож під ваш розклад: якщо важливо повернутися додому за тиждень — добираємо клініки з короткими протоколами; якщо потрібне довге відновлення — бронюємо санаторій або курорт поруч із містом клініки. Для сімейних поїздок окремо продумуємо дозвілля для супроводу.</p>
+<p>Категорії у каталозі: діагностика, лікування, естетична хірургія, реабілітація, стоматологія, офтальмологія, репродуктивна медицина, баріатрія, пересадка волосся та довголіття. Усі ціни — у валюті країни клініки; курсова різниця фіксується на момент підписання договору.</p>`,
+      contentEn: `<h2>Medical packages and curated wellness journeys</h2>
+<p>Our catalogue lists medical services with a fixed, up-front price — from a full cardiology check-up in Munich to dental implant placement in Antalya and IVF programs in Prague. Every package includes a specialist consultation, the required diagnostics, the procedure itself, basic recovery and a translation of the medical documents into Ukrainian or English.</p>
+<p>We build the trip around your schedule: if you need to be home within a week we select clinics with short protocols; if a longer recovery is required we book a sanatorium or resort near the clinic city. For family trips we plan separate activities for accompanying relatives.</p>
+<p>Catalogue categories: diagnostics, treatment, aesthetic surgery, rehabilitation, dentistry, ophthalmology, reproductive medicine, bariatric surgery, hair transplant and longevity. Prices are quoted in the clinic country's currency; the exchange rate is fixed on the date the contract is signed.</p>`,
       metaTitleUa: 'Медичні пакети та послуги — TEZAURUS-TOUR', metaTitleEn: 'Medical Packages & Services — TEZAURUS-TOUR',
-      metaDescriptionUa: 'Курортні wellness-програми та медичні пакети від TEZAURUS-TOUR.', metaDescriptionEn: 'Curated wellness journeys and medical packages by TEZAURUS-TOUR.',
+      metaDescriptionUa: 'Курортні wellness-програми та медичні пакети від TEZAURUS-TOUR: діагностика, лікування, реабілітація.', metaDescriptionEn: 'Curated wellness journeys and medical packages by TEZAURUS-TOUR: diagnostics, treatment, rehabilitation.',
       published: true,
     },
     {
       slug: 'about',
       titleUa: 'Про нас', titleEn: 'About Us',
-      contentUa: 'TEZAURUS-TOUR — це команда професіоналів медичного туризму з більш ніж 10-річним досвідом.',
-      contentEn: 'TEZAURUS-TOUR is a team of medical tourism professionals with over 10 years of experience.',
+      contentUa: `<h2>Про TEZAURUS-TOUR</h2>
+<p>TEZAURUS-TOUR — це команда професіоналів медичного туризму з понад 10-річним досвідом організації лікування за кордоном. Ми працюємо з українськими пацієнтами та їхніми родинами, щоби забезпечити повний цикл супроводу: від попередньої онлайн-консультації до повернення додому та пост-операційного контролю.</p>
+<p>Наш підхід побудований на чотирьох принципах: ретельний відбір клінік-партнерів з акредитацією JCI та іншими міжнародними стандартами; особистий куратор для кожного пацієнта; прозорий кошторис без прихованих платежів; та повноцінна логістика — переліт, трансфер, проживання, переклад медичної документації.</p>
+<p>За роки роботи ми допомогли тисячам пацієнтів знайти найкраще лікування: онкологічне, кардіологічне, ортопедичне, репродуктивне, естетичне та стоматологічне. Більшість пацієнтів повертаються до нас повторно або рекомендують знайомим — і це найкращий показник якості нашого сервісу.</p>`,
+      contentEn: `<h2>About TEZAURUS-TOUR</h2>
+<p>TEZAURUS-TOUR is a team of medical tourism professionals with more than 10 years of experience arranging treatment abroad. We work with Ukrainian patients and their families to provide a full-cycle service: from an initial online consultation to returning home and post-operative follow-up.</p>
+<p>Our approach rests on four principles: careful selection of partner clinics with JCI accreditation and other international standards; a personal case manager for every patient; a transparent cost estimate with no hidden fees; and full-scale logistics — flights, transfers, accommodation and medical document translation.</p>
+<p>Over the years we have helped thousands of patients find the best treatment — oncological, cardiological, orthopedic, reproductive, aesthetic and dental. Most of our patients return for additional care or refer friends and family, which is the clearest measure of our service quality.</p>`,
       metaTitleUa: 'Про нас — TEZAURUS-TOUR', metaTitleEn: 'About Us — TEZAURUS-TOUR',
+      metaDescriptionUa: 'TEZAURUS-TOUR — команда з 10+ років досвіду в медичному туризмі, що організовує лікування в провідних клініках світу.',
+      metaDescriptionEn: 'TEZAURUS-TOUR — a team with over 10 years of experience in medical tourism, arranging treatment at leading clinics worldwide.',
       published: true,
     },
     {
       slug: 'contacts',
       titleUa: 'Контакти', titleEn: 'Contacts',
-      contentUa: 'Проконсультуйтеся з нашою командою спеціалістів.',
-      contentEn: 'Consult with our specialist team.',
+      contentUa: `<h2>Зв\'яжіться з нами</h2>
+<p>Наша команда готова проконсультувати вас українською, англійською, німецькою або турецькою мовами. Залиште заявку на сайті — лікар-координатор зателефонує протягом робочого дня та допоможе скласти попередній план лікування без зобовʼязань.</p>
+<p>Офіс TEZAURUS-TOUR розташований у Києві; додаткові координатори працюють у Стамбулі, Мюнхені та Тель-Авіві, щоби супроводжувати пацієнтів безпосередньо у країні лікування. Для оформлення термінових випадків у нас передбачена цілодобова гаряча лінія.</p>
+<p>Усі консультації — безкоштовні та конфіденційні. Ми підписуємо угоду про нерозголошення та гарантуємо безпеку ваших медичних документів. Якщо вам зручніше спілкуватися через месенджер — напишіть у Telegram, WhatsApp або Instagram, посилання внизу сторінки.</p>`,
+      contentEn: `<h2>Get in touch</h2>
+<p>Our team is ready to consult you in Ukrainian, English, German or Turkish. Submit a request through the website — a medical coordinator will call you during business hours and help outline a preliminary treatment plan with no commitment.</p>
+<p>The TEZAURUS-TOUR head office is located in Kyiv; additional coordinators work in Istanbul, Munich and Tel Aviv to accompany patients directly in the country of treatment. A 24/7 hotline is available for urgent cases.</p>
+<p>All consultations are free and confidential. We sign a non-disclosure agreement and guarantee the security of your medical documents. If you prefer a messenger — write to us on Telegram, WhatsApp or Instagram; links are in the footer.</p>`,
       metaTitleUa: 'Контакти — TEZAURUS-TOUR', metaTitleEn: 'Contacts — TEZAURUS-TOUR',
-      metaDescriptionUa: 'Зв\'яжіться з TEZAURUS-TOUR для консультації щодо медичного туризму.',
-      metaDescriptionEn: 'Contact TEZAURUS-TOUR for medical tourism consultation.',
+      metaDescriptionUa: 'Звʼяжіться з TEZAURUS-TOUR для безкоштовної консультації щодо медичного туризму та курортних програм.',
+      metaDescriptionEn: 'Contact TEZAURUS-TOUR for a free medical tourism and wellness consultation.',
       published: true,
     },
     {
       slug: 'blog',
       titleUa: 'Блог', titleEn: 'Blog',
-      contentUa: 'Корисні статті та новини про медичний туризм, велнес та лікування за кордоном.',
-      contentEn: 'Useful articles and news about medical tourism, wellness, and treatment abroad.',
+      contentUa: `<h2>Блог TEZAURUS-TOUR</h2>
+<p>У нашому блозі ми збираємо все корисне для пацієнтів, які планують лікування за кордоном: покрокові гіди з підготовки, огляди топових клінік Туреччини, Німеччини та Ізраїлю, розбір страхових продуктів для медичних подорожей, а також тренди 2026 року у wellness та відновлювальній медицині.</p>
+<p>Ми пишемо статті разом з лікарями та практиками з медичного туризму, тож кожен матеріал проходить фактчекінг і містить посилання на джерела. Ви знайдете тут поради щодо вибору клініки, організації поїздки, підготовки документів та періоду відновлення.</p>
+<p>Підпишіться на розсилку, щоби отримувати нові матеріали першими, і не забудьте поділитися корисною статтею з близькими, які також планують лікування або оздоровчу подорож.</p>`,
+      contentEn: `<h2>TEZAURUS-TOUR Blog</h2>
+<p>Our blog gathers everything useful for patients planning treatment abroad: step-by-step preparation guides, reviews of the top clinics in Turkey, Germany and Israel, overviews of travel medical insurance, and 2026 trends in wellness and rehabilitation medicine.</p>
+<p>We write articles together with doctors and medical tourism practitioners, so every piece is fact-checked and references its sources. You will find advice on choosing a clinic, organising the trip, preparing documents and the recovery period.</p>
+<p>Subscribe to the newsletter to be the first to read new materials, and do not forget to share a useful article with friends or family who are also planning treatment or a wellness journey.</p>`,
       metaTitleUa: 'Блог — TEZAURUS-TOUR', metaTitleEn: 'Blog — TEZAURUS-TOUR',
       metaDescriptionUa: 'Блог TEZAURUS-TOUR: поради, тренди та гіди з медичного туризму.',
       metaDescriptionEn: 'TEZAURUS-TOUR blog: tips, trends, and medical tourism guides.',
@@ -937,7 +973,62 @@ async function main() {
   ];
 
   for (const p of pages) {
-    await prisma.page.upsert({ where: { slug: p.slug }, update: {}, create: p });
+    await prisma.page.upsert({
+      where: { slug: p.slug },
+      update: {
+        titleUa: p.titleUa, titleEn: p.titleEn,
+        contentUa: p.contentUa, contentEn: p.contentEn,
+        metaTitleUa: p.metaTitleUa, metaTitleEn: p.metaTitleEn,
+        metaDescriptionUa: p.metaDescriptionUa, metaDescriptionEn: p.metaDescriptionEn,
+        published: p.published,
+      },
+      create: p,
+    });
+  }
+
+  // ── CLINIC IMAGES (галерея: 3-5 фото на клініку) ──
+  const galleryPool = [
+    'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=1200&q=80',
+    'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1200&q=80',
+    'https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=1200&q=80',
+    'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?w=1200&q=80',
+    'https://images.unsplash.com/photo-1632833239869-a37e3a5806d2?w=1200&q=80',
+    'https://images.unsplash.com/photo-1551076805-e1869033e561?w=1200&q=80',
+    'https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=1200&q=80',
+    'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80',
+    'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200&q=80',
+    'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1200&q=80',
+    'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1200&q=80',
+    'https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=1200&q=80',
+  ];
+
+  const seededClinics = await prisma.clinic.findMany({ select: { id: true, slug: true, imageUrl: true } });
+  for (const clinic of seededClinics) {
+    // Ідемпотентно: спочатку чистимо звʼязки, потім створюємо знову.
+    await prisma.clinicImage.deleteMany({ where: { clinicId: clinic.id } });
+
+    const urls = [clinic.imageUrl, ...galleryPool]
+      .filter((u): u is string => !!u)
+      .filter((u, idx, arr) => arr.indexOf(u) === idx)
+      .slice(0, 4);
+
+    for (let i = 0; i < urls.length; i++) {
+      const url = urls[i];
+      const asset = await prisma.mediaAsset.upsert({
+        where: { key: url },
+        update: {},
+        create: {
+          key: url,
+          mimeType: 'image/jpeg',
+          size: 0,
+          altUa: `Фото клініки ${clinic.slug}`,
+          altEn: `Photo of clinic ${clinic.slug}`,
+        },
+      });
+      await prisma.clinicImage.create({
+        data: { clinicId: clinic.id, mediaId: asset.id, sortOrder: i },
+      });
+    }
   }
 
   console.log('Seed done');
