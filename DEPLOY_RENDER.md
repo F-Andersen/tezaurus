@@ -45,3 +45,7 @@ npx prisma db seed
 
 - Холодний старт сервісів — перший запит може бути повільним.
 - База **free** має обмеження за розміром і терміном; для продакшену розгляньте платний план.
+
+## 7. Помилка `npm ci` у Docker (API)
+
+Якщо збірка падає з `package.json and package-lock.json are not in sync`, у каталозі `apps/api` виконайте `npm install` і закомітьте оновлений `package-lock.json`. У Docker використовується саме `npm ci`, тому lock-файл має відповідати `package.json`.
