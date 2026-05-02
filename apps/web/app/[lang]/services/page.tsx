@@ -34,37 +34,34 @@ export default async function ServicesPage({ params }: { params: Promise<{ lang:
   const [page, services] = await Promise.all([getPage('services', l), getServices(l)]);
 
   return (
-    <section className="pt-8 pb-24">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        {/* Breadcrumbs */}
-        <nav className="flex items-center gap-3 text-[10px] font-label tracking-[0.2em] text-on-surface-variant uppercase mb-12">
-          <Link href={`/${l}`} className="hover:text-primary transition-colors">
-            {t.breadHome[l]}
-          </Link>
-          <span className="material-symbols-outlined text-[10px]">chevron_right</span>
-          <span className="text-primary font-bold">{t.breadCurrent[l]}</span>
-        </nav>
+    <div className="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
+      {/* Breadcrumbs */}
+      <nav className="flex items-center gap-3 text-[10px] font-label tracking-[0.2em] text-on-surface-variant uppercase mb-12">
+        <Link href={`/${l}`} className="hover:text-primary transition-colors">
+          {t.breadHome[l]}
+        </Link>
+        <span className="material-symbols-outlined text-[10px]">chevron_right</span>
+        <span className="text-primary font-bold">{t.breadCurrent[l]}</span>
+      </nav>
 
-        {/* Header */}
-        <div className="mb-20">
-          <h1 className="font-headline text-5xl md:text-6xl text-primary mb-6 leading-tight">
-            {page?.title ? (
-              page.title
-            ) : (
-              <>
-                {t.heroTitle[l]} <br />
-                <span className="italic font-normal text-secondary">{t.heroTitleItalic[l]}</span>
-              </>
-            )}
-          </h1>
-          <p className="max-w-2xl text-on-surface-variant font-body text-lg leading-relaxed">
-            {page?.subtitle || t.heroSub[l]}
-          </p>
-        </div>
-
-        {/* Interactive Directory */}
-        <ServicesDirectory services={services} lang={l} />
+      {/* Hero (як відступи на сторінці клінік) */}
+      <div className="mb-20">
+        <h1 className="font-headline text-5xl md:text-6xl text-primary mb-6 leading-tight">
+          {page?.title ? (
+            page.title
+          ) : (
+            <>
+              {t.heroTitle[l]} <br />
+              <span className="italic font-normal text-secondary">{t.heroTitleItalic[l]}</span>
+            </>
+          )}
+        </h1>
+        <p className="max-w-2xl text-on-surface-variant font-body text-lg font-light leading-relaxed">
+          {page?.subtitle || t.heroSub[l]}
+        </p>
       </div>
-    </section>
+
+      <ServicesDirectory services={services} lang={l} />
+    </div>
   );
 }

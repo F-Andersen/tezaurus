@@ -14,5 +14,6 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next|favicon|sitemap|robots).*)'],
+  // Exclude /placeholders/* so /public SVGs are not redirected to /[locale]/...
+  matcher: ['/((?!api|_next|favicon|sitemap|robots|placeholders).*)'],
 };

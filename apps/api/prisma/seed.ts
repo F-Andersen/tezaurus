@@ -115,7 +115,8 @@ async function main() {
       descriptionUa: 'Оздоровчі програми у термальних курортах Бадена та Зальцбурга. Термальні процедури, масажі та детокс-програми.',
       descriptionEn: 'Health programs at thermal resorts in Baden and Salzburg. Thermal treatments, massages, and detox programs.',
       country: 'Austria', city: 'Baden', priceFrom: 1500, currency: 'EUR', duration: '5-14 днів',
-      imageUrl: 'https://images.unsplash.com/photo-1540555700478-4be289fbec6f?w=800&q=80',
+      // Same-origin asset: avoids ERR_BLOCKED_BY_CLIENT on images.unsplash.com in strict blockers
+      imageUrl: '/placeholders/service.svg',
       tags: ['spa', 'wellness', 'thermal'], featured: false, published: true, sortOrder: 6,
     },
     {

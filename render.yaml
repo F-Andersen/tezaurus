@@ -1,3 +1,4 @@
+# Blueprint: New → Blueprint у Render, вибрати репозиторій. Деталі — DEPLOY_RENDER.md
 databases:
   - name: tezaurus-db
     plan: free

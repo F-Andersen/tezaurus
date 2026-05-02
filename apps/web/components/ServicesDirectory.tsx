@@ -36,13 +36,10 @@ const categoryLabels: Record<string, Record<'ua' | 'en', string>> = {
 };
 
 const t = {
+  searchPlaceholder: { ua: 'Пошук за назвою пакета або описом…', en: 'Search by package name or description…' },
   treatmentType: { ua: 'Тип лікування', en: 'Treatment Type' },
-  allSpecializations: { ua: 'Усі спеціалізації', en: 'All Specializations' },
   destination: { ua: 'Напрямок', en: 'Destination' },
-  globalLocations: { ua: 'Усі локації', en: 'Global Locations' },
   budgetRange: { ua: 'Бюджет', en: 'Budget Range' },
-  selectRange: { ua: 'Оберіть діапазон', en: 'Select Range' },
-  findPackages: { ua: 'Знайти пакети', en: 'Find Packages' },
   startingFrom: { ua: 'Вартість від', en: 'Starting from' },
   details: { ua: 'Детальніше', en: 'Details' },
   showing: { ua: 'Показано', en: 'Showing' },
@@ -86,6 +83,7 @@ function getPageNumbers(current: number, total: number): (number | 'dots')[] {
 }
 
 export function ServicesDirectory({ services, lang }: Props) {
+  const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('');
   const [selectedBudget, setSelectedBudget] = useState<BudgetRange>('');
@@ -94,7 +92,7 @@ export function ServicesDirectory({ services, lang }: Props) {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedCategory, selectedCountry, selectedBudget, sortBy]);
+  }, [search, selectedCategory, selectedCountry, selectedBudget, sortBy]);
 
   const categories = useMemo(() => {
     const set = new Set<string>();
@@ -109,7 +107,14 @@ export function ServicesDirectory({ services, lang }: Props) {
   }, [services]);
 
   const filtered = useMemo(() => {
+    const q = search.toLowerCase().trim();
     let result = services.filter((s) => {
+      if (q) {
+        const inName = s.name.toLowerCase().includes(q);
+        const inDesc = s.description?.toLowerCase().includes(q);
+        const inTags = s.tags.some((tag) => tag.toLowerCase().includes(q));
+        if (!inName && !inDesc && !inTags) return false;
+      }
       if (selectedCategory && s.category !== selectedCategory) return false;
       if (selectedCountry && s.country !== selectedCountry) return false;
       if (selectedBudget) {
@@ -133,7 +138,7 @@ export function ServicesDirectory({ services, lang }: Props) {
         break;
     }
     return result;
-  }, [services, selectedCategory, selectedCountry, selectedBudget, sortBy]);
+  }, [services, search, selectedCategory, selectedCountry, selectedBudget, sortBy]);
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
   const paginated = filtered.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
@@ -141,79 +146,83 @@ export function ServicesDirectory({ services, lang }: Props) {
   const showEnd = Math.min(currentPage * ITEMS_PER_PAGE, filtered.length);
   const pageNumbers = getPageNumbers(currentPage, totalPages);
 
+  const clearFilters = () => {
+    setSearch('');
+    setSelectedCategory('');
+    setSelectedCountry('');
+    setSelectedBudget('');
+    setCurrentPage(1);
+  };
+
   return (
     <>
-      {/* ── Filter Bar ── */}
-      <div className="sticky top-28 z-40 bg-white/90 backdrop-blur-md rounded-xl p-6 package-card-shadow mb-16 flex flex-wrap items-end gap-8" style={{ border: '1px solid rgba(32,48,51,0.10)' }}>
-        {/* Treatment Type */}
-        <div className="flex-1 min-w-[200px]">
-          <label className="block text-[10px] font-label tracking-[0.2em] text-on-surface-variant uppercase mb-3 px-1">
-            {t.treatmentType[lang]}
-          </label>
-          <div className="relative">
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full appearance-none bg-surface-container-low border-none rounded-lg px-4 py-3 text-xs font-label tracking-wider focus:ring-2 focus:ring-primary/10 focus:outline-none cursor-pointer"
+      {/* ── Search & filters (логіка та стиль як у ClinicsDirectory) ── */}
+      <section className="mb-16">
+        <div className="flex flex-col items-stretch gap-4 rounded-2xl border border-black/5 bg-white p-3 shadow-soft lg:flex-row lg:items-center">
+          <div className="relative w-full flex-grow">
+            <span className="material-symbols-outlined pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-outline">
+              search
+            </span>
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full rounded-lg border-none bg-surface-container-low py-4 pl-12 pr-4 font-label text-sm text-on-surface outline-none placeholder:text-outline-variant focus:ring-1 focus:ring-secondary/20"
+              placeholder={t.searchPlaceholder[lang]}
+            />
+          </div>
+          <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center lg:w-auto">
+            <div className="relative w-full lg:w-48">
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="w-full cursor-pointer appearance-none rounded-lg border-none bg-surface-container-low px-4 py-4 font-label text-sm text-on-surface outline-none focus:ring-1 focus:ring-secondary/20"
+              >
+                <option value="">{t.treatmentType[lang]}</option>
+                {categories.map((c) => (
+                  <option key={c} value={c}>
+                    {categoryLabels[c]?.[lang] || c}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="relative w-full lg:w-48">
+              <select
+                value={selectedCountry}
+                onChange={(e) => setSelectedCountry(e.target.value)}
+                className="w-full cursor-pointer appearance-none rounded-lg border-none bg-surface-container-low px-4 py-4 font-label text-sm text-on-surface outline-none focus:ring-1 focus:ring-secondary/20"
+              >
+                <option value="">{t.destination[lang]}</option>
+                {countries.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="relative w-full lg:w-48">
+              <select
+                value={selectedBudget}
+                onChange={(e) => setSelectedBudget(e.target.value as BudgetRange)}
+                className="w-full cursor-pointer appearance-none rounded-lg border-none bg-surface-container-low px-4 py-4 font-label text-sm text-on-surface outline-none focus:ring-1 focus:ring-secondary/20"
+              >
+                <option value="">{t.budgetRange[lang]}</option>
+                <option value="5000-15000">$5,000 – $15,000</option>
+                <option value="15000-30000">$15,000 – $30,000</option>
+                <option value="30000+">$30,000+</option>
+              </select>
+            </div>
+            <button
+              type="button"
+              onClick={clearFilters}
+              className="flex shrink-0 items-center justify-center rounded-lg bg-primary p-4 text-white transition-opacity hover:opacity-90"
+              title={lang === 'ua' ? 'Скинути фільтри' : 'Clear filters'}
             >
-              <option value="">{t.allSpecializations[lang]}</option>
-              {categories.map((c) => (
-                <option key={c} value={c}>{categoryLabels[c]?.[lang] || c}</option>
-              ))}
-            </select>
-            <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-sm">expand_more</span>
+              <span className="material-symbols-outlined">tune</span>
+            </button>
           </div>
         </div>
-
-        {/* Destination */}
-        <div className="flex-1 min-w-[200px]">
-          <label className="block text-[10px] font-label tracking-[0.2em] text-on-surface-variant uppercase mb-3 px-1">
-            {t.destination[lang]}
-          </label>
-          <div className="relative">
-            <select
-              value={selectedCountry}
-              onChange={(e) => setSelectedCountry(e.target.value)}
-              className="w-full appearance-none bg-surface-container-low border-none rounded-lg px-4 py-3 text-xs font-label tracking-wider focus:ring-2 focus:ring-primary/10 focus:outline-none cursor-pointer"
-            >
-              <option value="">{t.globalLocations[lang]}</option>
-              {countries.map((c) => (
-                <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
-            <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-sm">expand_more</span>
-          </div>
-        </div>
-
-        {/* Budget Range */}
-        <div className="flex-1 min-w-[200px]">
-          <label className="block text-[10px] font-label tracking-[0.2em] text-on-surface-variant uppercase mb-3 px-1">
-            {t.budgetRange[lang]}
-          </label>
-          <div className="relative">
-            <select
-              value={selectedBudget}
-              onChange={(e) => setSelectedBudget(e.target.value as BudgetRange)}
-              className="w-full appearance-none bg-surface-container-low border-none rounded-lg px-4 py-3 text-xs font-label tracking-wider focus:ring-2 focus:ring-primary/10 focus:outline-none cursor-pointer"
-            >
-              <option value="">{t.selectRange[lang]}</option>
-              <option value="5000-15000">$5,000 – $15,000</option>
-              <option value="15000-30000">$15,000 – $30,000</option>
-              <option value="30000+">$30,000+</option>
-            </select>
-            <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-sm">expand_more</span>
-          </div>
-        </div>
-
-        {/* Find Packages */}
-        <button
-          onClick={() => setCurrentPage(1)}
-          className="bg-primary text-white h-[44px] px-8 rounded-lg font-label text-[11px] tracking-[0.2em] uppercase hover:bg-secondary transition-all flex items-center gap-2"
-        >
-          <span className="material-symbols-outlined text-sm">search</span>
-          {t.findPackages[lang]}
-        </button>
-      </div>
+      </section>
 
       {/* ── Cards Grid ── */}
       {filtered.length === 0 ? (
@@ -299,8 +308,11 @@ export function ServicesDirectory({ services, lang }: Props) {
 
           {/* ── Pagination & Sort ── */}
           {totalPages > 0 && (
-            <div className="mt-24 flex flex-col md:flex-row items-center justify-between gap-8 pt-12" style={{ borderTop: '1px solid rgba(32,48,51,0.10)' }}>
-              <div className="flex items-center gap-2">
+            <div
+              className="mt-16 flex w-full flex-col items-stretch justify-between gap-6 pt-8 sm:mt-20 sm:gap-8 sm:pt-10 md:mt-24 md:flex-row md:items-center md:gap-8 md:pt-12"
+              style={{ borderTop: '1px solid rgba(32,48,51,0.10)' }}
+            >
+              <div className="flex flex-wrap items-center gap-2">
                 <span className="text-[11px] font-label tracking-[0.2em] text-on-surface-variant uppercase">
                   {t.showing[lang]}
                 </span>
@@ -312,7 +324,7 @@ export function ServicesDirectory({ services, lang }: Props) {
                 </span>
               </div>
 
-              <div className="flex items-center gap-12">
+              <div className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:justify-end md:gap-6 lg:gap-12">
                 {totalPages > 1 && (
                   <div className="flex items-center gap-4">
                     <button
