@@ -4,6 +4,7 @@ COPY package.json package-lock.json ./
 COPY prisma ./prisma/
 RUN npm ci
 COPY . .
+# Лише для етапу збірки (prisma generate). У runtime runner-стадія це НЕ наслідує — DATABASE_URL задає Render.
 ENV DATABASE_URL="postgresql://placeholder:placeholder@localhost:5432/placeholder"
 RUN npx prisma generate
 RUN npm run build
