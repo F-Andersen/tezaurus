@@ -9,6 +9,8 @@ RUN npx prisma generate
 RUN npm run build
 
 FROM node:20-alpine AS runner
+# Prisma на Alpine потребує OpenSSL у runtime (інакше попередження / збої query engine)
+RUN apk add --no-cache libc6-compat openssl
 WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=builder /app/dist ./dist
